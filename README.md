@@ -2,6 +2,7 @@
 The waveformlidar package provides functions to process waveform LiDAR data with decomposition or deconvolution methods. For the decomposition, multiple functions such as Gaussian, adaptive Gaussian and Weibull functions are available for directly decomposing waveforms. There are two deconvolution methods included for waveform deconvolution in this package: Richard-Lucy (RL) and Gold algorithms. In addition, there are several functions are available for extracting waveform-related variables from raw waveforms, which can be beneficial for characterizing the waveform for tree species identification, biomass estimation and vegetation characterization. 
 
 Install waveformlidar
+
 The current developmental version can be downloaded from github via
 if (!require("devtools")) {
   install.packages("devtools")
