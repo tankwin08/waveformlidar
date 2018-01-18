@@ -16,17 +16,17 @@ library(waveformlidar)
 
 **How to use waveformlidar**
 
-##import return waveform data
-data(return)
-lr<-nrow(return)
-ind<-c(1:lr)  ##create a index for each waveform
-plot (as.numeric(return[i,]),type="l")  ##you can check the raw waveform data
-##prepare the data
-return<-data.frame(ind,return)
-x<-return[182,] ###must be a dataset including intensity with index at the beginning.
-r1<-decom(x)  ##use default setup
-r2<-decom(x,smooth="TRUE",width=3) ###you can assign different smooth width for the data
+##import return waveform data  
+data(return)  
+lr<-nrow(return)  
+ind<-c(1:lr)  ##create a index for each waveform  
+plot (as.numeric(return[i,]),type="l")  ##you can check the raw waveform data  
+##prepare the data  
+return<-data.frame(ind,return)  
+x<-return[182,] ###must be a dataset including intensity with index at the beginning.  
+r1<-decom(x)  ##use default setup  
+r2<-decom(x,smooth="TRUE",width=3) ###you can assign different smooth width for the data  
 
-**What is the best way to ask a question or propose a new feature?
+**What is the best way to ask a question or propose a new feature?**
 
 To propose a new feature or report a bug, please open an issue on github (https://github.com/tankwin08/waveformlidar/issues). Of course, you can always write me an email (tankchow12@gmail.com).
