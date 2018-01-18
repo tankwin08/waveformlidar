@@ -1,0 +1,13 @@
+Package: waveformlidar
+Type: Package
+Title: What the Package Does (Title Case)
+Version: 0.1.0
+Author: person("Tan", "Zhou", email = "tankchow12@gmail.com",
+                  role = c("aut", "cre"))
+Maintainer: The package maintainer <tankchow12@gmail.com>
+Description: More about what it does (maybe more than one line)
+    Use four spaces when indenting paragraphs within the Description.
+License: What license is it under?
+Encoding: UTF-8
+LazyData: true
+RoxygenNote: 6.0.1.9000
