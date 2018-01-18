@@ -1,2 +1,2 @@
 # waveformlidar
-waveform LiDAR data processing and analysis
+The waveformlidar package provides  LiDAR data processing and analysis
