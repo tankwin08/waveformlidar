@@ -21,8 +21,10 @@ data(return)
 lr<-nrow(return)  
 ind<-c(1:lr)  ##create a index for each waveform  
 plot (as.numeric(return[i,]),type="l")  ##you can check the raw waveform data  
+
 ##prepare the data  
 return<-data.frame(ind,return)  
+
 x<-return[182,] ###must be a dataset including intensity with index at the beginning.  
 r1<-decom(x)  ##use default setup  
 r2<-decom(x,smooth="TRUE",width=3) ###you can assign different smooth width for the data  
