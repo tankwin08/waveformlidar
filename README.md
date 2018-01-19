@@ -3,7 +3,7 @@ The *waveformlidar* package provides functions to process waveform LiDAR data wi
 
 **Install waveformlidar**
 ---
-'''
+\\\
 The current developmental version can be downloaded from github via
 
 if (!require("devtools")) {
@@ -11,10 +11,10 @@ if (!require("devtools")) {
   install.packages("devtools")
   
 }
-
+\\\
 devtools::install_github("tankwin08/waveformlidar", dependencies = TRUE)  
 library(waveformlidar)
-'''
+
 **How to use waveformlidar**
 ---
 ##import return waveform data  
