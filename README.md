@@ -16,17 +16,24 @@ library(waveformlidar)
 ``` 
 **How to use waveformlidar**
 ---
-##import return waveform data. Here we just made one simple example of decomposing waveforms
+##import return waveform data.  
+##Here we just made one simple example of decomposing waveforms with Gaussian decomposition.  
+
 data(return)  
+
 lr<-nrow(return)  
+
 ind<-c(1:lr)  ##create a index for each waveform  
+
 plot (as.numeric(return[i,]),type="l")  ##you can check the raw waveform data  
 
 ##prepare the data  
 return<-data.frame(ind,return)  
 
 x<-return[182,] ###must be a dataset including intensity with index at the beginning.  
+
 r1<-decom(x)  ##use default setup with Gaussian decomposition
+
 r2<-decom(x,smooth="TRUE",width=3) ###you can assign different smooth width to process the data  
 
 **What is the best way to ask a question or propose a new feature?**
