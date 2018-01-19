@@ -1,6 +1,6 @@
 #' peak finding function
 #'
-#' This function allows you to find where is the peak and return a list of TRUE and FALSE
+#' This function allows you to locate where are peaks of a waveform and return a list of TRUE and FALSE
 #'    TRUE represents this location is the peak.
 #'
 #' @param series is the input a numeric vector.
@@ -8,12 +8,16 @@
 #' @return return a boolean type data corresponding to the numeric vector.
 #' @export
 #' @examples
-#' w1 is numeric values represnt an waveform.
-#' peaks(w1,3)
-#' peaks(w2,5)
+#' data(return)
+#' w1<-return[1,]
+#' #w1 is numeric values represnt an waveform.
+#' lpeak(w1,3)
+#' w2<-return[3,]
+#' lpeak(w2,5)
 
-peaks <- function(series,span=3)
+lpeak <- function(series,span=3)
 {
+  series<-as.numeric(series)
   z <- embed(series, span)
   s <- span%/%2
   v <- max.col(z, "first") == 1 + s   # take first if a tie

@@ -31,7 +31,7 @@ med.height<-function(x, smooth="TRUE",thres=0.2,width=3, tr=1){  ####return the 
   }
 
   #####get the intial parameter for the waveform, it can be assumed as the prior parameters
-  peakrecord<-peaks(x,3)#show TRUE and FALSE
+  peakrecord<-lpeak(x,3)#show TRUE and FALSE
   peaknumber<-which(peakrecord == T)#show true's position, namely time in this case
   #peaknumber,it show the peaks' corresponding time
   imax<-max(x,na.rm=T)

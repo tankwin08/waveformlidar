@@ -10,7 +10,7 @@
 #' @importFrom caTools runmean
 #' @export
 #' @examples
-#' 
+#'
 #' ##import return waveform data
 #' data(return)
 #' ###individual waveform
@@ -20,8 +20,8 @@
 #'   npeaks(x,smooth="FALSE",threshold=0.25) ###you can set up threshold to determine if peaks are correctly identified.
 #' ###if there are some columns are not intensity, you can delete before you process
 #'    y<-c(c(1,2,3),as.numeric(x))
-#'    npeaks(y,drop=c(1:3))
-#' 
+#'    npeaks(y,drop=c(1,3))
+#'
 
 
 
@@ -37,7 +37,7 @@ npeaks<-function(y,drop=c(0,0),smooth="TRUE",threshold=0.2){
     y<-runmean(y,3,"C")  ###when we identify the peaks, maybe we should not use the smooth function
   }
   #####get the intial parameter for the waveform, it can be assumed as the prior parameters
-  peakrecord<-peaks(y,3)#show TRUE and FALSE
+  peakrecord<-lpeak(y,3)#show TRUE and FALSE
   peaknumber<-which(peakrecord == T)#show true's position, namely time in this case
   #peaknumber,it show the peaks' corresponding time
   imax<-max(y,na.rm=T)

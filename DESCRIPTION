@@ -1,13 +1,36 @@
 Package: waveformlidar
 Type: Package
-Title: What the Package Does (Title Case)
-Version: 0.1.0
+Title: waveform LiDAR data processing and analysis
+Version: 1.0.0
 Author: person("Tan", "Zhou", email = "tankchow12@gmail.com",
                   role = c("aut", "cre"))
+Depends: 
+    R (>= 3.3.0)
 Maintainer: The package maintainer <tankchow12@gmail.com>
-Description: More about what it does (maybe more than one line)
-    Use four spaces when indenting paragraphs within the Description.
-License: What license is it under?
+Imports: 
+    data.table,
+    caTools,
+    minpack.lm,
+    flux,
+    raster,
+    rgdal,
+    sp,
+    rgeos,
+    sqldf,
+    splitstackshape,
+    Peaks,
+Description: The waveformlidar package provides functions to process waveform LiDAR data 
+    with decomposition or deconvolution methods. For the decomposition, multiple functions 
+    such as Gaussian, adaptive Gaussian and Weibull functions are available for directly 
+    decomposing waveforms. There are two deconvolution methods included for waveform 
+    deconvolution in this package: Richard-Lucy (RL) and Gold algorithms. In addition, 
+    there are several functions are available for extracting waveform-related variables 
+    from raw waveforms, which can be beneficial for characterizing the waveform for 
+    tree species identification, biomass estimation and vegetation characterization. 
+License: GPL (>= 2)
 Encoding: UTF-8
 LazyData: true
+URL:https://github.com/tankwin08/waveformlidar,
+BugReports: https://github.com/tankwin08/waveformlidar/issues
+Reference: 
 RoxygenNote: 6.0.1.9000

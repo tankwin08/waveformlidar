@@ -49,7 +49,7 @@ decom<-function(x,smooth="TRUE",thres=0.22,width=3,fun="G"){
   if (smooth=="TRUE"){
     y<-runmean(y,width,"C")##"fast" here cannot handle the NA in the middle
   }
-  peakrecord<-peaks(y,3)#show TRUE and FALSE
+  peakrecord<-lpeak(y,3)#show TRUE and FALSE
   peaknumber<-which(peakrecord == T)#show true's position, namely time in this case
   #peaknumber,it show the peaks' corresponding time
   imax<-max(y,na.rm=T)

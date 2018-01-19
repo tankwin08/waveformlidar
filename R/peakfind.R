@@ -10,19 +10,21 @@
 #' @return return a list contains waveform index, rough estimates of A, u, sig.
 #' @export
 #' @examples
-#' 
+#'
 #' ##import return waveform data
 #' data(return)
 #' ind<-c(1:nrow(return))
 #' return<-data.frame(ind,return)
 #' x<-return[1,] ###must be must be a dataset incluing intensity with index at the beginning.
-#' peakfind(x)
-#' 
+#' peakfind(x) ## index, estimated A, u, and sig
+#'
+#'##to get accurate estimates of A, u,g, you need to explore your dataset to optimized parameters.
+#'##generally thres affects a lot, assigning smooth to TRUE is preferable in most of cases.
 #' for the whole dataset
 #' dr<-apply(return,1,peakfind)
 #' ####to manage data and store in a data frame.
 #' rpf<-do.call("rbind",lapply(dr,"[[",1))
-#' 
+#'
 
 
 peakfind<-function(x, smooth="TRUE",thres=0.2,width=3){
@@ -35,7 +37,7 @@ peakfind<-function(x, smooth="TRUE",thres=0.2,width=3){
     y<-runmean(y,width,"C")##"fast" here cannot handle the NA in the middle
   }
 
-  peakrecord<-peaks(y,3)#show TRUE and FALSE
+  peakrecord<-lpeak(y,3)#show TRUE and FALSE
   peaknumber<-which(peakrecord == T)#show true's position, namely time in this case
   #peaknumber,it show the peaks' corresponding time
   imax<-max(y,na.rm=T)
