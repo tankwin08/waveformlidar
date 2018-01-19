@@ -16,7 +16,7 @@ library(waveformlidar)
 ``` 
 **How to use waveformlidar**
 ---
-##import return waveform data  
+##import return waveform data. Here we just made one simple example of decomposing waveforms
 data(return)  
 lr<-nrow(return)  
 ind<-c(1:lr)  ##create a index for each waveform  
