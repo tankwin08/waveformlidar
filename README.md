@@ -35,7 +35,8 @@ x<-return[182,] ###must be a dataset including intensity with index at the begin
 
 r1<-decom(x)  ##use default setup with Gaussian decomposition
 
-r2<-decom(x,smooth="TRUE",width=3) ###you can assign different smooth width to process the data  
+r2<-decom(x,smooth="TRUE",width=3) ###you can assign different smooth width to preprocess the data  
+
 ```
 **What is the best way to ask a question or propose a new feature?**
 ---
