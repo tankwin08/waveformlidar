@@ -10,10 +10,10 @@ if (!require("devtools")) {
   install.packages("devtools")  
   
 }  
-``` 
+
 devtools::install_github("tankwin08/waveformlidar", dependencies = TRUE)  
 library(waveformlidar)
-
+``` 
 **How to use waveformlidar**
 ---
 ##import return waveform data  
