@@ -1,11 +1,11 @@
-#' waveformclip: clip waveform based on shpfile or geoextent.
+#' waveformclip: clip waveforms based on shpfile or geoextent.
 #'
 #' The function allows you to select waveforms of your interest from the whole waveform dataset based on the shpfile(s) or
 #'   geoextent including xmin,xmax,ymin,ymax.
 #'
-#' @param waveform the raw waveform data.
-#' @param geo the refer;ence geolocation that corresponds to the raw waveform data which requres has the same row as the waveform data.
-#' @param shp the region of interst which tells the regions to clip, it require has the same projetct coordinate system as the geo data.
+#' @param waveform the raw waveform data with intensities only.
+#' @param geo the reference geolocation that corresponds to the raw waveform data which requires has the same row as the waveform data.
+#' @param shp the region of interst which tells the regions to clip, it require has the same projetct coordinate system (UTM is prefered) as the geo data.
 #' @param geoextent another way to clip waveform using xmin, xmax, ymin, ymax. Please note you should specify the parameter in this order. Defalut is NULL and
 #'   we prefer to use shpfile to clip waveform.
 
@@ -22,11 +22,11 @@
 #' data(sj_wave)  ###import raw return waveforms
 #' data(sj_geo)  ###import corresponding reference geolocation
 #' data(shp)  ###import shpefile
-#'
+#'##the next step is required, since everybody's georeference data maybe a bit difference, you need to adjust by yourself when you implement the function.
 #' colnames(sj_geo)[1:8]<-c("x","y","z","dx","dy","dz","or","fr") ###here at least you need to assign x and y columns at least to make the function run properly
 #'
 #' ##use shp file
-#' waveform<-sj_wave
+#' waveform<-cbind(waveformindex=1:nrow(sj_wave),sj_wave)  ##this step is required and can hep you to identify index of selected waveforms from original datasets
 #' geo<-sj_geo
 #' shp<-shp
 #' swre<-waveformclip(waveform,geo,shp)
@@ -36,10 +36,9 @@
 
 
 
-
-
 waveformclip<-function(waveform,geo,shp,geoextent=c()){
-  ll<-apply(waveform,1, wavelen)
+  waveform1<-waveform[,-1]
+  ll<-apply(waveform1,1, wavelen)
   x<-geo$x + geo$dx*(round(ll/2)-geo$fr)  ##use the middle point to represent the waveform position
   y<-geo$y + geo$dy*(round(ll/2)-geo$fr)
 

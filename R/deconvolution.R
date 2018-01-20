@@ -15,37 +15,40 @@
 #'   iterations: number of iterations (parameter L in the Gold deconvolution algorithm) between boosting operations;
 #'   repetitions number of repetitions of boosting operations. It must be greater or equal to one.So the total number of iterations is repetitions*iterations
 #'   boosting coefficient/exponent. Applies only if repetitions is greater than one. Recommended range [1..2].
-#' @param np a threshold value which determines use para1 (smaller iterations and repetitions in the deconvolution) or 
+#' @param np a threshold value which determines use para1 (smaller iterations and repetitions in the deconvolution) or
 #'          or para2 (larger iterations and repetitionsin the deconvolution). Default is 2.
 #' @return The deconvovled waveform.
 #' @import data.table
 #' @import Peaks
 #' @export
 #' @examples
-#' 
+#'
 #' data(return)
 #' data(outg)
-#' data(imp)
-#' 
+#' data(imp)  ##The impulse function is generally one for the whole study area or
+#'
 #' re<-return[1,]
 #' out<-outg[1,]
 #' imp<-imp
-#' 
+#'
 #' dr<-deconvolution(re,out,imp)
 #' dr1<-deconvolution(re,out,imp,method="RL")
 #' dr2<-deconvolution(re,out,imp,method="RL",para1=c(20,2,1.8,20,2,2))
-#' 
+#'
 #' plot(dr,type="l")
 #' lines(dr1,col="red")
 #' lines(dr2,col="blue")
 #' ###some differences can be observed when you used different parameters.
-#' In the real application, you need to find one suitable for your cases. 
+#' ##In the real application, you need to find optimized parameters suitable for your case.
+#' ## In addition, the accuracy of impulse function significantly affects results based on experiments.
+#'
+
 
 
 
 
 deconvolution<-function(re,out,imp,method =c("Gold"),np=2,normalization="TRUE",para1=c(30,2,1.8,30,2,2),para2=c(40,3,1.8,40,3,2)){
-  
+
   library.dynam('Peaks', 'Peaks', lib.loc=NULL)
   #(the above line tells R to load the dynamic library for the Peaks package, which allows Rcpp to call its functions.)
   y<-as.numeric(re)

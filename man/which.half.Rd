@@ -2,14 +2,14 @@
 % Please edit documentation in R/which.half.R
 \name{which.half}
 \alias{which.half}
-\title{which.half: calculate the position of half total energy position}
+\title{which.half: calculate the position of half total energy position of the total waveform.}
 \usage{
 which.half(x, normalization = "TRUE")
 }
 \arguments{
 \item{x}{is the waveform intensities. If you have other information, you should delete these intensites before you run this function .}
 
-\item{normalization}{is determine whether you want to normalized the waveform intensity or not. Here we used the minimum intensity to conduct normalization. Default is use the normalized data.}
+\item{normalization}{is to determine whether you want to normalized the waveform intensity or not. Here we used the minimum intensity to conduct normalization. Default is use the normalized data.}
 }
 \value{
 return the index of half total energy position of waveform.
@@ -23,6 +23,6 @@ data(return)
 x<-return[1,]
 #default
 which.half(x)
-#NOT USE normalization
-which.half(x,normalization="TRUE")
+#NOT USE normalization, the result will be a bit different
+which.half(x,normalization="FALSE")
 }

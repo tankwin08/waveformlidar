@@ -4,7 +4,7 @@
 #'
 #' @param y is the waveform intensities.
 #' @param drop is the index of waveform index we should ingore or non-intensity of waveform information.Default is c(0,0) that means use the all input data.
-#' @param smooth is tell whether you want to smooth the waveform to remove some obvious outliers. Default is TRUE.
+#' @param smooth is tell whether you want to smooth the waveform to reduce the effect of some obvious noise. Default is TRUE.
 #' @param threshold is to determine if the detected peak is the real peak whose intensity should be higher than threshold*maximum intensity. Default is 0.2.
 #' @return return the number of waveform componments.
 #' @importFrom caTools runmean

@@ -17,7 +17,7 @@ deconvolution(re, out, imp, method = c("Gold"), np = 2,
 
 \item{method}{two methods including Gold or Richardson-Lucy (RL) algorithms. method=c("Gold","RL"). Default is method=c("Gold").}
 
-\item{np}{a threshold value which determines use para1 (smaller iterations and repetitions in the deconvolution) or 
+\item{np}{a threshold value which determines use para1 (smaller iterations and repetitions in the deconvolution) or
 or para2 (larger iterations and repetitionsin the deconvolution). Default is 2.}
 
 \item{normalization}{is determine whether you want to normalized the waveform intensity or not. Here we used the minimum intensity to conduct normalization. Default is use normalization.}
@@ -42,7 +42,7 @@ The function allows you to deconvolve retrun waveform lidar data by using the co
 
 data(return)
 data(outg)
-data(imp)
+data(imp)  ##The impulse function is generally one for the whole study area or
 
 re<-return[1,]
 out<-outg[1,]
@@ -56,5 +56,7 @@ plot(dr,type="l")
 lines(dr1,col="red")
 lines(dr2,col="blue")
 ###some differences can be observed when you used different parameters.
-In the real application, you need to find one suitable for your cases. 
+##In the real application, you need to find optimized parameters suitable for your case.
+## In addition, the accuracy of impulse function significantly affects results based on experiments.
+
 }

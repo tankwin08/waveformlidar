@@ -17,7 +17,7 @@ geotransform(decomp, geo, decomindex = c(1:7), geoindex = c(1:9, 16),
 "sd" (estimated echo width of the waveform, sigma), "pise" (standard error of estimated amplitude), "tse" (standard error of estimated peak location), and "sdse" (standard error
 of estimated echo width). Default colomn number for decompostion results is c(1:7).}
 
-\item{geoindex}{this tells which colomns of geo-reference are used fordesired positions' geolocation calculation. 10 important colomns are needed to be
+\item{geoindex}{this tells which colomns of geo-reference are used for desired positions' geolocation calculation. 10 important colomns are needed to be
 assigned: "i" (index of waveform which help to find the corresponding reference data for waveform data),"orix" (reference x (Easting) position), "oriy" (reference y (Northing) position),
 "oriz" (reference z (height) position), "dx","dy", "dz" (pulse direction vector that can measure position change per nanosecond), "outref" (the outgoing pulse reference bin location
 (leading edge 50% point of the outgoing pulse)), "refbin" (first return reference bin location (leading edge 50% point of the first return)) and "outpeak" (the time of
@@ -32,21 +32,23 @@ The function allows you to convert parameters from decomposition to point cloud 
   Gold - a noveldeconvolution algorithm with optimization for waveform LiDAR processing.ISPRS Journal of Photogrammetry and Remote Sensing 129 (2017): 131-150.
   For the direct decomposition method, three kinds of position are calculated: leading edge, peak and trail edge. For the deconvolution and decomposition method,
   only the peak position is used to calculate the position. In additional, the uncertianty of the point cloud was provided based on detected peaks'
-  95% confidence interval using deterministic method for waveform decomposition.
+  95% confidence interval using deterministic method for waveform decomposition. This fucntion is suitable for NEON waveform lidar. For other kinds of dataset,
+  you need to preprocess data to the same format or have the same required information or datsets.
 }
 \examples{
 
 data(geo)
 data(decom_result)
 data(decon_result)
-
+##used part of data to show the results
 decomp<-decom_result[1:80,]
 geo<-geo[1:80] ###the index of geolocation files should include all index of decomposition results.
 deconp<-decon_result[1:80]
 
 ####for decomposition results
 geor<-geotransform(decomp,geo)  ###generally you need to specify the columns for corresponding paramters
-                                #####here we used the example from the data, so we kept it default
+                                #####here we used the example from the data, so we kept it default.
+                                ###most of us maybe just interested in xyz (px,py,pz or lowx,lowy,lowz or upx,upy,upz) and intensity(pi).
 geor1<-geotransform(decomp,decomindex=c(1:7),geoindex=c(1:9,16))
 
 ########for deconvolution and decomposition

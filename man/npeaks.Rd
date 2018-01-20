@@ -11,7 +11,7 @@ npeaks(y, drop = c(0, 0), smooth = "TRUE", threshold = 0.2)
 
 \item{drop}{is the index of waveform index we should ingore or non-intensity of waveform information.Default is c(0,0) that means use the all input data.}
 
-\item{smooth}{is tell whether you want to smooth the waveform to remove some obvious outliers. Default is TRUE.}
+\item{smooth}{is tell whether you want to smooth the waveform to reduce the effect of some obvious noise. Default is TRUE.}
 
 \item{threshold}{is to determine if the detected peak is the real peak whose intensity should be higher than threshold*maximum intensity. Default is 0.2.}
 }
@@ -32,6 +32,6 @@ data(return)
   npeaks(x,smooth="FALSE",threshold=0.25) ###you can set up threshold to determine if peaks are correctly identified.
 ###if there are some columns are not intensity, you can delete before you process
    y<-c(c(1,2,3),as.numeric(x))
-   npeaks(y,drop=c(1:3))
+   npeaks(y,drop=c(1,3))
 
 }

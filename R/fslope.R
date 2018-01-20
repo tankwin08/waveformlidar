@@ -3,7 +3,7 @@
 #' The function allows you calculate the : front slope angle (FS) and roughness of outermost canopy (ROUGH).
 #'
 #' @param x is a waveform with only intensities.
-#' @param smooth is tell whether you want to smooth the waveform to remove some obvious outliers. Default is TRUE.
+#' @param smooth is tell whether you want to smooth the waveform to reduce the effect of some obvious noise. Default is TRUE.
 #' @param thres is to determine if the detected peak is the real peak whose intensity should be higher than threshold*maximum intensity. Default is 0.22.
 #' @param width width of moving window.Default is 3, must be integer between 1 and n.This parameter ONLY work when the smooth is TRUE.
 #' @param tr the temporal resolution of waveform.Default is 1 ns. Must be integer from 1 to n.

@@ -3,16 +3,16 @@
 #' The function allows you to identify the possible ground location (index) in the waveform.
 #'
 #' @param x is the waveform intensities. If you have other information, you should delete these intensites before you run this function .
-#' @param smooth is tell whether you want to smooth the waveform to remove some obvious outliers. Default is TRUE.
+#' @param smooth is tell whether you want to smooth the waveform to reduce the effect of some obvious noise. Default is TRUE.
 #' @param thres is to determine if the detected peak is the real peak whose intensity should be higher than threshold*maximum intensity. Default is 0.22.
-#' @param width width of moving window.Default is 3, must be integer between 1 and n.This parameter ONLY work when the smooth is TRUE.
+#' @param width the width of moving window for smoothing.Default is 3, must be integer between 1 and n.This parameter ONLY work when the smooth is TRUE.
 #' @return return the index of possible ground position of waveform.
 #' @importFrom caTools runmean
 #' @export
 #' @examples
 #'
 #'data(return)
-#'x<-return[1,]
+#'x<-return[125,]
 #'#default
 #'gro(x)
 #'

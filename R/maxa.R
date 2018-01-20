@@ -3,7 +3,7 @@
 #' The function allows you to identify maximum intensity which can be used to calculate the height from waveform ending or waveform begining.
 #'
 #' @param x is the waveform intensities. If you have other information, you should delete these intensites before you run this function .
-#' @param smooth is tell whether you want to smooth the waveform to remove some obvious outliers. Default is TRUE.
+#' @param smooth is tell whether you want to smooth the waveform to reduce the effect of some obvious noise. Default is TRUE.
 #' @param thres is to determine if the detected peak is the real peak whose intensity should be higher than threshold*maximum intensity. Default is 0.2.
 #' @param width width of moving window.Default is 3, must be integer between 1 and n.This parameter ONLY work when the smooth is TRUE.
 

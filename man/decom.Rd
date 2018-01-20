@@ -2,9 +2,9 @@
 % Please edit documentation in R/decom.R
 \name{decom}
 \alias{decom}
-\title{decom: decompose waveform with different functions including Gaussian, adpative Gaussian and Weibull functions.}
+\title{decom: decompose waveform with the Gaussian function.}
 \usage{
-decom(x, smooth = "TRUE", thres = 0.22, width = 3, fun = "G")
+decom(x, smooth = "TRUE", thres = 0.22, width = 3)
 }
 \arguments{
 \item{x}{is a waveform with a index at the begining and followed with intensities.}
@@ -14,8 +14,6 @@ decom(x, smooth = "TRUE", thres = 0.22, width = 3, fun = "G")
 \item{thres}{is to determine if the detected peak is the real peak whose intensity should be higher than threshold*maximum intensity. Default is 0.22.}
 
 \item{width}{width of moving window.Default is 3, must be odd integer between 1 and n.This parameter ONLY work when the smooth is TRUE.}
-
-\item{fun}{determine which method will be used for waveform decompsotion.Default is to use Gaussian (G) function. Other two functions are adpative Gaussian (AG) and Weibull (W) functions.}
 }
 \value{
 A list contains estimates of A, u, sig after decomposition.
@@ -30,22 +28,27 @@ data(return)
 lr<-nrow(return)
 ind<-c(1:lr)
 return<-data.frame(ind,return)
-x<-return[182,] ###must be a dataset including intensity with index at the beginning.
+x<-return[1,] ###must be a dataset including intensity with index at the beginning.
 r1<-decom(x)
-r2<-decom(x,smooth="TRUE",width=3) ###you can assign different smooth width for the data
+r2<-decom(x,smooth="TRUE",width=5) ###you can assign different smooth width for the data
+###when it comes very noisy waveforms, it may give you some problems
+xx<-return[182,]
+r3<-decom(xx)  ##this one returns NULL which means the function didn't work for the complex waveform or too noisy waveform,
+               ## we should try to reprocess these unsucessful waveforms using larger width to smooth the waveforms
+r4<-decom(xx,smooth="TRUE",width=5) ##when you change to a larger width, it can work, but give you some unreasonable estimates, return NA
 
-for the whole dataset
+###original result form this decom is (you will not see it, the function filter this result and put NA for the estimation since they are not right results)
+Nonlinear regression model
+#model: y ~ A1 * exp(-(x - u1)^2/(2 * sigma1^2)) + A2 * exp(-(x - u2)^2/(2 *     sigma2^2)) + A3 * exp(-(x - u3)^2/(2 * sigma3^2))
+#data: df
+#A1      A2      A3      u1      u2      u3  sigma1  sigma2  sigma3
+#228.709 -30.883  81.869  41.640  42.131  71.680  14.613   3.522   8.073
+##A (ampilitude should be negative)
+
+r5<-decom(xx,width=10) ##this will work by smoothing the waveform
+r6<-decom(xx,thres=0.1,width=5)  ##by adjusting width and thres of real peak, you may get a reasonable results
+
+# for the whole dataset
 dr<-apply(return,1,decom)
 
-####to collect all data
-rfit<-do.call("rbind",lapply(dr,"[[",1)) ## waveform is correctly decomposed with index,some are not correct index by NA
-ga<-do.call("rbind",lapply(dr,"[[",2))   ###the original results, which can help to get more detailed results.
-pa<-do.call("rbind",lapply(dr,"[[",3))   ###useful decompostion results for next step or geolocation transformation.
-
-colnames(pa)<-c("index","pi","t","sd","pise","tse","sdse")
-
-####delete some wrong ones
-rid<-rfit[!is.na(rfit),]
-wid<-setdiff(c(1:lr),rid)  ###index of waveforms needs to be reprocessed
-rpars<-pa[!is.na(pa[,1]),]    ###useful decomposition parameters
 }

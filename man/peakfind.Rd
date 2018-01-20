@@ -9,7 +9,7 @@ peakfind(x, smooth = "TRUE", thres = 0.2, width = 3)
 \arguments{
 \item{x}{is a waveform with a index at the begining mainly to .}
 
-\item{smooth}{is tell whether you want to smooth the waveform to remove some obvious outliers. Default is TRUE.}
+\item{smooth}{is tell whether you want to smooth the waveform to reduce the effect of some obvious noise. Default is TRUE.}
 
 \item{thres}{is to determine if the detected peak is the real peak whose intensity should be higher than threshold*maximum intensity. Default is 0.2.}
 
@@ -30,8 +30,10 @@ data(return)
 ind<-c(1:nrow(return))
 return<-data.frame(ind,return)
 x<-return[1,] ###must be must be a dataset incluing intensity with index at the beginning.
-peakfind(x)
+peakfind(x) ## index, estimated A, u, and sig
 
+##to get accurate estimates of A, u,g, you need to explore your dataset to optimized parameters.
+##generally thres affects a lot, assigning smooth to TRUE is preferable in most of cases.
 for the whole dataset
 dr<-apply(return,1,peakfind)
 ####to manage data and store in a data frame.

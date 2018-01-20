@@ -13,13 +13,14 @@ wavelen(x)
 return the the number of waveform intensities or waveform length.
 }
 \description{
-The function allows you to measure the length of the waveform with intensity and exclude non-intensity.
+The function allows you to measure the length of the waveform with intensity after excluding non-intensity parts.
+Generally, we assumed the intensity of a waveform should be larger than 0.
 }
 \examples{
 
 data(return)
 y<-cbind(1:nrow(return),return)
-x<-as.numeric(return[1,])
+x<-return[1,]
 wavelen(x)
 #for x has index and intensities, we should delete non-intensities first
 yy<-y[,-1]

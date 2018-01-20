@@ -2,29 +2,33 @@
 % Please edit documentation in R/integral.R
 \name{integral}
 \alias{integral}
-\title{integral: calculate the integral or cumulative enery from vegetation and ground parts of the waveform.}
+\title{integral: calculate the integral or cumulative enery of the waveform from vegetation and ground parts.}
 \usage{
 integral(y, smooth = "TRUE", thres = 0.2, width = 3, tr = 1, dis = 20)
 }
 \arguments{
-\item{smooth}{is tell whether you want to smooth the waveform to remove some obvious outliers. Default is TRUE.}
+\item{smooth}{is tell whether you want to smooth the waveform to reduce the effect of some obvious noise. Default is TRUE.}
 
-\item{thres}{is to determine if the detected peak is the real peak whose intensity should be higher than threshold*maximum intensity. Default is 0.2.}
+\item{thres}{is to determine if the detected peak is the real peak whose intensity should be higher than threshold*maximum intensity.
+Default is 0.2.}
 
 \item{width}{width of moving window.Default is 3, must be integer between 1 and n.This parameter ONLY work when the smooth is TRUE.}
 
 \item{tr}{the temporal resolution of waveform.Default is 1 ns. Must be integer from 1 to n.}
 
-\item{dis}{the distance from last echo (ground) which determine the boundary between ground and vegetation. Default is 20 ns which equals to 3 m.
-This means the ground part signals are from identified ground location to 20 ns above and the signals of vegetation are from waveform begining to 3 m above ground.}
+\item{dis}{the distance from last echo (ground) which determine the boundary between ground and vegetation.
+Default is 20 ns which equals to 3 m (20*0.15*1).This means the ground part signals are from
+the identified ground location to 20 ns above or the signals of vegetation are from waveform begining to 3 m above ground.}
 
 \item{x}{is the waveform intensities. If you have other information, you should delete these intensites before you run this function .}
 }
 \value{
-return the integral of waveform intensity for the ground, vegetation parts, the whole waveform above ground and the integral ration betwwen vegetation and the whole waveform .
+return the integral of waveform intensity for the ground, vegetation parts, the whole waveform above ground
+       and the integral ration betwwen vegetation and the whole waveform .
 }
 \description{
-The function allows you to calculate the integral of vegetation part, ground part, sum of them and ration between vegation integral and total integral.
+The function allows you to calculate the integral of vegetation part, ground part, sum of them
+and ration between vegation integral and total integral with self defined vegetation and ground boundary.
 }
 \examples{
 
@@ -38,7 +42,7 @@ r1<-integral(x)
 r2<-integral(x,smooth="FALSE")
 
 ##you also can define the boundary between vegetation and ground by assign adjusting dis
-#if we assign 15, it means vegetation starts at 15*1*0.15 m above the last echo.
+#if we assign 15, it means vegetation starts at 2.25 (15*1*0.15) m above the last echo.
 
 r3<-integral(x,dis=15)
 # when it comes to the waveform with several peaks

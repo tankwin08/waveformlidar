@@ -1,13 +1,15 @@
-#' med.height: calculate the position and height of half energy above ground (not waveform ending).
+#' med.height: calculate the position and height of half energy above ground (not total waveform).
 #'
 #' The function allows you to identify the half total energy position which can be used to calculate the height from the ground.
+#' If you are interested in variables from the total waveform, you should use percentile function.
 #'
 #' @param x is the waveform intensities. If you have other information, you should delete these intensites before you run this function .
-#' @param smooth is tell whether you want to smooth the waveform to remove some obvious outliers. Default is TRUE.
+#' @param smooth is tell whether you want to smooth the waveform to reduce the effect of some obvious noise. Default is TRUE.
 #' @param thres is to determine if the detected peak is the real peak whose intensity should be higher than threshold*maximum intensity. Default is 0.22.
 #' @param width width of moving window.Default is 3, must be integer between 1 and n.This parameter ONLY work when the smooth is TRUE.
 #' @param tr the temporal resolution of waveform.Default is 1 ns. Must be integer from 1 to n.
-#' @return return the height of half total energy above the ground and proportion of the first half.
+#' @return return the height of half total energy above the ground and
+#'         the height proportion of the first half (from waveform begining to the half total energy position).
 #' @importFrom caTools runmean
 #' @export
 #' @examples

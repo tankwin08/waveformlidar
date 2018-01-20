@@ -7,7 +7,7 @@
 fslope(y, smooth = "TRUE", thres = 0.22, width = 5, tr = 1)
 }
 \arguments{
-\item{smooth}{is tell whether you want to smooth the waveform to remove some obvious outliers. Default is TRUE.}
+\item{smooth}{is tell whether you want to smooth the waveform to reduce the effect of some obvious noise. Default is TRUE.}
 
 \item{thres}{is to determine if the detected peak is the real peak whose intensity should be higher than threshold*maximum intensity. Default is 0.22.}
 

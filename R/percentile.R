@@ -1,10 +1,10 @@
-#' percentile: calculate the position of energy percentile in the waveform.
+#' percentile: calculate the position of energy percentile in the waveform (the total waveform).
 #'
 #' The function allows you to calculate the position of energy percentile based on the given quantile within a waveform.
 #'
 #' @param x is the waveform intensities. If you have other information, you should delete these intensites before you run this function .
 #' @param quan is the quantile of energy you are interested in. Defalut is seq(0.5,1,0.1).
-#' @param normalization is determine whether you want to normalized the waveform intensity or not. Here we used the minimum intensity for each waveform to conduct normalization. 
+#' @param normalization is determine whether you want to normalized the waveform intensity or not. Here we used the minimum intensity for each waveform to conduct normalization.
 #'                      Default is use normalization.
 #' @return return the index or position of corressponding quantile energy of waveform.
 #' @export
@@ -18,9 +18,9 @@
 #'#change the quantile
 #'qr<-seq(0.45,0.99,0.03)
 #'re1<-percentile(x,quan=qr)
-#'###normalization affacts your results
+#'###normalization affects your results
 #'re2<-percentile(x,quan=qr,normalization = "FALSE")
-#'
+#'##after you get the index, you can convert them to the height based on temporal resolution or georeference information of this waveform.
 
 
 percentile<-function(x,quan=seq(0.5,1,0.1),normalization = "TRUE"){

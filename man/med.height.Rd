@@ -2,14 +2,14 @@
 % Please edit documentation in R/med.height.R
 \name{med.height}
 \alias{med.height}
-\title{med.height: calculate the position and height of half energy above ground (not waveform ending).}
+\title{med.height: calculate the position and height of half energy above ground (not total waveform).}
 \usage{
 med.height(x, smooth = "TRUE", thres = 0.2, width = 3, tr = 1)
 }
 \arguments{
 \item{x}{is the waveform intensities. If you have other information, you should delete these intensites before you run this function .}
 
-\item{smooth}{is tell whether you want to smooth the waveform to remove some obvious outliers. Default is TRUE.}
+\item{smooth}{is tell whether you want to smooth the waveform to reduce the effect of some obvious noise. Default is TRUE.}
 
 \item{thres}{is to determine if the detected peak is the real peak whose intensity should be higher than threshold*maximum intensity. Default is 0.22.}
 
@@ -18,10 +18,12 @@ med.height(x, smooth = "TRUE", thres = 0.2, width = 3, tr = 1)
 \item{tr}{the temporal resolution of waveform.Default is 1 ns. Must be integer from 1 to n.}
 }
 \value{
-return the height of half total energy above the ground and proportion of the first half.
+return the height of half total energy above the ground and
+        the height proportion of the first half (from waveform begining to the half total energy position).
 }
 \description{
 The function allows you to identify the half total energy position which can be used to calculate the height from the ground.
+If you are interested in variables from the total waveform, you should use percentile function.
 }
 \examples{
 

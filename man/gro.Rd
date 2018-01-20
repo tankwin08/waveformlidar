@@ -7,11 +7,11 @@
 gro(y, smooth = "TRUE", thres = 0.2, width = 3)
 }
 \arguments{
-\item{smooth}{is tell whether you want to smooth the waveform to remove some obvious outliers. Default is TRUE.}
+\item{smooth}{is tell whether you want to smooth the waveform to reduce the effect of some obvious noise. Default is TRUE.}
 
 \item{thres}{is to determine if the detected peak is the real peak whose intensity should be higher than threshold*maximum intensity. Default is 0.22.}
 
-\item{width}{width of moving window.Default is 3, must be integer between 1 and n.This parameter ONLY work when the smooth is TRUE.}
+\item{width}{the width of moving window for smoothing.Default is 3, must be integer between 1 and n.This parameter ONLY work when the smooth is TRUE.}
 
 \item{x}{is the waveform intensities. If you have other information, you should delete these intensites before you run this function .}
 }
@@ -24,7 +24,7 @@ The function allows you to identify the possible ground location (index) in the 
 \examples{
 
 data(return)
-x<-return[1,]
+x<-return[125,]
 #default
 gro(x)
 

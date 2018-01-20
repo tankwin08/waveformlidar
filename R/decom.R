@@ -1,4 +1,4 @@
-#' decom: decompose waveform with different functions including Gaussian, adpative Gaussian and Weibull functions.
+#' decom: decompose waveform with the Gaussian function.
 #'
 #' The function allows you to eatimate parameters charcterizing waveforms and to pave the way for generating waveform-based point cloud.
 #'
@@ -6,11 +6,10 @@
 #' @param smooth is tell whether you want to smooth the waveform to remove some obvious outliers. Default is TRUE.
 #' @param thres is to determine if the detected peak is the real peak whose intensity should be higher than threshold*maximum intensity. Default is 0.22.
 #' @param width width of moving window.Default is 3, must be odd integer between 1 and n.This parameter ONLY work when the smooth is TRUE.
-#' @param fun determine which method will be used for waveform decompsotion.Default is to use Gaussian (G) function. Other two functions are adpative Gaussian (AG) and Weibull (W) functions.
 
 #' @return A list contains estimates of A, u, sig after decomposition.
-#' @importFrom caTools runmean
-#' @importFrom minpack.lm nlsLM
+#' @import caTools
+#' @import minpack.lm
 #' @export
 #' @examples
 #'
@@ -19,29 +18,37 @@
 #' lr<-nrow(return)
 #' ind<-c(1:lr)
 #' return<-data.frame(ind,return)
-#' x<-return[182,] ###must be a dataset including intensity with index at the beginning.
+#' x<-return[1,] ###must be a dataset including intensity with index at the beginning.
 #' r1<-decom(x)
-#' r2<-decom(x,smooth="TRUE",width=3) ###you can assign different smooth width for the data
+#' r2<-decom(x,smooth="TRUE",width=5) ###you can assign different smooth width for the data
+#' ###when it comes very noisy waveforms, it may give you some problems
+#' xx<-return[182,]
+#' r3<-decom(xx)  ##this one returns NULL which means the function didn't work for the complex waveform or too noisy waveform,
+#'                ## we should try to reprocess these unsucessful waveforms using larger width to smooth the waveforms
+#' r4<-decom(xx,smooth="TRUE",width=5) ##when you change to a larger width, it can work, but give you some unreasonable estimates, return NA
 #'
-#' for the whole dataset
+#' ###original result form this decom is (you will not see it, the function filter this result and put NA for the estimation since they are not right results)
+#' Nonlinear regression model
+#' #model: y ~ A1 * exp(-(x - u1)^2/(2 * sigma1^2)) + A2 * exp(-(x - u2)^2/(2 *     sigma2^2)) + A3 * exp(-(x - u3)^2/(2 * sigma3^2))
+#' #data: df
+#' #A1      A2      A3      u1      u2      u3  sigma1  sigma2  sigma3
+#' #228.709 -30.883  81.869  41.640  42.131  71.680  14.613   3.522   8.073
+#' ##A (ampilitude should be negative)
+#'
+#'r5<-decom(xx,width=10) ##this will work by smoothing the waveform
+#'r6<-decom(xx,thres=0.1,width=5)  ##by adjusting width and thres of real peak, you may get a reasonable results
+#'
+#' # for the whole dataset
 #' dr<-apply(return,1,decom)
 #'
-#' ####to collect all data
-#' rfit<-do.call("rbind",lapply(dr,"[[",1)) ## waveform is correctly decomposed with index,some are not correct index by NA
-#' ga<-do.call("rbind",lapply(dr,"[[",2))   ###the original results, which can help to get more detailed results.
-#' pa<-do.call("rbind",lapply(dr,"[[",3))   ###useful decompostion results for next step or geolocation transformation.
-#'
-#' colnames(pa)<-c("index","pi","t","sd","pise","tse","sdse")
-#'
-#' ####delete some wrong ones
-#' rid<-rfit[!is.na(rfit),]
-#' wid<-setdiff(c(1:lr),rid)  ###index of waveforms needs to be reprocessed
-#' rpars<-pa[!is.na(pa[,1]),]    ###useful decomposition parameters
 
 
 
-decom<-function(x,smooth="TRUE",thres=0.22,width=3,fun="G"){
-  y0<-as.numeric(x);index<-y0[1]
+
+
+decom<-function(x,smooth="TRUE",thres=0.22,width=3){
+  y0<-as.numeric(x)
+  index<-y0[1]
   y<-y0[-1]
   y[y==0]<-NA
   ###when for direct decomposition
@@ -74,26 +81,9 @@ decom<-function(x,smooth="TRUE",thres=0.22,width=3,fun="G"){
     gsd[2:z]<-diff(realind)/4
   }
 
-
-  ri<- rnorm (1,2,0.1)  ###for adaptive Gaussian function
-
-  ##for weibull function
-  wi<- rnorm (1,3,1)  ##this one can be fixed,but not sure if this will work or not
-  #we should define some start value of the nls, then can reduce the error
-  wgsd<-rnorm(z,realind,5)
-  wgu<-rnorm(z,0,3)
-  wgi<-rnorm(z,2000,500)
-
-
   # start to fit use the auto generate formula
-  if (fun=="G"){
-    init0 <- gennls(gi, gu, gsd)
-  } else if (fun=="AG") {
-    init0 <- agennls(gi, gu, gsd, ri)
-  } else {
-    init0 <- wgennls(wgi, wgu, wgsd, wi) ####we should use different prior information for the weibull function
-  }
 
+    init0 <- gennls(gi, gu, gsd)
 
   #init$formula
   #init$start
@@ -106,7 +96,7 @@ decom<-function(x,smooth="TRUE",thres=0.22,width=3,fun="G"){
     pn<-sum(result[,1]>0)
     rownum<-nrow(result);npeak<-rownum/3
     #record the shot number of not good fit
-    rightfit<-NA;ga<-matrix(NA,rownum,5);pmi<-matrix(NA,npeak,7)
+    rightfit<-NA;ga<-matrix(NA,rownum,5);#pmi<-matrix(NA,npeak,7)
     if (pn==rownum){
       rightfit<-index
       ga<-cbind(index,result)

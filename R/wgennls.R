@@ -9,7 +9,7 @@
 #' @return A formula suitable for different number of waveform componments with Weibull distribution.
 #' @export
 #' @examples
-#' 
+#'
 #' A<-c(1000,900,1500);u<-c(-3,-5,0);sig<-c(30,40,75); k<-c(3,3,3) ##these four should have the same length
 
 #' fg<-wgennls(A,u,sig,k)
@@ -22,7 +22,7 @@
 wgennls <- function(A, u, sig, k) {
   n <- seq_along(A)
   fs <- paste("y~",
-              paste(paste0("A",n,"*k/sig",n,"*((x-u",n,")/sig",n,")**(k-1)*exp(-((x-u",n,")/sig",n,")**k)"),collapse="+",sep="")
+              paste(paste0("A",n,"*k/sig",n,"*(abs(x-u",n,")/sig",n,")**(k-1)*exp(-(abs(x-u",n,")/sig",n,")**k)"),collapse="+",sep="")
   )
   names(A)<-paste0("A",seq_along(A))
   names(u)<-paste0("u",seq_along(u))

@@ -2,16 +2,16 @@
 % Please edit documentation in R/waveformclip.R
 \name{waveformclip}
 \alias{waveformclip}
-\title{waveformclip: clip waveform based on shpfile or geoextent.}
+\title{waveformclip: clip waveforms based on shpfile or geoextent.}
 \usage{
 waveformclip(waveform, geo, shp, geoextent = c())
 }
 \arguments{
-\item{waveform}{the raw waveform data.}
+\item{waveform}{the raw waveform data with intensities only.}
 
-\item{geo}{the refer;ence geolocation that corresponds to the raw waveform data which requres has the same row as the waveform data.}
+\item{geo}{the reference geolocation that corresponds to the raw waveform data which requires has the same row as the waveform data.}
 
-\item{shp}{the region of interst which tells the regions to clip, it require has the same projetct coordinate system as the geo data.}
+\item{shp}{the region of interst which tells the regions to clip, it require has the same projetct coordinate system (UTM is prefered) as the geo data.}
 
 \item{geoextent}{another way to clip waveform using xmin, xmax, ymin, ymax. Please note you should specify the parameter in this order. Defalut is NULL and
 we prefer to use shpfile to clip waveform.}
@@ -29,11 +29,11 @@ The function allows you to select waveforms of your interest from the whole wave
 data(sj_wave)  ###import raw return waveforms
 data(sj_geo)  ###import corresponding reference geolocation
 data(shp)  ###import shpefile
-
+##the next step is required, since everybody's georeference data maybe a bit difference, you need to adjust by yourself when you implement the function.
 colnames(sj_geo)[1:8]<-c("x","y","z","dx","dy","dz","or","fr") ###here at least you need to assign x and y columns at least to make the function run properly
 
 ##use shp file
-waveform<-sj_wave
+waveform<-cbind(waveformindex=1:nrow(sj_wave),sj_wave)  ##this step is required and can hep you to identify index of selected waveforms from original datasets
 geo<-sj_geo
 shp<-shp
 swre<-waveformclip(waveform,geo,shp)

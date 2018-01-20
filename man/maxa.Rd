@@ -7,7 +7,7 @@
 maxa(y, smooth = "TRUE", thres = 0.2, width = 3)
 }
 \arguments{
-\item{smooth}{is tell whether you want to smooth the waveform to remove some obvious outliers. Default is TRUE.}
+\item{smooth}{is tell whether you want to smooth the waveform to reduce the effect of some obvious noise. Default is TRUE.}
 
 \item{thres}{is to determine if the detected peak is the real peak whose intensity should be higher than threshold*maximum intensity. Default is 0.2.}
 

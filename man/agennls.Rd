@@ -19,7 +19,7 @@ agennls(A, u, sig, r)
 return a formula suitable for different number of waveform componments with adaptive Gaussian distribution.
 }
 \description{
-The function allows you to prepare the formula and start values for adaptive or generalized Gaussian decomposition.
+The function allows you to prepare the formula and start values for adaptive or generalized Gaussian decomposition using nlsLM.
 }
 \examples{
 

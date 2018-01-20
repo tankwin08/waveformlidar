@@ -2,6 +2,7 @@ Package: waveformlidar
 Type: Package
 Title: waveform LiDAR data processing and analysis
 Version: 1.0.0
+Date: 01/19/2018
 Author: person("Tan", "Zhou", email = "tankchow12@gmail.com",
                   role = c("aut", "cre"))
 Depends: 

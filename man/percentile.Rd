@@ -2,7 +2,7 @@
 % Please edit documentation in R/percentile.R
 \name{percentile}
 \alias{percentile}
-\title{percentile: calculate the position of energy percentile in the waveform.}
+\title{percentile: calculate the position of energy percentile in the waveform (the total waveform).}
 \usage{
 percentile(x, quan = seq(0.5, 1, 0.1), normalization = "TRUE")
 }
@@ -11,7 +11,7 @@ percentile(x, quan = seq(0.5, 1, 0.1), normalization = "TRUE")
 
 \item{quan}{is the quantile of energy you are interested in. Defalut is seq(0.5,1,0.1).}
 
-\item{normalization}{is determine whether you want to normalized the waveform intensity or not. Here we used the minimum intensity for each waveform to conduct normalization. 
+\item{normalization}{is determine whether you want to normalized the waveform intensity or not. Here we used the minimum intensity for each waveform to conduct normalization.
 Default is use normalization.}
 }
 \value{
@@ -30,7 +30,7 @@ percentile(x)
 #change the quantile
 qr<-seq(0.45,0.99,0.03)
 re1<-percentile(x,quan=qr)
-###normalization affacts your results
+###normalization affects your results
 re2<-percentile(x,quan=qr,normalization = "FALSE")
-
+##after you get the index, you can convert them to the height based on temporal resolution or georeference information of this waveform.
 }
