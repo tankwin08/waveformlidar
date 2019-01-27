@@ -4,16 +4,16 @@
 \alias{decom}
 \title{decom: decompose waveform with the Gaussian function.}
 \usage{
-decom(x, smooth = "TRUE", thres = 0.22, width = 3)
+decom(x, smooth = TRUE, width = 3, thres = 0.22)
 }
 \arguments{
 \item{x}{is a waveform with a index at the begining and followed with intensities.}
 
 \item{smooth}{is tell whether you want to smooth the waveform to remove some obvious outliers. Default is TRUE.}
 
-\item{thres}{is to determine if the detected peak is the real peak whose intensity should be higher than threshold*maximum intensity. Default is 0.22.}
-
 \item{width}{width of moving window.Default is 3, must be odd integer between 1 and n.This parameter ONLY work when the smooth is TRUE.}
+
+\item{thres}{is to determine if the detected peak is the real peak whose intensity should be higher than threshold*maximum intensity. Default is 0.22.}
 }
 \value{
 A list contains estimates of A, u, sig after decomposition.
@@ -25,17 +25,15 @@ The function allows you to eatimate parameters charcterizing waveforms and to pa
 
 ##import return waveform data
 data(return)
-lr<-nrow(return)
-ind<-c(1:lr)
-return<-data.frame(ind,return)
+return<-data.table(index=c(1:nrow(return)),return)
 x<-return[1,] ###must be a dataset including intensity with index at the beginning.
 r1<-decom(x)
-r2<-decom(x,smooth="TRUE",width=5) ###you can assign different smooth width for the data
+r2<-decom(x,smooth=TRUE,width=5) ###you can assign different smooth width for the data
 ###when it comes very noisy waveforms, it may give you some problems
 xx<-return[182,]
 r3<-decom(xx)  ##this one returns NULL which means the function didn't work for the complex waveform or too noisy waveform,
                ## we should try to reprocess these unsucessful waveforms using larger width to smooth the waveforms
-r4<-decom(xx,smooth="TRUE",width=5) ##when you change to a larger width, it can work, but give you some unreasonable estimates, return NA
+r4<-decom(xx,smooth=TRUE,width=5) ##when you change to a larger width, it can work, but give you some unreasonable estimates, return NA
 
 ###original result form this decom is (you will not see it, the function filter this result and put NA for the estimation since they are not right results)
 Nonlinear regression model
@@ -51,4 +49,9 @@ r6<-decom(xx,thres=0.1,width=5)  ##by adjusting width and thres of real peak, yo
 # for the whole dataset
 dr<-apply(return,1,decom)
 
+}
+\references{
+Zhou, Tan*, Sorin C. Popescu, Keith Krause, Ryan D. Sheridan, and Eric Putman, 2017. Gold-A novel deconvolution algorithm with
+  optimization for waveform LiDAR processing. ISPRS Journal of Photogrammetry and Remote Sensing 129 (2017):
+  131-150. https://doi.org/10.1016/j.isprsjprs.2017.04.021
 }

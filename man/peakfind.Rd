@@ -4,7 +4,7 @@
 \alias{peakfind}
 \title{peakfind: find peak locations, corresponding amplitude and echo width}
 \usage{
-peakfind(x, smooth = "TRUE", thres = 0.2, width = 3)
+peakfind(x, smooth = TRUE, thres = 0.2, width = 3)
 }
 \arguments{
 \item{x}{is a waveform with a index at the begining mainly to .}

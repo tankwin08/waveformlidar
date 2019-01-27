@@ -11,21 +11,24 @@
 #' @import caTools
 #' @import minpack.lm
 #' @export
+#' @references
+#'   Zhou, Tan*, Sorin C. Popescu, Keith Krause, Ryan D. Sheridan, and Eric Putman, 2017. Gold-A novel deconvolution algorithm with
+#'   optimization for waveform LiDAR processing. ISPRS Journal of Photogrammetry and Remote Sensing 129 (2017):
+#'   131-150. https://doi.org/10.1016/j.isprsjprs.2017.04.021
+#'
 #' @examples
 #'
 #' ##import return waveform data
 #' data(return)
-#' lr<-nrow(return)
-#' ind<-c(1:lr)
-#' return<-data.frame(ind,return)
+#' return<-data.table(index=c(1:nrow(return)),return)
 #' x<-return[1,] ###must be a dataset including intensity with index at the beginning.
 #' r1<-decom(x)
-#' r2<-decom(x,smooth="TRUE",width=5) ###you can assign different smooth width for the data
+#' r2<-decom(x,smooth=TRUE,width=5) ###you can assign different smooth width for the data
 #' ###when it comes very noisy waveforms, it may give you some problems
 #' xx<-return[182,]
 #' r3<-decom(xx)  ##this one returns NULL which means the function didn't work for the complex waveform or too noisy waveform,
 #'                ## we should try to reprocess these unsucessful waveforms using larger width to smooth the waveforms
-#' r4<-decom(xx,smooth="TRUE",width=5) ##when you change to a larger width, it can work, but give you some unreasonable estimates, return NA
+#' r4<-decom(xx,smooth=TRUE,width=5) ##when you change to a larger width, it can work, but give you some unreasonable estimates, return NA
 #'
 #' ###original result form this decom is (you will not see it, the function filter this result and put NA for the estimation since they are not right results)
 #' Nonlinear regression model
@@ -46,16 +49,14 @@
 
 
 
-decom<-function(x,smooth="TRUE",thres=0.22,width=3){
+decom<-function(x,smooth=TRUE,width=3,thres=0.22){
   y0<-as.numeric(x)
   index<-y0[1]
   y<-y0[-1]
   y[y==0]<-NA
   ###when for direct decomposition
   y<-y-min(y,na.rm = T)+1
-  if (smooth=="TRUE"){
-    y<-runmean(y,width,"C")##"fast" here cannot handle the NA in the middle
-  }
+  if (smooth ==TRUE)  y<-runmean(y,width,"C")##"fast" here cannot handle the NA in the middle
   peakrecord<-lpeak(y,3)#show TRUE and FALSE
   peaknumber<-which(peakrecord == T)#show true's position, namely time in this case
   #peaknumber,it show the peaks' corresponding time
@@ -69,7 +70,7 @@ decom<-function(x,smooth="TRUE",thres=0.22,width=3){
   #you must define newpeak as a list or a vector(one demision),otherwise it's just a value
   #I just assume that intensity is larger than 45 can be seen as a peak, this can be changed
 
-  #####if the peak location is too close, remove it just keep one???????
+  #####if the peak location is too close, remove it just keep one
   #not sure we really need this step
 
   ##################################initilize parameters
@@ -97,9 +98,11 @@ decom<-function(x,smooth="TRUE",thres=0.22,width=3){
     rownum<-nrow(result);npeak<-rownum/3
     #record the shot number of not good fit
     rightfit<-NA;ga<-matrix(NA,rownum,5);#pmi<-matrix(NA,npeak,7)
+    ga<-cbind(index,result)
+    pmi<-NULL
     if (pn==rownum){
       rightfit<-index
-      ga<-cbind(index,result)
+      #ga<-cbind(index,result)
       ####directly get the parameters
       ###make a matrix
       pm<-matrix(NA,npeak,6)
@@ -109,6 +112,7 @@ decom<-function(x,smooth="TRUE",thres=0.22,width=3){
       s3<-2*npeak+1;e3<-3*npeak
       pm[,3]<-result[s3:e3,1];pm[,6]<-result[s3:e3,2]
       pmi<-cbind(index,pm)
+      colnames(pmi) = c("index","A","u","sigma","A_std","u_std","sig_std")
     }
     return (list(rightfit,ga,pmi))
   }

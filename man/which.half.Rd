@@ -2,14 +2,15 @@
 % Please edit documentation in R/which.half.R
 \name{which.half}
 \alias{which.half}
-\title{which.half: calculate the position of half total energy position of the total waveform.}
+\title{which.half}
 \usage{
-which.half(x, normalization = "TRUE")
+which.half(x, rescale = TRUE)
 }
 \arguments{
-\item{x}{is the waveform intensities. If you have other information, you should delete these intensites before you run this function .}
+\item{x}{is the waveform intensities. If you have other information, you should delete these intensites before you run this function.}
 
-\item{normalization}{is to determine whether you want to normalized the waveform intensity or not. Here we used the minimum intensity to conduct normalization. Default is use the normalized data.}
+\item{rescale}{is to determine whether you want to rescale the waveform intensity or not. Here we used the minimum intensity of each waveform to conduct rescaling.
+Default is using rescaling.}
 }
 \value{
 return the index of half total energy position of waveform.
@@ -23,6 +24,9 @@ data(return)
 x<-return[1,]
 #default
 which.half(x)
-#NOT USE normalization, the result will be a bit different
-which.half(x,normalization="FALSE")
+#NOT USE rescale, the result will be a bit different
+half_pos <- which.half(x,rescale=FALSE)
+##the distnace from half position to the waveform ending is
+dis_end = (wavelen(x)-half_pos)*0.15
+dis_begin = half_pos*0.15 ##here 0.15 is the 1ns distance.
 }

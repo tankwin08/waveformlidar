@@ -83,15 +83,19 @@
 
 
 #####new function for geolocation transformation
+#geoindex=c(1:9,16)
+#colnames(geo)[geoindex]<-c("index","orix","oriy","oriz","dx","dy","dz","outref","refbin","outpeak")
+#colnames(decomp)[decomindex]<-c("index","pi","t","sd","pise","tse","sdse")
 
-geotransform<-function (decomp,geo,decomindex=c(1:7),geoindex=c(1:9,16),source="decomposition"){
+geotransform<-function (decomp,geo,source="decomposition"){
   ###1 get the right geo reference according to the data you got
-  colnames(geo)[geoindex]<-c("i","orix","oriy","oriz","dx","dy","dz","outref","refbin","outpeak")
-  colnames(decomp)[decomindex]<-c("index","pi","t","sd","pise","tse","sdse")
+  decomp<- data.table(decomp)
+  setnames(decomp,c("A","u","sigma","A_se","u_se","sigma_se"),
+            c("pi","t","sd","pise","tse","sdse"))
 
   id<-unique(decomp$index)
 
-  geosub0<-geo[geo$i %in% id,]
+  geosub0<-geo[geo$index %in% id,]
 
   ###2 create a geolocation dataframe which consistent with our decomposition data
   rindex<-table(decomp$index)

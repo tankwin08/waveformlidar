@@ -22,12 +22,13 @@
 wgennls <- function(A, u, sig, k) {
   n <- seq_along(A)
   fs <- paste("y~",
-              paste(paste0("A",n,"*k/sig",n,"*(abs(x-u",n,")/sig",n,")**(k-1)*exp(-(abs(x-u",n,")/sig",n,")**k)"),collapse="+",sep="")
+              paste(paste0("A",n,"*k/sigma",n,"*(abs(x-u",n,")/sigma",n,")**(k-1)*exp(-(abs(x-u",n,")/sigma",n,")**k)"),collapse="+",sep="")
   )
   names(A)<-paste0("A",seq_along(A))
   names(u)<-paste0("u",seq_along(u))
   names(sig)<-paste0("sigma",seq_along(sig))
   names(k)<-paste0("k",seq_along(k))
+  names(k)<-"k"
   list(
     formula=as.formula(fs),
     start=c(as.list(A), as.list(u), as.list(sig),as.list(k))

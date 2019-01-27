@@ -4,7 +4,7 @@
 \alias{decom.adaptive}
 \title{decom: decompose waveform with adaptive Gaussian function.}
 \usage{
-decom.adaptive(x, smooth = "TRUE", thres = 0.22, width = 3)
+decom.adaptive(x, smooth = TRUE, thres = 0.22, width = 3)
 }
 \arguments{
 \item{x}{is a waveform with a index at the begining and followed with intensities.}
@@ -48,6 +48,6 @@ colnames(pa3)<-c("index","pi","t","sd","ri","pise","tse","sdse","rise")
 ####delete some wrong ones
 rid<-rfit3[!is.na(rfit3),]
 wid<-setdiff(c(1:lr),rid)  ###index of waveforms needs to be reprocessed
-rpars<-pa1[!is.na(pa1[,1]),]    ###useful decomposition parameters
+rpars<-pa3[!is.na(pa3[,1]),]    ###useful decomposition parameters
 Generally using adaptive Guassian will give less NA results comparing to Gaussian function (decom).
 }

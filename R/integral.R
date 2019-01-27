@@ -1,17 +1,19 @@
-#' integral: calculate the integral or cumulative enery of the waveform from vegetation and ground parts.
+#' integral
 #'
-#' The function allows you to calculate the integral of vegetation part, ground part, sum of them
-#' and ration between vegation integral and total integral with self defined vegetation and ground boundary.
+#' The function allows you to calculate the integral of intensity from ground part, vegetation part, sum of them
+#' and ratio between vegation integral and total integral with user-defined vegetation and ground boundary.
 #'
 #' @param x is the waveform intensities. If you have other information, you should delete these intensites before you run this function .
 #' @param smooth is tell whether you want to smooth the waveform to reduce the effect of some obvious noise. Default is TRUE.
 #' @param thres is to determine if the detected peak is the real peak whose intensity should be higher than threshold*maximum intensity.
 #'        Default is 0.2.
+#' @param rescale is to determine whether you want to rescale the waveform intensity or not. Here we used the minimum intensity of each waveform to conduct rescaling.
+#'        Default is using rescaling.
 #' @param width width of moving window.Default is 3, must be integer between 1 and n.This parameter ONLY work when the smooth is TRUE.
 #' @param tr the temporal resolution of waveform.Default is 1 ns. Must be integer from 1 to n.
-#' @param dis the distance from last echo (ground) which determine the boundary between ground and vegetation.
+#' @param dis the distance from last echo (assumed ground) which determine the boundary between ground and vegetation.
 #'        Default is 20 ns which equals to 3 m (20*0.15*1).This means the ground part signals are from
-#'        the identified ground location to 20 ns above or the signals of vegetation are from waveform begining to 3 m above ground.
+#'        the assumed ground location to 20 ns above or the signals of vegetation are from waveform begining to 3 m above ground.
 #' @return return the integral of waveform intensity for the ground, vegetation parts, the whole waveform above ground
 #'        and the integral ration betwwen vegetation and the whole waveform .
 #' @import caTools
@@ -26,7 +28,7 @@
 #'r1<-integral(x)
 #'
 #'#if you didn't want to smooth,
-#'r2<-integral(x,smooth="FALSE")
+#'r2<-integral(x,smooth=FALSE)
 #'
 #'##you also can define the boundary between vegetation and ground by assign adjusting dis
 #'#if we assign 15, it means vegetation starts at 2.25 (15*1*0.15) m above the last echo.
@@ -40,13 +42,13 @@
 
 
 ##########find the maximum ampilitude above 3m above the the last echo
-integral<-function(y,smooth="TRUE",thres=0.2,width=3,tr=1,dis=20){
+integral<-function(y,smooth=TRUE,rescale=TRUE, thres=0.2,width=3,tr=1,dis=20){
   y<-as.numeric(unlist(y))
   y[y==0]<-NA
   #y<-y[-c(1:11)]
   ###when for direct decomposition
-  y<-y-min(y,na.rm = T)+1
-  if (smooth=="TRUE"){
+  if (rescale) y<-y-min(y,na.rm = T)+1
+  if (smooth==TRUE){
     y<-runmean(y,width,"C")
   }
   #####get the intial parameter for the waveform, it can be assumed as the prior parameters
@@ -74,5 +76,5 @@ integral<-function(y,smooth="TRUE",thres=0.2,width=3,tr=1,dis=20){
   vegintegral<-auc(seq_along(vegy)*tr*0.15,vegy)
   grointegral<-tintegral - vegintegral
   ratiointegral<-vegintegral/tintegral
-  return (c(grointegral,vegintegral,tintegral,ratiointegral))
+  return (c(ground_integral = grointegral,vegetation_integral = vegintegral,total_integral = tintegral,veg_to_total = ratiointegral))
 }

@@ -27,13 +27,13 @@
 #'
 
 
-peakfind<-function(x, smooth="TRUE",thres=0.2,width=3){
+peakfind<-function(x, smooth=TRUE,thres=0.2,width=3){
   y0<-as.numeric(x);index<-y0[1]
   y<-y0[-1];
   y[y==0]<-NA
   ###when for direct decomposition, you need the following two steps
   y<-y-min(y,na.rm = T)+1
-  if (smooth=="TRUE"){
+  if (smooth){
     y<-runmean(y,width,"C")##"fast" here cannot handle the NA in the middle
   }
 
@@ -54,6 +54,6 @@ peakfind<-function(x, smooth="TRUE",thres=0.2,width=3){
   if (z>1){
     wm[2:z,4]<-diff(realind)/3
   }
-
-  return(list(wm))
+  colnames(wm)<-c("index","A","u","sigma")
+  return(wm)
 }

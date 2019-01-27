@@ -4,13 +4,15 @@
 \alias{geotransform}
 \title{geotransform: convert parameter from decomposition to point cloud.}
 \usage{
-geotransform(decomp, geo, decomindex = c(1:7), geoindex = c(1:9, 16),
-  source = "decomposition")
+geotransform(decomp, geo, source = "decomposition")
 }
 \arguments{
 \item{decomp}{the parameter estimation result after decomposition.}
 
 \item{geo}{the reference geolocation that is generally coming with waveform data and provided by the data provider.}
+
+\item{source}{is determined by input data. If estimated parameters are from dcomposition, source = "decomposition". Otherwise will be deconvolution and decomposition.
+Default is decomposition.}
 
 \item{decomindex}{this tells which colomns of decomposition results are used for desired positions' geolocation calculation.
 7 important colomns are needed to be assigned: "index" (the index of waveform), "pi" (estimated amplitude,A), "t"(estimated peak location this is the most important one, u),
@@ -22,9 +24,6 @@ assigned: "i" (index of waveform which help to find the corresponding reference 
 "oriz" (reference z (height) position), "dx","dy", "dz" (pulse direction vector that can measure position change per nanosecond), "outref" (the outgoing pulse reference bin location
 (leading edge 50% point of the outgoing pulse)), "refbin" (first return reference bin location (leading edge 50% point of the first return)) and "outpeak" (the time of
 peak location for the each outgoing pulse). Default colomn number for geo-reference data is c(1:9,16).}
-
-\item{source}{is determined by input data. If estimated parameters are from dcomposition, source = "decomposition". Otherwise will be deconvolution and decomposition.
-Default is decomposition.}
 }
 \description{
 The function allows you to convert parameters from decomposition to point cloud by using georeference data (generally it should come with waveform data).

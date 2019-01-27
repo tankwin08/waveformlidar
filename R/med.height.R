@@ -1,6 +1,6 @@
-#' med.height: calculate the position and height of half energy above ground (not total waveform).
+#' med.height
 #'
-#' The function allows you to identify the half total energy position which can be used to calculate the height from the ground.
+#' The function allows you to calculate the height of half total energy above ground (not total waveform).
 #' If you are interested in variables from the total waveform, you should use percentile function.
 #'
 #' @param x is the waveform intensities. If you have other information, you should delete these intensites before you run this function .
@@ -24,11 +24,11 @@
 
 
 
-med.height<-function(x, smooth="TRUE",thres=0.2,width=3, tr=1){  ####return the half energy height for waveform beginning to ground
+med.height<-function(x, smooth=TRUE,thres=0.2,width=3, tr=1){  ####return the half energy height for waveform beginning to ground
   x<-as.numeric(unlist(x))
   x[x==0]<-NA
   x<-x-min(x,na.rm = T)+1
-  if (smooth=="TRUE"){
+  if (smooth== TRUE){
     x<-runmean(x,width,"C")
   }
 

@@ -4,14 +4,14 @@
 \alias{fslope}
 \title{fslope}
 \usage{
-fslope(y, smooth = "TRUE", thres = 0.22, width = 5, tr = 1)
+fslope(y, smooth = TRUE, thres = 0.22, width = 5, tr = 1)
 }
 \arguments{
 \item{smooth}{is tell whether you want to smooth the waveform to reduce the effect of some obvious noise. Default is TRUE.}
 
 \item{thres}{is to determine if the detected peak is the real peak whose intensity should be higher than threshold*maximum intensity. Default is 0.22.}
 
-\item{width}{width of moving window.Default is 3, must be integer between 1 and n.This parameter ONLY work when the smooth is TRUE.}
+\item{width}{width of moving window.Default is 3, must be integer between 1 and n.This parameter ONLY works when the smooth is TRUE.}
 
 \item{tr}{the temporal resolution of waveform.Default is 1 ns. Must be integer from 1 to n.}
 
@@ -22,7 +22,8 @@ return the front slope angle (FS, The angle from waveform beginning to the first
   and roughness of outermost canopy (ROUGH, the distnace from the waveform beginning to the first peak).
 }
 \description{
-The function allows you calculate the : front slope angle (FS) and roughness of outermost canopy (ROUGH).
+The function allows you calculate the (1) front slope angle (FS, the angle from waveform beginning to the first peak
+which is assumed to be canopy returns) and (2)roughness of outermost canopy (ROUGH, the distnace from the waveform beginning to the first peak).
 }
 \examples{
 

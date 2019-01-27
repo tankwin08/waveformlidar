@@ -38,19 +38,17 @@
 #' ####delete some wrong ones
 #' rid<-rfit3[!is.na(rfit3),]
 #' wid<-setdiff(c(1:lr),rid)  ###index of waveforms needs to be reprocessed
-#' rpars<-pa1[!is.na(pa1[,1]),]    ###useful decomposition parameters
+#' rpars<-pa3[!is.na(pa3[,1]),]    ###useful decomposition parameters
 #' Generally using adaptive Guassian will give less NA results comparing to Gaussian function (decom).
 
-decom.adaptive<-function(x,smooth="TRUE",thres=0.22,width=3){
+decom.adaptive<-function(x,smooth=TRUE,thres=0.22,width=3){
   y0<-as.numeric(x)
   index<-y0[1]
   y<-y0[-1]
   y[y==0]<-NA
   ###when for direct decomposition
   y<-y-min(y,na.rm = T)+1
-  if (smooth=="TRUE"){
-    y<-runmean(y,width,"C")##"fast" here cannot handle the NA in the middle
-  }
+  if (smooth==TRUE) y<-runmean(y,width,"C")##"fast" here cannot handle the NA in the middle
   peakrecord<-lpeak(y,3)#show TRUE and FALSE
   peaknumber<-which(peakrecord == T)#show true's position, namely time in this case
   #peaknumber,it show the peaks' corresponding time
@@ -133,9 +131,11 @@ decom.adaptive<-function(x,smooth="TRUE",thres=0.22,width=3){
     rownum<-nrow(result);npeak<-rownum/4
     #record the shot number of not good fit
     rightfit<-NA;ga<-matrix(NA,rownum,5);#pmi<-matrix(NA,npeak,9)
+    ga<-cbind(index,result)
+    pmi<-NULL
     if (pn==rownum){
       rightfit<-index
-      ga<-cbind(index,result)
+
       ####directly get the parameters
       ###make a matrix
       pm<-matrix(NA,npeak,8)
@@ -146,8 +146,9 @@ decom.adaptive<-function(x,smooth="TRUE",thres=0.22,width=3){
       pm[,3]<-result[s3:e3,1];pm[,7]<-result[s3:e3,2]
       s4<-3*npeak+1;e4<-4*npeak
       pm[,4]<-result[s4:e4,1];pm[,8]<-result[s4:e4,2]
-
       pmi<-cbind(index,pm)
+      colnames(pmi) = c("index","A","u","sigma","r","A_se","u_se","sigma_se","r_se")
+
     }
     return (list(rightfit,ga,pmi))
   }

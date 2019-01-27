@@ -2,23 +2,22 @@
 % Please edit documentation in R/waveformclip.R
 \name{waveformclip}
 \alias{waveformclip}
-\title{waveformclip: clip waveforms based on shpfile or geoextent.}
+\title{waveformclip: clip waveforms based on shapefile or geoextent.}
 \usage{
 waveformclip(waveform, geo, shp, geoextent = c())
 }
 \arguments{
-\item{waveform}{the raw waveform data with intensities only.}
+\item{waveform}{The raw waveform data containing intensities and index of waveform.}
 
-\item{geo}{the reference geolocation that corresponds to the raw waveform data which requires has the same row as the waveform data.}
+\item{geo}{The reference geolocation that corresponds to the raw waveform data which has the same number of rows as the waveform data.}
 
-\item{shp}{the region of interst which tells the regions to clip, it require has the same projetct coordinate system (UTM is prefered) as the geo data.}
+\item{shp}{The region of interst which tells the regions to clip, it require has the same projetct coordinate system (UTM is prefered) as the geo data.}
 
-\item{geoextent}{another way to clip waveform using xmin, xmax, ymin, ymax. Please note you should specify the parameter in this order. Defalut is NULL and
-we prefer to use shpfile to clip waveform.}
+\item{geoextent}{Another way to clip waveform using xmin, xmax, ymin, ymax. Please note you should specify the parameter in this order. Defalut is NULL.}
 }
 \value{
-For using shpfile to clip, it will return a dataframe with shpfile index and corresponding select waveforms in each sub shpfiles.
-  For the geoextent, it will return the selected waveforms in the extent.
+For using shapefile, it will return a dataframe with shapefile index (this will be useful for multipolygons) and corresponding select waveforms in each sub shapefiles.
+  For the geoextent, it will return the selected waveforms in the extent and corresponind selected index of geo data.
 }
 \description{
 The function allows you to select waveforms of your interest from the whole waveform dataset based on the shpfile(s) or

@@ -1,16 +1,15 @@
-#' waveformclip: clip waveforms based on shpfile or geoextent.
+#' waveformclip: clip waveforms based on shapefile or geoextent.
 #'
 #' The function allows you to select waveforms of your interest from the whole waveform dataset based on the shpfile(s) or
 #'   geoextent including xmin,xmax,ymin,ymax.
 #'
-#' @param waveform the raw waveform data with intensities only.
-#' @param geo the reference geolocation that corresponds to the raw waveform data which requires has the same row as the waveform data.
-#' @param shp the region of interst which tells the regions to clip, it require has the same projetct coordinate system (UTM is prefered) as the geo data.
-#' @param geoextent another way to clip waveform using xmin, xmax, ymin, ymax. Please note you should specify the parameter in this order. Defalut is NULL and
-#'   we prefer to use shpfile to clip waveform.
+#' @param waveform The raw waveform data containing intensities and index of waveform.
+#' @param geo The reference geolocation that corresponds to the raw waveform data which has the same number of rows as the waveform data.
+#' @param shp The region of interst which tells the regions to clip, it require has the same projetct coordinate system (UTM is prefered) as the geo data.
+#' @param geoextent Another way to clip waveform using xmin, xmax, ymin, ymax. Please note you should specify the parameter in this order. Defalut is NULL.
 
-#' @return For using shpfile to clip, it will return a dataframe with shpfile index and corresponding select waveforms in each sub shpfiles.
-#'   For the geoextent, it will return the selected waveforms in the extent.
+#' @return For using shapefile, it will return a dataframe with shapefile index (this will be useful for multipolygons) and corresponding select waveforms in each sub shapefiles.
+#'   For the geoextent, it will return the selected waveforms in the extent and corresponind selected index of geo data.
 #' @import raster
 #' @import data.table
 #' @import rgdal

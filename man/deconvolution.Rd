@@ -2,47 +2,55 @@
 % Please edit documentation in R/deconvolution.R
 \name{deconvolution}
 \alias{deconvolution}
-\title{deconvolution: deconvolove waveform to obtain effective target positions.}
+\title{deconvolution}
 \usage{
-deconvolution(re, out, imp, method = c("Gold"), np = 2,
-  normalization = "TRUE", para1 = c(30, 2, 1.8, 30, 2, 2), para2 = c(40,
-  3, 1.8, 40, 3, 2))
+deconvolution(re, out, imp, impout = NULL, method = c("Gold"), np = 2,
+  rescale = TRUE, small_paras = c(30, 2, 1.8, 30, 2, 1.8),
+  large_paras = c(30, 3, 1.8, 40, 3, 1.8), imp_outpars = c(20, 5, 1.8))
 }
 \arguments{
 \item{re}{is the return waveform.}
 
-\item{out}{is the outgoing waveform.}
+\item{out}{is the outgoing waveform, which should have the same number of rows.}
 
-\item{imp}{is the impulse reponse.}
+\item{imp}{is the return impulse reponse (this should come with the corresponding outgoing pluse) or the sytem impulse reponse (when the corresponding outgoing pulse
+for the impluse response is not available or the data vendors directly provide system impluse response).}
 
 \item{method}{two methods including Gold or Richardson-Lucy (RL) algorithms. method=c("Gold","RL"). Default is method=c("Gold").}
 
-\item{np}{a threshold value which determines use para1 (smaller iterations and repetitions in the deconvolution) or
-or para2 (larger iterations and repetitionsin the deconvolution). Default is 2.}
+\item{np}{is a threshold value which determines use small_paras (smaller iterations and repetitions in the deconvolution) or
+or large_paras (larger iterations and repetitionsin the deconvolution). Default is 2.}
 
-\item{normalization}{is determine whether you want to normalized the waveform intensity or not. Here we used the minimum intensity to conduct normalization. Default is use normalization.}
+\item{rescale}{is determine whether you want to rescale the waveform intensity. Generally, we used the minimum intensity to conduct rescaling. Default is to implement rescale.}
 
-\item{para1}{is the parameters including iterations, repetitions and boost for deconvolution when the number of waveform componments is less than np.}
+\item{small_paras}{is the deconvolution parameters including iterations, repetitions and boost when condcuting the system impulse and outgoing pulse deconvolution algorithms with waveform componments is less than np
+or the waveform is less complicated with few noise.}
 
-\item{para2}{is the parameters including iterations, repetitions and boost for deconvolution when the number of waveform componments is more than np.
-Generally when the waveform become more complicated, these parameters should be larger than corresponding para1.
-iterations: number of iterations (parameter L in the Gold deconvolution algorithm) between boosting operations;
+\item{large_paras}{is the deconvolution parameters including iterations, repetitions and boost for the system impulse and outgoing pulse deconvolution when the number of waveform componments is more than np.
+Generally when the waveform become more complicated, we should use larger iteration, repetitions.
+iterations: number of iterations (parameter in the Gold deconvolution algorithm) between boosting operations;
 repetitions number of repetitions of boosting operations. It must be greater or equal to one.So the total number of iterations is repetitions*iterations
-boosting coefficient/exponent. Applies only if repetitions is greater than one. Recommended range [1..2].}
+boosting coefficient/exponent. Applies only if repetitions is greater than one. Recommended range [1,2].}
+
+\item{imp_out}{is the corresponding outgoing pulse of the return impulse response. Through devonvolution of return impulse response, we can obtain
+true system impluse repsonse if it wasn't provided by the data vendor.}
+
+\item{out_impars}{is the deconvolution parameters for obtaining system impluse response using the impulse response and corresponding outgoing pulse.
+As same as the small_paras and large_parameters. This parameter is effective only when the impout is not NULL.}
 }
 \value{
 The deconvovled waveform.
 }
 \description{
-The function allows you to deconvolve retrun waveform lidar data by using the corresponding outgoing waveform and impulse response to
-  to obtain effective target positions. Two algorithms were used including Gold or Richardson-Lucy algorithms. The detailed deconvolution
-  infromation can be founded in package Peaks.
+The function allows you to deconvolve retrun waveform lidar data by using the system impulse response (it can be given by the data provider or measured with the return impulse response
+ and its corresponding outgoing pluse) and corresponding outgoing waveform to obtain effective target positions. Two algorithms including Gold or Richardson-Lucy algorithms were available.
 }
 \examples{
 
 data(return)
 data(outg)
 data(imp)  ##The impulse function is generally one for the whole study area or
+data(imp_out)
 
 re<-return[1,]
 out<-outg[1,]
@@ -59,4 +67,9 @@ lines(dr2,col="blue")
 ##In the real application, you need to find optimized parameters suitable for your case.
 ## In addition, the accuracy of impulse function significantly affects results based on experiments.
 
+}
+\references{
+Zhou, Tan*, Sorin C. Popescu, Keith Krause, Ryan D. Sheridan, and Eric Putman, 2017. Gold-A novel deconvolution algorithm with
+  optimization for waveform LiDAR processing. ISPRS Journal of Photogrammetry and Remote Sensing 129 (2017):
+  131-150. https://doi.org/10.1016/j.isprsjprs.2017.04.021
 }

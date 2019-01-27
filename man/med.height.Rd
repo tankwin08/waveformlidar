@@ -2,9 +2,9 @@
 % Please edit documentation in R/med.height.R
 \name{med.height}
 \alias{med.height}
-\title{med.height: calculate the position and height of half energy above ground (not total waveform).}
+\title{med.height}
 \usage{
-med.height(x, smooth = "TRUE", thres = 0.2, width = 3, tr = 1)
+med.height(x, smooth = TRUE, thres = 0.2, width = 3, tr = 1)
 }
 \arguments{
 \item{x}{is the waveform intensities. If you have other information, you should delete these intensites before you run this function .}
@@ -22,7 +22,7 @@ return the height of half total energy above the ground and
         the height proportion of the first half (from waveform begining to the half total energy position).
 }
 \description{
-The function allows you to identify the half total energy position which can be used to calculate the height from the ground.
+The function allows you to calculate the height of half total energy above ground (not total waveform).
 If you are interested in variables from the total waveform, you should use percentile function.
 }
 \examples{

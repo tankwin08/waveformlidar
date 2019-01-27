@@ -1,11 +1,12 @@
 #' fslope
 #'
-#' The function allows you calculate the : front slope angle (FS) and roughness of outermost canopy (ROUGH).
+#' The function allows you calculate the (1) front slope angle (FS, the angle from waveform beginning to the first peak
+#' which is assumed to be canopy returns) and (2)roughness of outermost canopy (ROUGH, the distnace from the waveform beginning to the first peak).
 #'
 #' @param x is a waveform with only intensities.
 #' @param smooth is tell whether you want to smooth the waveform to reduce the effect of some obvious noise. Default is TRUE.
 #' @param thres is to determine if the detected peak is the real peak whose intensity should be higher than threshold*maximum intensity. Default is 0.22.
-#' @param width width of moving window.Default is 3, must be integer between 1 and n.This parameter ONLY work when the smooth is TRUE.
+#' @param width width of moving window.Default is 3, must be integer between 1 and n.This parameter ONLY works when the smooth is TRUE.
 #' @param tr the temporal resolution of waveform.Default is 1 ns. Must be integer from 1 to n.
 #' @return return the front slope angle (FS, The angle from waveform beginning to the first peak which is assumed to be canopy returns)
 #'   and roughness of outermost canopy (ROUGH, the distnace from the waveform beginning to the first peak).
@@ -22,13 +23,13 @@
 #' yyr<-fslope(yy)
 
 
-fslope<-function(y,smooth="TRUE",thres=0.22,width=5,tr=1){
+fslope<-function(y,smooth=TRUE,thres=0.22,width=5,tr=1){
   y<-as.numeric(unlist(y))
   y[y==0]<-NA
   #y<-y[-c(1:11)]
   ###when for direct decomposition
   y<-y-min(y,na.rm = T)+1
-  if (smooth=="TRUE"){
+  if (smooth==TRUE){
     y<-runmean(y,width,"C")  ###when we identify the peaks, maybe we should try both smooth and non-smooth functions to determine which one is better
   }
 
