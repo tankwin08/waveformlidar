@@ -22,8 +22,8 @@ return the height of half total energy above the ground and
         the height proportion of the first half (from waveform begining to the half total energy position).
 }
 \description{
-The function allows you to calculate the height of half total energy above ground (not total waveform).
-If you are interested in variables from the total waveform, you should use percentile function.
+The function allows you to calculate the height of half total energy above ground (not total waveform) and height proportion at the half energy position.
+If you are interested in variables from the total waveform, you can use which.half or percentile.location functions.
 }
 \examples{
 
