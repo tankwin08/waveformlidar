@@ -1,4 +1,4 @@
-#' automatic generate a fromula and start values for unknown parameters for a mixture of adaptive or generalized Gaussian distribution
+#' agennls
 #'
 #' The function allows you to prepare the formula and start values for adaptive or generalized Gaussian decomposition using nlsLM.
 #'
@@ -7,12 +7,14 @@
 #' @param sig is the echo width of waveform.
 #' @param r is the rate parameter of adpative or generalized Gaussian distribution. For Gaussian distributionm, r is fixed to 2.
 #' @return return a formula suitable for different number of waveform componments with adaptive Gaussian distribution.
+#' @importFrom stats as.formula
 #' @export
 #' @examples
 #'
-#' A<-c(76,56,80);u<-c(29,40,67);sig<-c(4,3,2.5); r<-c(2,2,2) ##these four should have the same length
-
+#' ###these four should have the same length
+#' A<-c(76,56,80);u<-c(29,40,67);sig<-c(4,3,2.5); r<-c(2,2,2)
 #' fg<-agennls(A,u,sig,r)
+#'
 #' ##input formula for Gaussian decomposition
 #' fgf<-fg$formula
 #' ###start values

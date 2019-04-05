@@ -2,7 +2,7 @@
 % Please edit documentation in R/agennls.R
 \name{agennls}
 \alias{agennls}
-\title{automatic generate a fromula and start values for unknown parameters for a mixture of adaptive or generalized Gaussian distribution}
+\title{agennls}
 \usage{
 agennls(A, u, sig, r)
 }
@@ -23,8 +23,10 @@ The function allows you to prepare the formula and start values for adaptive or 
 }
 \examples{
 
-A<-c(76,56,80);u<-c(29,40,67);sig<-c(4,3,2.5); r<-c(2,2,2) ##these four should have the same length
+###these four should have the same length
+A<-c(76,56,80);u<-c(29,40,67);sig<-c(4,3,2.5); r<-c(2,2,2)
 fg<-agennls(A,u,sig,r)
+
 ##input formula for Gaussian decomposition
 fgf<-fg$formula
 ###start values

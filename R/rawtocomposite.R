@@ -23,14 +23,16 @@
 #'
 #' data(return)  ###import raw return waveforms
 #' data(geo)  ###import corresponding reference geolocation
-#' colnames(geo)[1:8]<-c("x","y","z","dx","dy","dz","or","fr")
-#' ### you should know which columns corresponding to above column names before run the hyperpointcloud when you used your own new datasets
-#' hpr<-hyperpointcloud(waveform=sj_wave,geo=sj_geo)
+#' colnames(geo)[2:9]<-c("x","y","z","dx","dy","dz","or","fr")
+#' ### you should know which columns corresponding to above column names before
+#' ### run the hyperpointcloud when you used your own new datasets.
+#'
+#' hpr<-hyperpointcloud(waveform=return,geo=geo)
 #'
 #' ##beofre run waveformvoxel, we need to create hyperpointcloud first
 #' ##this exampel we just used 100000 points to reduce processing time
-#' hypr0<-hpr[1:100000,]
-#' voxr<-waveformvoxel(hpr=hypr0,res=c(1,1,0.3))
+#'
+#' voxr<-waveformvoxel(hpc=hpr,res=c(1,1,0.3))
 #' rtc<-rawtocomposite(voxr)
 
 rawtocomposite<-function(voxr,inten_index=2){

@@ -1,4 +1,4 @@
-#' waveformvoxel: convert waveforms into voxels with self-defined voxel sizes.
+#' waveformvoxel
 #'
 #' The function allows you to project raw waveforms into 3d voxels from hyperpointcloud with self defined resolution.
 #'   For the intensity of each grid, four kinds of values were available to be used: the total number of intensity in each voxel,
@@ -19,26 +19,30 @@
 #'   \item{intensity.meani}{The mean intensity of waveforms in the voxel}
 #'   \item{intensity.totali}{The total intensity of waveforms in the voxel}
 #'   \item{...}{Percentile intensity based on the quan}
-#' @import reshape2
+#' @import data.table
+#' @import stats
 #' @export
 #' @examples
 #'
-#' data(sj_wave)  ###import raw return waveforms
-#' data(sj_geo)  ###import corresponding reference geolocation
-#' colnames(sj_geo)[1:8]<-c("x","y","z","dx","dy","dz","or","fr")
-#' ### you should know which columns corresponding to above column names before run the hyperpointcloud when you used your own new datasets
-#' hpr<-hyperpointcloud(waveform=sj_wave,geo=sj_geo)
+#' data(return)  ###import raw return waveforms
+#' data(geo)  ###import corresponding reference geolocation
+#'
+#' #' ### you should know which columns corresponding to above column names
+#' ## before run the hyperpointcloud when you used your own new datasets, this is very important step
+#' colnames(geo)[2:9]<-c("x","y","z","dx","dy","dz","or","fr")
+#'
+#' hpr<- hyperpointcloud(waveform = return,geo = geo)
 #'
 #' ##beofre run waveformvoxel, we need to create hyperpointcloud first
 #' ##this exampel we just used 100000 points to reduce processing time
-#' hypr0<-hpr[1:100000,]
-#' voxr<-waveformvoxel(hpr=hypr0,res=c(1,1,0.3))
+#'
+#' voxr<-waveformvoxel(hpc = hpr,res=c(1,1,0.3))
 #'
 waveformvoxel<-function(hpc,res=c(0.8,0.8,0.15),quan=NULL){
 
   #x<-hpr[,1];y<-hpr[,2];
   x<-unlist(hpc[,1]);y<-unlist(hpc[,2]);  ##when you read in fread, it will give you error, sicne the input will be list and this require the double
-  z<-hpc[,3];intensity<-hpc[,4]
+  z<-unlist(hpc[,3]);intensity<-unlist(hpc[,4])
   dx<-res[1];dy<-res[2];dz<-res[3]
 
   x.res<-seq(from = min(x,na.rm=T),to = max(x,na.rm=T)-0.3*dx, by=dx)

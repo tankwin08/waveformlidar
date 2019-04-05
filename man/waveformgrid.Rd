@@ -4,8 +4,8 @@
 \alias{waveformgrid}
 \title{waveformgrid}
 \usage{
-waveformgrid(hpc, waveform = NULL, geo = NULL, quan = NULL, res = c(0.8,
-  0.8), method = "HPC")
+waveformgrid(hpc, waveform = NULL, geo = NULL, quan = NULL,
+  res = c(0.8, 0.8), method = "HPC")
 }
 \arguments{
 \item{hpc}{The hyper point cloud generated from the raw waveform data with hyperpointcloud function or
@@ -46,7 +46,15 @@ The function allows you to project raw waveforms into 2d grids (can be xy, yz, a
 
 data(return)  ###import raw return waveforms
 data(geo)  ###import corresponding reference geolocation
+##if your geo data didn't the same column names as the follwoing one, you need to change it to
+#it to the same column names. One thing you need to figure out is the corresponding column numbers
 colnames(geo)[1:8]<-c("x","y","z","dx","dy","dz","or","fr")
 ###at least you should know which columns corresponding to x,y and fr before run the waveformgrid
+##using the raw data
 grid_re<-waveformgrid(waveform=return,geo=geo,res=c(0.8,0.8),method = "Other")
+
+##using the hpc object
+hpc<-hyperpointcloud(waveform=return,geo=geo)
+
+hpcgrid<-waveformgrid(hpc=hpc,res=c(1,1))
 }

@@ -7,6 +7,8 @@
 fslope(y, smooth = TRUE, thres = 0.22, width = 5, tr = 1)
 }
 \arguments{
+\item{y}{is a waveform with only intensities.}
+
 \item{smooth}{is tell whether you want to smooth the waveform to reduce the effect of some obvious noise. Default is TRUE.}
 
 \item{thres}{is to determine if the detected peak is the real peak whose intensity should be higher than threshold*maximum intensity. Default is 0.22.}
@@ -14,8 +16,6 @@ fslope(y, smooth = TRUE, thres = 0.22, width = 5, tr = 1)
 \item{width}{width of moving window.Default is 3, must be integer between 1 and n.This parameter ONLY works when the smooth is TRUE.}
 
 \item{tr}{the temporal resolution of waveform.Default is 1 ns. Must be integer from 1 to n.}
-
-\item{x}{is a waveform with only intensities.}
 }
 \value{
 return the front slope angle (FS, The angle from waveform beginning to the first peak which is assumed to be canopy returns)
@@ -28,7 +28,9 @@ which is assumed to be canopy returns) and (2)roughness of outermost canopy (ROU
 \examples{
 
 data(return)
-y<-return[1,]  ###for the one peak, this function returns not useful results. This function more related to vegetation and canopy.
+###for the one peak, this function returns not useful results.
+#This function more related to vegetation and canopy.
+y<-return[1,]
 #default
 yr<-fslope(y)
 

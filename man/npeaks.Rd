@@ -2,7 +2,7 @@
 % Please edit documentation in R/npeaks.R
 \name{npeaks}
 \alias{npeaks}
-\title{npeaks: count the number of waveform compoments}
+\title{npeaks}
 \usage{
 npeaks(y, drop = c(0, 0), smooth = TRUE, threshold = 0.2)
 }
@@ -29,7 +29,8 @@ data(return)
   x<-return[1,]
   npeaks(x)
   npeaks(x,smooth=FALSE) ##it will use the raw data to detect peaks
-  npeaks(x,smooth=FALSE,threshold=0.25) ###you can set up threshold to determine if peaks are correctly identified.
+  #you can set up threshold to determine if peaks are correctly identified.
+  npeaks(x,smooth=FALSE,threshold=0.25)
 ###if there are some columns are not intensity, you can delete before you process
    y<-c(c(1,2,3),as.numeric(x))
    npeaks(y,drop=c(1,3))

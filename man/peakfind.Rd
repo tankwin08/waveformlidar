@@ -2,7 +2,7 @@
 % Please edit documentation in R/peakfind.R
 \name{peakfind}
 \alias{peakfind}
-\title{peakfind: find peak locations, corresponding amplitude and echo width}
+\title{peakfind}
 \usage{
 peakfind(x, smooth = TRUE, thres = 0.2, width = 3)
 }
@@ -14,14 +14,12 @@ peakfind(x, smooth = TRUE, thres = 0.2, width = 3)
 \item{thres}{is to determine if the detected peak is the real peak whose intensity should be higher than threshold*maximum intensity. Default is 0.2.}
 
 \item{width}{width of moving window.Default is 3, must be integer between 1 and n. This parameter ONLY work when the smooth is TRUE.}
-
-\item{drop}{is the index of waveform index we should ingore or non-intensity of waveform information.Default is c(0,0) that means use the all input data.}
 }
 \value{
 return a list contains waveform index, rough estimates of A, u, sig.
 }
 \description{
-The function allows you to roughly know A,u,sig parameters will fit in the Gaussian decomposition.
+The function allows you to roughly estimate A,u,sig parameters will fit in the Gaussian decomposition.
 }
 \examples{
 
@@ -34,7 +32,7 @@ peakfind(x) ## index, estimated A, u, and sig
 
 ##to get accurate estimates of A, u,g, you need to explore your dataset to optimized parameters.
 ##generally thres affects a lot, assigning smooth to TRUE is preferable in most of cases.
-for the whole dataset
+#for the whole dataset
 dr<-apply(return,1,peakfind)
 ####to manage data and store in a data frame.
 rpf<-do.call("rbind",lapply(dr,"[[",1))

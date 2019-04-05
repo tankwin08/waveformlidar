@@ -1,7 +1,7 @@
 #' med.height
 #'
-#' The function allows you to calculate the height of half total energy above ground (not total waveform).
-#' If you are interested in variables from the total waveform, you should use percentile function.
+#' The function allows you to calculate the height of half total energy above ground (not total waveform) and height proportion at the half energy position.
+#' If you are interested in variables from the total waveform, you can use which.half or percentile.location functions.
 #'
 #' @param x is the waveform intensities. If you have other information, you should delete these intensites before you run this function .
 #' @param smooth is tell whether you want to smooth the waveform to reduce the effect of some obvious noise. Default is TRUE.

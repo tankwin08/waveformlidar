@@ -26,17 +26,24 @@
 #'   \item{intensity.totali or value.totali}{The total intensity of waveforms in the grid}
 #'   \item{...}{Percentile intensity based on the quan}
 #'   By assigning differnt columns as x and y, the users can project waveforms into the xy, xz, yz surfaces.
-#' @import reshape2
 #' @import data.table
+#' @import stats
 #' @export
 #' @examples
 #'
 #' data(return)  ###import raw return waveforms
 #' data(geo)  ###import corresponding reference geolocation
+#' ##if your geo data didn't the same column names as the follwoing one, you need to change it to
+#' #it to the same column names. One thing you need to figure out is the corresponding column numbers
 #' colnames(geo)[1:8]<-c("x","y","z","dx","dy","dz","or","fr")
 #' ###at least you should know which columns corresponding to x,y and fr before run the waveformgrid
-
+#' ##using the raw data
 #' grid_re<-waveformgrid(waveform=return,geo=geo,res=c(0.8,0.8),method = "Other")
+#'
+#' ##using the hpc object
+#' hpc<-hyperpointcloud(waveform=return,geo=geo)
+#'
+#' hpcgrid<-waveformgrid(hpc=hpc,res=c(1,1))
 
 
 
@@ -119,12 +126,13 @@ waveformgrid<-function(hpc,waveform=NULL,geo=NULL, quan=NULL,res=c(0.8,0.8),meth
     sns<-acns[c(3:nc,tc)] ###here we just need intensity and index
     #ind1<-c(3:nc,tc)
 
-    datm<-data[,..sns]  ###for list or data.table
-
+    #datm<-data[,..sns]  ###for list or data.table
+    datm<- data[,sns,with = FALSE]
 
     ###to get the xy geolocation
     sns1<-acns[c(1,2,tc)]
-    dat1<-data[,..sns1]
+    #dat1<-data[,..sns1]
+    dat1<- data[,sns1, with = FALSE]
     dat0<-melt(datm,id="index",na.rm=TRUE)
     ###calculate in each grid, how many intenisty has, the mean intensity, max intensity, and total intensity
     if (is.null(quan)){

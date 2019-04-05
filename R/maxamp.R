@@ -1,9 +1,9 @@
-#' max.amp
+#' maxamp
 #'
-#' The function allows you to find the maximum amplitude of waveform above the ground (not the whole waveform) if this waveform come from vegetation with more than 1 peaks. Otherwise it will 
+#' The function allows you to find the maximum amplitude of waveform above the ground (not the whole waveform) if this waveform come from vegetation with more than 1 peaks. Otherwise it will
 #' give the last peak's corresponding intensity. The identified maximum intensity can be used to calculate the height from waveform ending or waveform begining.
 #'
-#' @param x is the waveform intensities. If you have other information, you should delete these intensites before you run this function .
+#' @param y is the waveform intensities. If you have other information, you should delete these intensites before you run this function .
 #' @param smooth is tell whether you want to smooth the waveform to reduce the effect of some obvious noise. Default is TRUE.
 #' @param thres is to determine if the detected peak is the real peak whose intensity should be higher than threshold*maximum intensity. Default is 0.2.
 #' @param width width of moving window.Default is 3, must be integer between 1 and n.This parameter ONLY work when the smooth is TRUE.
@@ -14,17 +14,17 @@
 #' @examples
 #'
 #'data(return)
-#'x<-return[1,]
-#'#default
-#'maxa(x) ###for one peak waveform, it didn't make too much sense
+#'x<- return[1,]
 #'
-#'x1<-return[182,]
-#'rx1<-maxa(x1)
+#'rx<- maxamp(x)
+#'###for more complicated waveforms
+#'x1<- return[182,]
+#'rx1<- maxamp(x1)
 
 
 
 ##########find the maximum ampilitude above 3m above the the last echo
-max.amp<-function(y,smooth = TRUE,thres=0.2,width=3){
+maxamp<-function(y,smooth = TRUE,thres=0.2,width=3){
   y<-as.numeric(unlist(y))
   y[y==0]<-NA
   #y<-y[-c(1:11)]

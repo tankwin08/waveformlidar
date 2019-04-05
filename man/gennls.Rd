@@ -2,7 +2,7 @@
 % Please edit documentation in R/gennls.R
 \name{gennls}
 \alias{gennls}
-\title{automatic generate a fromula and start values for unknown parameters for a mixture of Gaussian distribution}
+\title{gennls}
 \usage{
 gennls(A, u, sig)
 }

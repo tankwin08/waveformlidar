@@ -5,9 +5,11 @@
 \title{ground.location}
 \usage{
 ground.location(y, smooth = TRUE, rescale = TRUE, thres = 0.2,
-  width = 3)
+  width = 3, top = TRUE)
 }
 \arguments{
+\item{y}{is the waveform intensities. If you have other information, you should delete these intensites before you run this function .}
+
 \item{smooth}{is tell whether you want to smooth the waveform to reduce the effect of some obvious noise. Default is TRUE.}
 
 \item{rescale}{is to determine whether you want to rescale the waveform intensity or not. Here we used the minimum intensity of each waveform to conduct rescaling.
@@ -17,7 +19,7 @@ Default is using rescaling.}
 
 \item{width}{the width of moving window for smoothing.Default is 3, must be integer between 1 and n.This parameter ONLY work when the smooth is TRUE.}
 
-\item{x}{is the waveform intensities. If you have other information, you should delete these intensites before you run this function .}
+\item{top}{is to tell whether we calculate the ground time location from the top (where waveform starts or canopy) or from the bottom (where the waveform ends). Default is from the top.}
 }
 \value{
 return the index of possible ground position of waveform.

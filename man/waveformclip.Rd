@@ -2,7 +2,7 @@
 % Please edit documentation in R/waveformclip.R
 \name{waveformclip}
 \alias{waveformclip}
-\title{waveformclip: clip waveforms based on shapefile or geoextent.}
+\title{waveformclip}
 \usage{
 waveformclip(waveform, geo, shp, geoextent = c())
 }
@@ -25,18 +25,22 @@ The function allows you to select waveforms of your interest from the whole wave
 }
 \examples{
 
-data(sj_wave)  ###import raw return waveforms
-data(sj_geo)  ###import corresponding reference geolocation
-data(shp)  ###import shpefile
-##the next step is required, since everybody's georeference data maybe a bit difference, you need to adjust by yourself when you implement the function.
-colnames(sj_geo)[1:8]<-c("x","y","z","dx","dy","dz","or","fr") ###here at least you need to assign x and y columns at least to make the function run properly
+data(return)  ###import raw return waveforms
+data(geo)  ###import corresponding reference geolocation
+data(shp_hf)  ###import shpefile
+##the next step is required, since everybody's georeference data maybe
+##a bit difference, you need to adjust by yourself when you implement the function.
+
+### you need to assign x and y columns at least to make the function run properly
+colnames(geo)[2:9]<-c("x","y","z","dx","dy","dz","or","fr")
 
 ##use shp file
-waveform<-cbind(waveformindex=1:nrow(sj_wave),sj_wave)  ##this step is required and can hep you to identify index of selected waveforms from original datasets
-geo<-sj_geo
-shp<-shp
+##this step is required. Mainly to identify index of selected waveforms from original datasets
+waveform<-cbind(waveformindex=1:nrow(return),return)
+geo<-geo
+shp<-shp_hf
 swre<-waveformclip(waveform,geo,shp)
 
 ###use geoextent
-swre1<-waveformclip(waveform,geo,geoextent=c(256830,256840,4110810,4110830))
+swre1<-waveformclip(waveform,geo,geoextent=c(731126,731128,4712678,4712698))
 }

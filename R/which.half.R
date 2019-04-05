@@ -1,6 +1,6 @@
 #' which.half
 #'
-#' The function allows you to identify the half total energy position which can be used to calculate the height from waveform ending or waveform begining.
+#' The function allows you to identify the half total energy position (time location) which can be used to calculate the height from waveform ending or waveform begining.
 #'
 #' @param x is the waveform intensities. If you have other information, you should delete these intensites before you run this function.
 #' @param rescale is to determine whether you want to rescale the waveform intensity or not. Here we used the minimum intensity of each waveform to conduct rescaling.

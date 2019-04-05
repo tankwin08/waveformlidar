@@ -2,7 +2,7 @@
 % Please edit documentation in R/waveformvoxel.R
 \name{waveformvoxel}
 \alias{waveformvoxel}
-\title{waveformvoxel: convert waveforms into voxels with self-defined voxel sizes.}
+\title{waveformvoxel}
 \usage{
 waveformvoxel(hpc, res = c(0.8, 0.8, 0.15), quan = NULL)
 }
@@ -33,15 +33,18 @@ The function allows you to project raw waveforms into 3d voxels from hyperpointc
 }
 \examples{
 
-data(sj_wave)  ###import raw return waveforms
-data(sj_geo)  ###import corresponding reference geolocation
-colnames(sj_geo)[1:8]<-c("x","y","z","dx","dy","dz","or","fr")
-### you should know which columns corresponding to above column names before run the hyperpointcloud when you used your own new datasets
-hpr<-hyperpointcloud(waveform=sj_wave,geo=sj_geo)
+data(return)  ###import raw return waveforms
+data(geo)  ###import corresponding reference geolocation
+
+#' ### you should know which columns corresponding to above column names
+## before run the hyperpointcloud when you used your own new datasets, this is very important step
+colnames(geo)[2:9]<-c("x","y","z","dx","dy","dz","or","fr")
+
+hpr<- hyperpointcloud(waveform = return,geo = geo)
 
 ##beofre run waveformvoxel, we need to create hyperpointcloud first
 ##this exampel we just used 100000 points to reduce processing time
-hypr0<-hpr[1:100000,]
-voxr<-waveformvoxel(hpr=hypr0,res=c(1,1,0.3))
+
+voxr<-waveformvoxel(hpc = hpr,res=c(1,1,0.3))
 
 }

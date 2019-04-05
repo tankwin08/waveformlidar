@@ -2,7 +2,7 @@
 % Please edit documentation in R/wgennls.R
 \name{wgennls}
 \alias{wgennls}
-\title{automatic generate a fromula and start values for unknown parameters for a mixture of Weibull distribution}
+\title{wgennls}
 \usage{
 wgennls(A, u, sig, k)
 }
@@ -23,7 +23,8 @@ The function allows you to prepare the formula and start values for the decompos
 }
 \examples{
 
-A<-c(1000,900,1500);u<-c(-3,-5,0);sig<-c(30,40,75); k<-c(3,3,3) ##these four should have the same length
+A<-c(1000,900,1500);u<-c(-3,-5,0);sig<-c(30,40,75); k<-c(3,3,3)
+##these four should have the same length
 fg<-wgennls(A,u,sig,k)
 ##input formula for Gaussian decomposition
 fgf<-fg$formula

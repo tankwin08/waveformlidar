@@ -1,4 +1,4 @@
-#' automatic generate a fromula and start values for unknown parameters for a mixture of Weibull distribution
+#' wgennls
 #'
 #' The function allows you to prepare the formula and start values for the decomposition using Weibull functions.
 #'
@@ -10,7 +10,8 @@
 #' @export
 #' @examples
 #'
-#' A<-c(1000,900,1500);u<-c(-3,-5,0);sig<-c(30,40,75); k<-c(3,3,3) ##these four should have the same length
+#' A<-c(1000,900,1500);u<-c(-3,-5,0);sig<-c(30,40,75); k<-c(3,3,3)
+#' ##these four should have the same length
 
 #' fg<-wgennls(A,u,sig,k)
 #' ##input formula for Gaussian decomposition

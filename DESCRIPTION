@@ -1,9 +1,9 @@
 Package: waveformlidar
 Type: Package
-Title: waveform LiDAR data processing and analysis
+Title: Waveform LiDAR Data Processing and Analysis
 Version: 1.1.0
-Date: 01/26/2019
-Author: person("Tan", "Zhou", email = "tankchow12@gmail.com",
+Date: 2019-04-04
+Authors@R: person("Tan", "Zhou", email = "tankchow12@gmail.com",
                   role = c("aut", "cre"))
 Depends: 
     R (>= 3.3.0)
@@ -19,7 +19,8 @@ Imports:
     rgeos (>= 0.3.8),
     sqldf,
     splitstackshape,
-    Peaks,
+    rPeaks,
+	reshape2
 Description: The waveformlidar package provides functions to process waveform LiDAR data 
     with decomposition or deconvolution methods. For the decomposition, multiple functions 
     such as Gaussian, adaptive Gaussian and Weibull functions are available for directly 
@@ -31,8 +32,6 @@ Description: The waveformlidar package provides functions to process waveform Li
 License: GPL (>= 2)
 Encoding: UTF-8
 LazyData: true
-URL:https://github.com/tankwin08/waveformlidar,
+URL: https://github.com/tankwin08/waveformlidar,
 BugReports: https://github.com/tankwin08/waveformlidar/issues
-Reference: Zhou, Tan*, Sorin C. Popescu, A. Michelle Lawing, Marian Eriksson, Bogdan M. Strimbu, and Paul C. Bürkner. Bayesian and Classical Machine Learning Methods: A Comparison for Tree Species Classification with LiDAR Waveform Signatures. Remote Sensing 10, no. 1 (2017): 39. doi:10.3390/rs10010039
-           Zhou, Tan*, Sorin C. Popescu, Keith Krause, Ryan D. Sheridan, and Eric Putman, 2017. Gold–A novel deconvolution algorithm with optimization for waveform LiDAR processing. ISPRS Journal of Photogrammetry and Remote Sensing 129 (2017): 131-150. https://doi.org/10.1016/j.isprsjprs.2017.04.021
-RoxygenNote: 6.0.1.9000
+RoxygenNote: 6.1.1

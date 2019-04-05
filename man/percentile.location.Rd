@@ -15,14 +15,15 @@ percentile.location(x, quan = seq(0.5, 1, 0.1), rescale = TRUE,
 \item{rescale}{is to determine whether you want to rescale the waveform intensity or not. Here we used the minimum intensity of each waveform to conduct rescaling.
 Default is using rescaling.}
 
-\item{top}{is to tell whether we calculate the percentile from the top (where waveform starts or canopy) or from the bottom (where the waveform ends).}
+\item{top}{is to tell whether we calculate the percentile from the top (where waveform starts or canopy) or from the bottom (where the waveform ends). Default is from the top.}
 }
 \value{
 return the index or position of corressponding quantile energy of waveform starting from the top.
 }
 \description{
 The function allows you to calculate the time location position of energy percentile based on the given quantile within a waveform.
-With this information, you can calculate the energy percentile heights. Here, the percentile will be calculated from the top by defalut.
+With this information. In addition, you can calculate the energy percentile heights.
+Here, the percentile will be calculated from the top (more likely the canopy part) by defalut.
 }
 \examples{
 
@@ -36,5 +37,6 @@ qr<-seq(0.45,0.99,0.05)
 re1<-percentile.location(x,quan=qr)
 ###rescale affects your results
 re2<-percentile.location(x,quan=qr,rescale = FALSE)
-##after you get the index, you can convert them to the height based on temporal resolution or georeference information of this waveform.
+##after you get the index, you can convert them to the height
+#based on temporal resolution or georeference information of this waveform.
 }

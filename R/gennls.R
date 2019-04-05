@@ -1,4 +1,4 @@
-#' automatic generate a fromula and start values for unknown parameters for a mixture of Gaussian distribution
+#' gennls
 #'
 #' The function allows you to prepare the formula and start values for Gaussian decomposition
 #'
@@ -9,7 +9,7 @@
 #'         needs to be determined by the users. Generally you need to use peakfind function to roughly estimate the number of waveform componments
 #' @export
 #' @examples
-#' 
+#'
 #' A<-c(76,56,80);u<-c(29,40,67);sig<-c(4,3,2.5) ##these three should have the same length
 #' fg<-gennls(A,u,sig)
 #' ##input formula for Gaussian decomposition

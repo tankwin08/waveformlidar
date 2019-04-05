@@ -20,12 +20,12 @@
 #'   iterations: number of iterations (parameter in the Gold deconvolution algorithm) between boosting operations;
 #'   repetitions number of repetitions of boosting operations. It must be greater or equal to one.So the total number of iterations is repetitions*iterations
 #'   boosting coefficient/exponent. Applies only if repetitions is greater than one. Recommended range [1,2].
-#' @param out_impars is the deconvolution parameters for obtaining system impluse response using the impulse response and corresponding outgoing pulse.
-#' As same as the small_paras and large_parameters. This parameter is effective only when the impout is not NULL.
+#' @param imp_out_pars is the deconvolution parameters for obtaining system impluse response using the impulse response and corresponding outgoing pulse.
+#' As same as the small_paras and large_parameters. This parameter is effective only when the imp_out is not NULL.
 
 #' @return The deconvovled waveform.
 #' @import data.table
-#' @import Peaks
+#' @import rPeaks
 #' @export
 #' @references
 #'   Zhou, Tan*, Sorin C. Popescu, Keith Krause, Ryan D. Sheridan, and Eric Putman, 2017. Gold-A novel deconvolution algorithm with
@@ -45,7 +45,7 @@
 #'
 #' dr<-deconvolution(re,out,imp)
 #' dr1<-deconvolution(re,out,imp,method="RL")
-#' dr2<-deconvolution(re,out,imp,method="RL",para1=c(20,2,1.8,20,2,2))
+#' dr2<-deconvolution(re,out,imp,method="RL",small_paras=c(20,2,1.8,20,2,2))
 #'
 #' plot(dr,type="l")
 #' lines(dr1,col="red")
@@ -56,14 +56,11 @@
 #'
 
 
-
-
-
-deconvolution<-function(re,out,imp,impout=NULL,method =c("Gold"),np=2,rescale=TRUE,
+deconvolution<-function(re,out,imp,imp_out=NULL,method =c("Gold"),np=2,rescale=TRUE,
                         small_paras=c(30,2,1.8,30,2,1.8),large_paras=c(30,3,1.8,40,3,1.8),
-                        imp_outpars=c(20,5,1.8)){
+                        imp_out_pars=c(20,5,1.8)){
 
-  library.dynam('Peaks', 'Peaks', lib.loc=NULL)
+  #library.dynam('Peaks', 'Peaks', lib.loc=NULL)
   #(the above line tells R to load the dynamic library for the Peaks package, which allows Rcpp to call its functions.)
   y<-as.numeric(re)
   x<-as.numeric(out)
@@ -96,21 +93,21 @@ deconvolution<-function(re,out,imp,impout=NULL,method =c("Gold"),np=2,rescale=TR
     irb2<-large_paras[4:6]
   }
 
-  if (is.null(impout) == FALSE) {
-    impout[impout==0]<-NA
-    impout<-impout - min(impout,na.rm=TRUE)
-    impout[is.na(impout)]<-0
-    imre<-SpectrumDeconvolution(imp,impout,iterations=imp_outpars[1],repetitions=imp_outpars[2],boost=imp_outpars[3],method=method)
-    imre<-round(imre,1)  #########################################very important step
+  if (is.null(imp_out) == FALSE) {
+    imp_out[imp_out==0]<-NA
+    imp_out<-imp_out - min(imp_out,na.rm=TRUE)
+    imp_out[is.na(imp_out)]<-0
+    imre<-rPeaks::SpectrumDeconvolution(imp,imp_out,iterations=imp_out_pars[1],repetitions=imp_out_pars[2],boost=imp_out_pars[3],method=method)
+    imre<-round(imre,2)  #########################################very important step
 
-    y1<-SpectrumDeconvolution(y,imre,iterations=irb1[1],repetitions=irb1[1],boost=irb1[3],method=method)
+    y1<-rPeaks::SpectrumDeconvolution(y,imre,iterations=irb1[1],repetitions=irb1[1],boost=irb1[3],method=method)
   } else {
     ###parameter are import for geting the information
-    y1<-SpectrumDeconvolution(y,imp,iterations=irb1[1],repetitions=irb1[2],boost=irb1[3],method=method)
+    y1<-rPeaks::SpectrumDeconvolution(y,imp,iterations=irb1[1],repetitions=irb1[2],boost=irb1[3],method=method)
   }
     ###parameter are import for geting the information
     #y1<-SpectrumDeconvolution(y,im,iterations=irb1[1],repetitions=irb1[2],boost=irb1[3],method=method)
-    de<-SpectrumDeconvolution(y1,x,iterations=irb2[1],repetitions=irb2[2],boost=irb2[3],method=method)
+    de<-rPeaks::SpectrumDeconvolution(y1,x,iterations=irb2[1],repetitions=irb2[2],boost=irb2[3],method=method)
 
   return(round(de,2))
 }

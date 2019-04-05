@@ -3,7 +3,7 @@
 #' The function allows you to calculate the integral of intensity from ground part, vegetation part, sum of them
 #' and ratio between vegation integral and total integral with user-defined vegetation and ground boundary.
 #'
-#' @param x is the waveform intensities. If you have other information, you should delete these intensites before you run this function .
+#' @param y is the waveform intensities. If you have other information, you should delete these intensites before you run this function .
 #' @param smooth is tell whether you want to smooth the waveform to reduce the effect of some obvious noise. Default is TRUE.
 #' @param thres is to determine if the detected peak is the real peak whose intensity should be higher than threshold*maximum intensity.
 #'        Default is 0.2.
@@ -23,8 +23,12 @@
 #'
 #'data(return)
 #'x<-return[1,]
-#'#if we kept everything as default, before you use this function, you need to know the temporal resolution of waveform, default is 1 ns.
-#'##for one peak, it generaly not make too much sense since generally only ground was present in this case.
+#'##if we kept everything as default, before you use this function, you need to know the
+#'## temporal resolution of waveform, default is 1 ns.
+#'
+#'##for one peak, it generaly not make too much sense since generally only ground was
+#'##present in this case.
+#'
 #'r1<-integral(x)
 #'
 #'#if you didn't want to smooth,

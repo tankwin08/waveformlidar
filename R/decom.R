@@ -1,4 +1,4 @@
-#' decom: decompose waveform with the Gaussian function.
+#' decom
 #'
 #' The function allows you to eatimate parameters charcterizing waveforms and to pave the way for generating waveform-based point cloud.
 #'
@@ -10,6 +10,7 @@
 #' @return A list contains estimates of A, u, sig after decomposition.
 #' @import caTools
 #' @import minpack.lm
+#' @importFrom stats na.omit
 #' @export
 #' @references
 #'   Zhou, Tan*, Sorin C. Popescu, Keith Krause, Ryan D. Sheridan, and Eric Putman, 2017. Gold-A novel deconvolution algorithm with
@@ -19,6 +20,7 @@
 #' @examples
 #'
 #' ##import return waveform data
+#' library(data.table)
 #' data(return)
 #' return<-data.table(index=c(1:nrow(return)),return)
 #' x<-return[1,] ###must be a dataset including intensity with index at the beginning.
@@ -26,27 +28,29 @@
 #' r2<-decom(x,smooth=TRUE,width=5) ###you can assign different smooth width for the data
 #' ###when it comes very noisy waveforms, it may give you some problems
 #' xx<-return[182,]
-#' r3<-decom(xx)  ##this one returns NULL which means the function didn't work for the complex waveform or too noisy waveform,
-#'                ## we should try to reprocess these unsucessful waveforms using larger width to smooth the waveforms
-#' r4<-decom(xx,smooth=TRUE,width=5) ##when you change to a larger width, it can work, but give you some unreasonable estimates, return NA
+#' r3<-decom(xx)  ##this one returns NULL which means the function didn't work for the
+#'                ##complex waveform or too noisy waveform,we should try to reprocess
+#'                ##these unsucessful waveforms using larger width to smooth the waveforms.
+#' r4<-decom(xx,smooth=TRUE,width=5) ##when you change to a larger width, it can work,
+#'                                   #but give you some unreasonable estimates, return NA
 #'
-#' ###original result form this decom is (you will not see it, the function filter this result and put NA for the estimation since they are not right results)
-#' Nonlinear regression model
-#' #model: y ~ A1 * exp(-(x - u1)^2/(2 * sigma1^2)) + A2 * exp(-(x - u2)^2/(2 *     sigma2^2)) + A3 * exp(-(x - u3)^2/(2 * sigma3^2))
+#' ###original result from this decom is (you will not see it, the function filter this result
+#' ###and put NA for the estimation since they maybe not right results)
+#' #Nonlinear regression model
+#' #model:y~A1*exp(-(x-u1)^2/(2*sigma1^2))+A2*exp(-(x-u2)^2/(2*sigma2^2)) n\
+#' #+A3*exp(-(x-u3)^2/(2*sigma3^2))
 #' #data: df
 #' #A1      A2      A3      u1      u2      u3  sigma1  sigma2  sigma3
 #' #228.709 -30.883  81.869  41.640  42.131  71.680  14.613   3.522   8.073
-#' ##A (ampilitude should be negative)
+#' ##A (ampilitude should not be negative)
 #'
-#'r5<-decom(xx,width=10) ##this will work by smoothing the waveform
-#'r6<-decom(xx,thres=0.1,width=5)  ##by adjusting width and thres of real peak, you may get a reasonable results
+#' r5<-decom(xx,width=10) ##this will work by smoothing the waveform
+#' r6<-decom(xx,thres=0.1,width=5)  ##by adjusting width and thres of real peak, you may
+#'                                  ##get a reasonable results
 #'
 #' # for the whole dataset
 #' dr<-apply(return,1,decom)
 #'
-
-
-
 
 
 decom<-function(x,smooth=TRUE,width=3,thres=0.22){

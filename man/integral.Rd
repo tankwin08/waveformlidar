@@ -8,6 +8,8 @@ integral(y, smooth = TRUE, rescale = TRUE, thres = 0.2, width = 3,
   tr = 1, dis = 20)
 }
 \arguments{
+\item{y}{is the waveform intensities. If you have other information, you should delete these intensites before you run this function .}
+
 \item{smooth}{is tell whether you want to smooth the waveform to reduce the effect of some obvious noise. Default is TRUE.}
 
 \item{rescale}{is to determine whether you want to rescale the waveform intensity or not. Here we used the minimum intensity of each waveform to conduct rescaling.
@@ -23,8 +25,6 @@ Default is 0.2.}
 \item{dis}{the distance from last echo (assumed ground) which determine the boundary between ground and vegetation.
 Default is 20 ns which equals to 3 m (20*0.15*1).This means the ground part signals are from
 the assumed ground location to 20 ns above or the signals of vegetation are from waveform begining to 3 m above ground.}
-
-\item{x}{is the waveform intensities. If you have other information, you should delete these intensites before you run this function .}
 }
 \value{
 return the integral of waveform intensity for the ground, vegetation parts, the whole waveform above ground
@@ -38,8 +38,12 @@ and ratio between vegation integral and total integral with user-defined vegetat
 
 data(return)
 x<-return[1,]
-#if we kept everything as default, before you use this function, you need to know the temporal resolution of waveform, default is 1 ns.
-##for one peak, it generaly not make too much sense since generally only ground was present in this case.
+##if we kept everything as default, before you use this function, you need to know the
+## temporal resolution of waveform, default is 1 ns.
+
+##for one peak, it generaly not make too much sense since generally only ground was
+##present in this case.
+
 r1<-integral(x)
 
 #if you didn't want to smooth,

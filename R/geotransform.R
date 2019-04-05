@@ -1,4 +1,4 @@
-#' geotransform: convert parameter from decomposition to point cloud.
+#' geotransform
 #'
 #' The function allows you to convert parameters from decomposition to point cloud by using georeference data (generally it should come with waveform data).
 #'   Detailed description of how to calculate can refer to Zhou, T., Popescu, S.C., Krause, K., Sheridan, R.D., Putman, E., 2017.
@@ -8,17 +8,8 @@
 #'   95% confidence interval using deterministic method for waveform decomposition. This fucntion is suitable for NEON waveform lidar. For other kinds of dataset,
 #'   you need to preprocess data to the same format or have the same required information or datsets.
 #'
-#' @param decomp the parameter estimation result after decomposition.
+#' @param decomp the object from the decomposition or after deconvolution and decomposition.
 #' @param geo the reference geolocation that is generally coming with waveform data and provided by the data provider.
-#' @param decomindex this tells which colomns of decomposition results are used for desired positions' geolocation calculation.
-#'   7 important colomns are needed to be assigned: "index" (the index of waveform), "pi" (estimated amplitude,A), "t"(estimated peak location this is the most important one, u),
-#'   "sd" (estimated echo width of the waveform, sigma), "pise" (standard error of estimated amplitude), "tse" (standard error of estimated peak location), and "sdse" (standard error
-#'   of estimated echo width). Default colomn number for decompostion results is c(1:7).
-#' @param geoindex this tells which colomns of geo-reference are used for desired positions' geolocation calculation. 10 important colomns are needed to be
-#'   assigned: "i" (index of waveform which help to find the corresponding reference data for waveform data),"orix" (reference x (Easting) position), "oriy" (reference y (Northing) position),
-#'   "oriz" (reference z (height) position), "dx","dy", "dz" (pulse direction vector that can measure position change per nanosecond), "outref" (the outgoing pulse reference bin location
-#'   (leading edge 50% point of the outgoing pulse)), "refbin" (first return reference bin location (leading edge 50% point of the first return)) and "outpeak" (the time of
-#'   peak location for the each outgoing pulse). Default colomn number for geo-reference data is c(1:9,16).
 #' @param source is determined by input data. If estimated parameters are from dcomposition, source = "decomposition". Otherwise will be deconvolution and decomposition.
 #'   Default is decomposition.
 
@@ -57,6 +48,7 @@
 #' @import data.table
 #' @import splitstackshape
 #' @import sqldf
+#' @importFrom stats ave
 #' @export
 #' @examples
 #'
@@ -65,33 +57,28 @@
 #' data(decon_result)
 #'##used part of data to show the results
 #' decomp<-decom_result[1:80,]
-#' geo<-geo[1:80] ###the index of geolocation files should include all index of decomposition results.
+#' geo<-geo[1:80]
 #' deconp<-decon_result[1:80]
 #'
+#' ##the follwoing steps are reuired to conduct the geotransformation,
+#' ##we need assign exactly same column names
+#' geoindex=c(1:9,16)
+#' colnames(geo)[geoindex]<-c("index","orix","oriy","oriz","dx","dy","dz","outref","refbin","outpeak")
 #' ####for decomposition results
-#' geor<-geotransform(decomp,geo)  ###generally you need to specify the columns for corresponding paramters
-#'                                 #####here we used the example from the data, so we kept it default.
-#'                                 ###most of us maybe just interested in xyz (px,py,pz or lowx,lowy,lowz or upx,upy,upz) and intensity(pi).
-#' geor1<-geotransform(decomp,decomindex=c(1:7),geoindex=c(1:9,16))
+#'
+#' geor<-geotransform(decomp,geo)
 #'
 #' ########for deconvolution and decomposition
 #' decongeo<-geotransform(decomp=deconp,geo,source="deconvolution")
 #'
-#' ##the columns for deconvolution and decomposition should be different as we have stated in the description.
 
 
-
-
-#####new function for geolocation transformation
-#geoindex=c(1:9,16)
-#colnames(geo)[geoindex]<-c("index","orix","oriy","oriz","dx","dy","dz","outref","refbin","outpeak")
-#colnames(decomp)[decomindex]<-c("index","pi","t","sd","pise","tse","sdse")
 
 geotransform<-function (decomp,geo,source="decomposition"){
   ###1 get the right geo reference according to the data you got
   decomp<- data.table(decomp)
-  setnames(decomp,c("A","u","sigma","A_se","u_se","sigma_se"),
-            c("pi","t","sd","pise","tse","sdse"))
+  # setnames(decomp,c("A","u","sigma","A_se","u_se","sigma_se"),
+  #           c("pi","t","sd","pise","tse","sdse"))
 
   id<-unique(decomp$index)
 
@@ -116,7 +103,7 @@ geotransform<-function (decomp,geo,source="decomposition"){
 
   ####3 find corresponding decomposition parameters file
   nr<-nrow(decomp)
-  peak<-decomp$t;sd<-decomp$sd;tse<-decomp$tse
+  peak<-decomp$u;sd<-decomp$sigma;tse<-decomp$u_std
   low<-peak-sd*sqrt(2*log(2))
   up<-peak+sd*sqrt(2*log(2))
 
@@ -127,7 +114,7 @@ geotransform<-function (decomp,geo,source="decomposition"){
   #################to calculate the peak, leading and trail edge position
   if (source=="decomposition"){
     sgeo<-matrix(NA,nr,29)
-    sgeo[,1:7]<-cbind(decomp$index,decomp$pi,decomp$t,decomp$sd,decomp$pise,decomp$tse,decomp$sdse)
+    sgeo[,1:7]<-cbind(decomp$index,decomp$A,decomp$u,decomp$sigma,decomp$A_std,decomp$u_std,decomp$sig_std)
     sgeo[,8]<-(peak-refbin)*dx+orix
     sgeo[,9]<-(peak-refbin)*dy+oriy
     sgeo[,10]<-(peak-refbin)*dz+oriz

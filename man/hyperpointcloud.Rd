@@ -27,8 +27,9 @@ The function allows you to convert every waveform intensities into points which 
 
 data(return)  ###import raw return waveforms
 data(geo)  ###import corresponding reference geolocation
-geo$index<-NULL
-colnames(geo)[1:8]<-c("x","y","z","dx","dy","dz","or","fr")
-### you should know which columns corresponding to above column names before run the hyperpointcloud when you used your own new datasets
-hpr<-hyperpointcloud(waveform=return,geo=geo)
+geo$index<- NULL
+colnames(geo)[1:8]<- c("x","y","z","dx","dy","dz","or","fr")
+### you should know which columns corresponding to above column names
+### before run the hyperpointcloud when you used your own new datasets
+hpr<- hyperpointcloud (waveform = return,geo = geo)
 }

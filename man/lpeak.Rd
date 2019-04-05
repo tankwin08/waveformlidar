@@ -2,7 +2,7 @@
 % Please edit documentation in R/lpeak.R
 \name{lpeak}
 \alias{lpeak}
-\title{peak finding function}
+\title{lpeak}
 \usage{
 lpeak(series, span = 3)
 }

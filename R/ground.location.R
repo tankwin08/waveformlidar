@@ -2,12 +2,13 @@
 #'
 #' The function allows you to identify the possible ground location (time index) in the waveform. Generally, we assume the last echo or peak corresponding to the ground.
 #'
-#' @param x is the waveform intensities. If you have other information, you should delete these intensites before you run this function .
+#' @param y is the waveform intensities. If you have other information, you should delete these intensites before you run this function .
 #' @param smooth is tell whether you want to smooth the waveform to reduce the effect of some obvious noise. Default is TRUE.
 #' @param rescale is to determine whether you want to rescale the waveform intensity or not. Here we used the minimum intensity of each waveform to conduct rescaling.
 #'        Default is using rescaling.
 #' @param thres is to determine if the detected peak is the real peak. The real peak's intensity should be higher than threshold*maximum intensity. Default is 0.22.
 #' @param width the width of moving window for smoothing.Default is 3, must be integer between 1 and n.This parameter ONLY work when the smooth is TRUE.
+#' @param top is to tell whether we calculate the ground time location from the top (where waveform starts or canopy) or from the bottom (where the waveform ends). Default is from the top.
 #' @return return the index of possible ground position of waveform.
 #' @importFrom caTools runmean
 #' @export
@@ -20,7 +21,7 @@
 #'
 
 
-ground.location<-function(y,smooth=TRUE,rescale=TRUE,thres=0.2,width=3){
+ground.location<-function(y,smooth=TRUE,rescale=TRUE,thres=0.2,width=3,top = TRUE){
   y<-as.numeric(unlist(y))
   y[y==0]<-NA
   #y<-y[-c(1:11)]
@@ -37,6 +38,6 @@ ground.location<-function(y,smooth=TRUE,rescale=TRUE,thres=0.2,width=3){
   ind<-y[peaknumber]>thres*imax      #####################you need to change threshold##########################################
   realind<-peaknumber[ind]#collect time
   groind<-realind[length(realind)]
-
+  if(!top) groind <- wavelen(y) - groind + 1
   return (groind)
 }

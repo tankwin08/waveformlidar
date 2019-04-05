@@ -1,4 +1,4 @@
-#' peak finding function
+#' lpeak
 #'
 #' This function allows you to locate where are peaks of a waveform and return a list of TRUE and FALSE
 #'    TRUE represents this location is the peak.
@@ -6,6 +6,7 @@
 #' @param series is the input a numeric vector.
 #' @param span is the length or interval of peak finding cell, default is 3.
 #' @return return a boolean type data corresponding to the numeric vector.
+#' @importFrom stats embed
 #' @export
 #' @examples
 #' data(return)

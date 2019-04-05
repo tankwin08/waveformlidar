@@ -1,4 +1,4 @@
-#' wavelen: calculate the length of waveform intensity
+#' wavelen
 #'
 #' The function allows you to measure the length of the waveform with intensity after excluding non-intensity parts.
 #' Generally, we assumed the intensity of a waveform should be larger than 0.

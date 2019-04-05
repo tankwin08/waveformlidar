@@ -4,9 +4,10 @@
 \alias{deconvolution}
 \title{deconvolution}
 \usage{
-deconvolution(re, out, imp, impout = NULL, method = c("Gold"), np = 2,
-  rescale = TRUE, small_paras = c(30, 2, 1.8, 30, 2, 1.8),
-  large_paras = c(30, 3, 1.8, 40, 3, 1.8), imp_outpars = c(20, 5, 1.8))
+deconvolution(re, out, imp, imp_out = NULL, method = c("Gold"),
+  np = 2, rescale = TRUE, small_paras = c(30, 2, 1.8, 30, 2, 1.8),
+  large_paras = c(30, 3, 1.8, 40, 3, 1.8), imp_out_pars = c(20, 5,
+  1.8))
 }
 \arguments{
 \item{re}{is the return waveform.}
@@ -15,6 +16,9 @@ deconvolution(re, out, imp, impout = NULL, method = c("Gold"), np = 2,
 
 \item{imp}{is the return impulse reponse (this should come with the corresponding outgoing pluse) or the sytem impulse reponse (when the corresponding outgoing pulse
 for the impluse response is not available or the data vendors directly provide system impluse response).}
+
+\item{imp_out}{is the corresponding outgoing pulse of the return impulse response. Through devonvolution of return impulse response, we can obtain
+true system impluse repsonse if it wasn't provided by the data vendor.}
 
 \item{method}{two methods including Gold or Richardson-Lucy (RL) algorithms. method=c("Gold","RL"). Default is method=c("Gold").}
 
@@ -32,11 +36,8 @@ iterations: number of iterations (parameter in the Gold deconvolution algorithm)
 repetitions number of repetitions of boosting operations. It must be greater or equal to one.So the total number of iterations is repetitions*iterations
 boosting coefficient/exponent. Applies only if repetitions is greater than one. Recommended range [1,2].}
 
-\item{imp_out}{is the corresponding outgoing pulse of the return impulse response. Through devonvolution of return impulse response, we can obtain
-true system impluse repsonse if it wasn't provided by the data vendor.}
-
-\item{out_impars}{is the deconvolution parameters for obtaining system impluse response using the impulse response and corresponding outgoing pulse.
-As same as the small_paras and large_parameters. This parameter is effective only when the impout is not NULL.}
+\item{imp_out_pars}{is the deconvolution parameters for obtaining system impluse response using the impulse response and corresponding outgoing pulse.
+As same as the small_paras and large_parameters. This parameter is effective only when the imp_out is not NULL.}
 }
 \value{
 The deconvovled waveform.
@@ -58,7 +59,7 @@ imp<-imp
 
 dr<-deconvolution(re,out,imp)
 dr1<-deconvolution(re,out,imp,method="RL")
-dr2<-deconvolution(re,out,imp,method="RL",para1=c(20,2,1.8,20,2,2))
+dr2<-deconvolution(re,out,imp,method="RL",small_paras=c(20,2,1.8,20,2,2))
 
 plot(dr,type="l")
 lines(dr1,col="red")

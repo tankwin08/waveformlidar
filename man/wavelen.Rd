@@ -2,7 +2,7 @@
 % Please edit documentation in R/wavelen.R
 \name{wavelen}
 \alias{wavelen}
-\title{wavelen: calculate the length of waveform intensity}
+\title{wavelen}
 \usage{
 wavelen(x)
 }

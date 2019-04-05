@@ -16,7 +16,7 @@ Default is using rescaling.}
 return the index of half total energy position of waveform.
 }
 \description{
-The function allows you to identify the half total energy position which can be used to calculate the height from waveform ending or waveform begining.
+The function allows you to identify the half total energy position (time location) which can be used to calculate the height from waveform ending or waveform begining.
 }
 \examples{
 
