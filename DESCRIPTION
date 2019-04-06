@@ -19,8 +19,10 @@ Imports:
     rgeos (>= 0.3.8),
     sqldf,
     splitstackshape,
-    rPeaks,
 	reshape2
+Suggests:
+    rPeaks
+Additional_repositories: https://github.com/jrminter/rPeaks
 Description: A wealth of Full Waveform (FW) LiDAR data are available to 
 	the public from different sources, which is poised to boost the extensive 
 	application of FW LiDAR data. However, we lack a handy and open source tool 

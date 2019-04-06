@@ -33,3 +33,8 @@ colnames(geo)[1:8]<- c("x","y","z","dx","dy","dz","or","fr")
 ### before run the hyperpointcloud when you used your own new datasets
 hpr<- hyperpointcloud (waveform = return,geo = geo)
 }
+\references{
+Zhou, Tan, Sorin Popescu, Lonesome Malambo, Kaiguang Zhao, and Keith Krause. From LiDAR 
+  waveforms to Hyper Point Clouds: a novel data product to characterize vegetation structure. 
+  Remote Sensing 10, no. 12 (2018): 1949.
+}

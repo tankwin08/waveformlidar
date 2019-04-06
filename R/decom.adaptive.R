@@ -12,6 +12,8 @@
 #' @import minpack.lm
 #' @importFrom stats na.omit
 #' @export
+#' @reference
+#'   Tan Zhou, and Sorin C. Popescu, 2017. Bayesian decomposition of full waveform LiDAR data with uncertainty analysis. Remote Sensing of Environment 200 (2017): 43-62.
 #' @examples
 #'
 #' ##import return waveform data

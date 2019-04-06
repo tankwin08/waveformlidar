@@ -50,6 +50,10 @@
 #' @import sqldf
 #' @importFrom stats ave
 #' @export
+#' @references
+#'   Zhou, Tan*, Sorin C. Popescu, Keith Krause, Ryan D. Sheridan, and Eric Putman, 2017. Gold-A novel deconvolution algorithm with
+#'   optimization for waveform LiDAR processing. ISPRS Journal of Photogrammetry and Remote Sensing 129 (2017):
+#'   131-150. https://doi.org/10.1016/j.isprsjprs.2017.04.021
 #' @examples
 #'
 #' data(geo)

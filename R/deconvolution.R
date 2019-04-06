@@ -25,7 +25,6 @@
 
 #' @return The deconvovled waveform.
 #' @import data.table
-#' @import rPeaks
 #' @export
 #' @references
 #'   Zhou, Tan*, Sorin C. Popescu, Keith Krause, Ryan D. Sheridan, and Eric Putman, 2017. Gold-A novel deconvolution algorithm with
@@ -62,6 +61,7 @@ deconvolution<-function(re,out,imp,imp_out=NULL,method =c("Gold"),np=2,rescale=T
 
   #library.dynam('Peaks', 'Peaks', lib.loc=NULL)
   #(the above line tells R to load the dynamic library for the Peaks package, which allows Rcpp to call its functions.)
+
   y<-as.numeric(re)
   x<-as.numeric(out)
 

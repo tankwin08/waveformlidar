@@ -12,8 +12,11 @@
 #'   \item{y}{The y position of one waveform intensity}
 #'   \item{z}{The z position of one waveform intensity}
 #'   \item{intensity}{The position's intensity}
-
 #' @export
+#' @references
+#' 	 Zhou, Tan, Sorin Popescu, Lonesome Malambo, Kaiguang Zhao, and Keith Krause. From LiDAR 
+#'   waveforms to Hyper Point Clouds: a novel data product to characterize vegetation structure. 
+#'   Remote Sensing 10, no. 12 (2018): 1949.
 #' @examples
 #'
 #' data(return)  ###import raw return waveforms
