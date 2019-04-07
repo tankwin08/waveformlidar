@@ -20,7 +20,7 @@ devtools::install_github("tankwin08/waveformlidar", dependencies = TRUE)
 As a brief introduction, we conduct Gaussian decomposition on several waveforms to extarct useful information from the wavefomrs. In addition, we also examplify the waveforms on decompostion method with GOLD and RL methods. The detailed description of these methods has been documented in our previous reserach (https://doi.org/10.1016/j.isprsjprs.2017.04.021). 
 Furthermore, we also demonstrate how to generate Hyper Point Cloud (HPC) from a sample waveform dataset at a small region.
 
-*Decomposition*
+*Decomposition:*
 We used two waveforms as an example to demonstrate how to conduct Gaussian, adaptive and Weibull decompositon with differnt preprocessing settings.
 
 ```
@@ -41,8 +41,8 @@ r5<-decom.adaptive(wf[182,])
 r6<-decom.weibull(wf[182,])
 
 ```
-<img src="man/figures/README_decompostion&deconvolution_example
-.png" width="60%" style="display: block; margin: auto;" />
+![alt text](https://github.com/tankwin08/waveformlidar/blob/master/man/figures/README_decompostion%26deconvolution_example.png)
+
 
 
 **What is the best way to ask a question or propose a new feature?**
