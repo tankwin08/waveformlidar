@@ -76,7 +76,6 @@ data(return)
 data(outg)  ###corresponding outgoing pulse of return
 data(imp)  ##The impulse function is generally one for the whole study area or
 data(imp_out) ##corresponding outgoing pulse of imp
-
 i=1
 re<-return[i,]
 out<-outg[i,]
@@ -87,20 +86,37 @@ imp_out<-imp_out
 gold0<-deconvolution(re = re,out = out,imp = imp,imp_out = imp_out)
 rl0<-deconvolution(re = re,out = out,imp = imp,imp_out = imp_out,method = "RL")
 
-
 ###option2: assume the return impluse repsonse RIP is the system impulse reponse (SIR)
 gold1<-deconvolution(re = re,out = out,imp = imp)
 rl1<-deconvolution(re = re,out = out,imp = imp,method="RL",small_paras = c(30,2,1.5,30,2,2))
 plot(gold1,type="l")
 lines(rl1,col="red")
-
 ```
 
-To visually compare the decompostion and deconvolution results, we made a plot of three wavefroms with these three methods (Gaussian decomposition, Gold and RL deconvolution) as follows:
+To visually compare the decompostion and deconvolution results at the individual waveform level, we made a plot of three wavefroms with these three methods (Gaussian decomposition, Gold and RL deconvolution) as follows:
+
+![alt text](https://github.com/tankwin08/waveformlidar/blob/master/man/figures/README_decompostion%26deconvolution_example.png)
+
+Point Cloud level:
+
+
+You also can find these results from our previous reserach: 
+
+*Hyper point cloud*
+---
+The routine for extracting FW LiDAR information is to convert part of waveform signals to discrete points with the decomposition or deconvolution methods, which has been proven useful for tree species identification, forest inventory, and biomass estimation. However, most of the intensity information inherent in waveforms is being ignored with the conventional methods that undoubtedly degrades the value of FW LiDAR data. Moreover, the complicated waveform processing steps perplex users and further hinder the extensive use of FW LiDAR data for vegetation characterization. To tackle these challenges, we directly convert all raw waveform signals into points to form a point cloud, named the HPC, for subsequent analysis. A HPC is a set of data points converted from all waveform signals along the pulse path by combing geo-reference information (black) with raw waveform data (blue). 
 
 ![alt text](https://github.com/tankwin08/waveformlidar/blob/master/man/figures/README_decompostion%26deconvolution_example.png)
 
 
+```
+data(geo)
+data(return)
+
+geo$index<-NULL
+colnames(geo)[1:8]<-c("x","y","z","dx","dy","dz","or","fr")
+hpc<-hyperpointcloud(waveform=return,geo=geo)
+```
 
 **What is the best way to ask a question or propose a new feature?**
 ---
