@@ -92,12 +92,16 @@ rl1<-deconvolution(re = re,out = out,imp = imp,method="RL",small_paras = c(30,2,
 plot(gold1,type="l")
 lines(rl1,col="red")
 ```
+*Method comparison*
+---
+To visually compare the decompostion and deconvolution results at the individual waveform level, we made a plot of three wavefroms with these three methods (Gaussian decomposition, Gold and RL deconvolution).
 
-To visually compare the decompostion and deconvolution results at the individual waveform level, we made a plot of three wavefroms with these three methods (Gaussian decomposition, Gold and RL deconvolution) as follows:
+Individual waveform level:
 
 ![alt text](https://github.com/tankwin08/waveformlidar/blob/master/man/figures/README_decompostion%26deconvolution_example.png)
 
 Point Cloud level:
+
 ![alt text](https://github.com/tankwin08/waveformlidar/blob/master/man/figures/README_point_cloud_comparison-min.png)
 
 You also can find these results from our previous reserach: 
