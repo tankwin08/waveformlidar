@@ -98,16 +98,16 @@ To visually compare the decompostion and deconvolution results at the individual
 ![alt text](https://github.com/tankwin08/waveformlidar/blob/master/man/figures/README_decompostion%26deconvolution_example.png)
 
 Point Cloud level:
-
+![alt text](https://github.com/tankwin08/waveformlidar/blob/master/man/figures/README_point_cloud_comparison-min.png)
 
 You also can find these results from our previous reserach: 
+Tan Zhou*, Sorin C. Popescu, Keith Krause, Ryan D. Sheridan, and Eric Putman, 2017. Gold-A novel deconvolution algorithm with optimization for waveform LiDAR processing. ISPRS Journal of Photogrammetry and Remote Sensing 129 (2017): 131-150. https://doi.org/10.1016/j.isprsjprs.2017.04.021
 
 *Hyper point cloud*
 ---
 The routine for extracting FW LiDAR information is to convert part of waveform signals to discrete points with the decomposition or deconvolution methods, which has been proven useful for tree species identification, forest inventory, and biomass estimation. However, most of the intensity information inherent in waveforms is being ignored with the conventional methods that undoubtedly degrades the value of FW LiDAR data. Moreover, the complicated waveform processing steps perplex users and further hinder the extensive use of FW LiDAR data for vegetation characterization. To tackle these challenges, we directly convert all raw waveform signals into points to form a point cloud, named the HPC, for subsequent analysis. A HPC is a set of data points converted from all waveform signals along the pulse path by combing geo-reference information (black) with raw waveform data (blue). 
 
-![alt text](https://github.com/tankwin08/waveformlidar/blob/master/man/figures/README_decompostion%26deconvolution_example.png)
-
+![alt text](https://github.com/tankwin08/waveformlidar/blob/master/man/figures/hyper_point_cloud_graphic_abstract-min.jpg)
 
 ```
 data(geo)
@@ -117,6 +117,31 @@ geo$index<-NULL
 colnames(geo)[1:8]<-c("x","y","z","dx","dy","dz","or","fr")
 hpc<-hyperpointcloud(waveform=return,geo=geo)
 ```
+
+*Individaul tree waveform voxelization*
+The principle behind the voxel is that the neighborhood points shared the similar characteristic and the information within the homogenous unit can be represented by one quantity or one voxel.  The following example shows how to voxelize data from the HPC. The main parameter of this function is the voxel size (res) which require you to assign a vector containing three values to represent voxel size at the X, Y and Z directions. Analogous to the waveformgrid, we also can generate the quantile intensity in each voxel by adding quan argument.
+```
+voxr<-waveformvoxel(hpc,res=c(1,1,0.15))
+```
+Here is one simple example to conduct waveform voxelization using one individual tree.
+![alt text](https://github.com/tankwin08/waveformlidar/blob/master/man/figures/individual_tree_waveformvoxel_flat_tree1_60%25_maxi_0.8_0.8_0.15_filter.png)
+
+
+## Citing waveformlidar and related software
+
+You are welcome to use the package. If you need more help on differnt dataset or cooperation, I'd love to contribute. Developing and maintaining open source software take authors a lot of time and effort yet often underappreciated contribution to scientific progress. Thus, whenever you are
+using open source software (or software in general), please make sure to cite it
+appropriately so that developers get credit for their work.
+
+When using waveformlidar, please cite one or more of the following publications:
+
+1. Tan Zhou *, Sorin Popescu, Lonesome Malambo, Kaiguang Zhao, Keith Krause. From LiDAR waveforms to Hyper Point Clouds: a novel data product to characterize vegetation structure. Remote Sensing 2018, 10(12), 1949; https://doi.org/10.3390/rs10121949
+
+2. Tan Zhou*, Sorin C. Popescu, A. Michelle Lawing, Marian Eriksson, Bogdan M. Strimbu, and Paul C. Bürkner. Bayesian and Classical Machine Learning Methods: A Comparison for Tree Species Classification with LiDAR Waveform Signatures. Remote Sensing 10, no. 1 (2017): 39. doi:10.3390/rs10010039
+
+3. Tan Zhou*, and S.C. Popescu, 2017. Bayesian decomposition of full waveform LiDAR data with uncertainty analysis. Remote Sensing of Environment 200 (2017): 43-62. http://dx.doi.org/10.1016/j.rse.2017.08.012
+
+4. Tan Zhou*, Sorin C. Popescu, Keith Krause, Ryan D. Sheridan, and Eric Putman, 2017. Gold-A novel deconvolution algorithm with optimization for waveform LiDAR processing. ISPRS Journal of Photogrammetry and Remote Sensing 129 (2017): 131-150. https://doi.org/10.1016/j.isprsjprs.2017.04.021
 
 **What is the best way to ask a question or propose a new feature?**
 ---
