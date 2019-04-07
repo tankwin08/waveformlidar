@@ -42,6 +42,15 @@ r5<-decom.adaptive(wf[182,])
 r6<-decom.weibull(wf[182,])
 
 ```
+We selected one of the results to demonstrate the structure of results and you can check the summary of the result:
+```
+r3
+r4
+
+```
+
+
+
 ![alt text](https://github.com/tankwin08/waveformlidar/blob/master/man/figures/README_decompostion%26deconvolution_example.png)
 
 
