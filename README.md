@@ -11,10 +11,7 @@ if (!require("devtools")) {
   install.packages("devtools")  
 }  
 devtools::install_github("tankwin08/waveformlidar", dependencies = TRUE)  
-
 ``` 
-
-
 **How to use waveformlidar**
 ---
 As a brief introduction, we conduct Gaussian decomposition on several waveforms to extarct useful information from the wavefomrs. In addition, we also examplify the waveforms on decompostion method with GOLD and RL methods. The detailed description of these methods has been documented in our previous reserach (https://doi.org/10.1016/j.isprsjprs.2017.04.021). 
@@ -42,7 +39,8 @@ r5<-decom.adaptive(wf[182,])
 r6<-decom.weibull(wf[182,])
 
 ```
-We selected one of the results to demonstrate the structure of results and you can check the summary of the result:
+We selected one of the results to demonstrate the structure of results with differnt prepocessing settings. As you can see, the r3 gave us NULL due to there is no solution when we used the Gaussian model to decompose waveform. However, with some filtering step, we can get the solution of the decompostion as shwon in r4. But this solution is not a reasonle solution since one of the As is negative. Consequently, the index number r4[[1]] and r4[[3]] return NA and NULL to indicate that the caution should be exercised on this result. 
+
 ```
 r3
 NULL
@@ -68,7 +66,37 @@ NULL
 
 ```
 
+*Deconvolution*
+---
+Compared to the decomposition, the deconvolution requires more input data and additional processing steps. Generally, we should have three kinds of data as the input for the deconvolution: the return waveform (RW), corresponding outgoing pulse (OUT) and the system impulse response (SIR). The RW and OUT are directly provided by the vendor. Ideally, the SIR is obtained through the calibration process in the lab before the waveform data are collected. In our case, the NEON provided a return impulse response (RIR) which can be assumed as a prototype SIR. This system impulse was obtained through a return pulse of single laser shot from a hard ground target with a mirror angle close to nadir. Meanwhile, NEON also provided the corresponding outgoing pulse of this return impulse response (RIR_OUT). The "true" system impulse response can be obtained by deconvolving the RIR_OUT.
+In this package, we provide two options for users to deal with the system impulse response (SIR). One is directly to assume the RIR as the SIR by assigning imp = RIR. Another is to obtain the SIR through deconvolving the OUT_RIR. In the function, the "true" SIR can be achieved by assigning imp = RIR and imp_out = OUT_RIR.
 
+```
+data(return)
+data(outg)  ###corresponding outgoing pulse of return
+data(imp)  ##The impulse function is generally one for the whole study area or
+data(imp_out) ##corresponding outgoing pulse of imp
+
+i=1
+re<-return[i,]
+out<-outg[i,]
+imp<-imp
+imp_out<-imp_out
+
+### option1: to obtain the true system impluse response using the return impluse repsonse (imp) and corresponding outgoing pulse (imp_out)
+gold0<-deconvolution(re = re,out = out,imp = imp,imp_out = imp_out)
+rl0<-deconvolution(re = re,out = out,imp = imp,imp_out = imp_out,method = "RL")
+
+
+###option2: assume the return impluse repsonse RIP is the system impulse reponse (SIR)
+gold1<-deconvolution(re = re,out = out,imp = imp)
+rl1<-deconvolution(re = re,out = out,imp = imp,method="RL",small_paras = c(30,2,1.5,30,2,2))
+plot(gold1,type="l")
+lines(rl1,col="red")
+
+```
+
+To visually compare the decompostion and deconvolution results, we made a plot of three wavefroms with these three methods (Gaussian decomposition, Gold and RL deconvolution) as follows:
 
 ![alt text](https://github.com/tankwin08/waveformlidar/blob/master/man/figures/README_decompostion%26deconvolution_example.png)
 
