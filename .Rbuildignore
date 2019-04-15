@@ -1,2 +1,10 @@
 ^.*\.Rproj$
 ^\.Rproj\.user$
+^release$
+^vignette
+^README\.md$
+^.*\.tar.gz$
+^\.travis.yml$
+^cpp\_version$
+^appveyor\.yml$
+^README.md

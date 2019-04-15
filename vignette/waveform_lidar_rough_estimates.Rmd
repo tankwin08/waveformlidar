@@ -1,0 +1,196 @@
+---
+title: "Conduct rough estimates on waveform LiDAR data with waveformlidar"
+author: "Tan Zhou"
+date: "`r Sys.Date()`"
+output: 
+  rmarkdown::html_vignette:
+    toc: yes
+vignette: >
+  %\VignetteIndexEntry{Conduct rough estimates on waveform LiDAR data with waveformlidar}
+  %\VignetteEngine{knitr::rmarkdown}
+  \usepackage[utf8]{inputenc}
+params:
+  EVAL: !r identical(Sys.getenv("NOT_CRAN"), "true")
+---
+
+```{r, SETTINGS-knitr, include=FALSE}
+stopifnot(require(knitr))
+options(width = 90)
+opts_chunk$set(
+  comment = NA,
+  message = FALSE,
+  warning = FALSE,
+  eval = if (isTRUE(exists("params"))) params$EVAL else FALSE,
+  dev = "png",
+  dpi = 150,
+  fig.asp = 0.8,
+  fig.width = 5,
+  out.width = "60%",
+  fig.align = "center"
+)
+library(waveformlidar)
+#ggplot2::theme_set(theme_default())
+```
+
+## Goal
+
+The purpose of this vignette is to prepare the waveform LiDAR data processing using **waveformlidar** package. In addition, we also demonstate an example using **peakfind** function to quickly identify the peak(s) of waveforms.
+
+
+## A Case Study
+
+```{r prepare formula for decomposition}
+
+##for known estimated paramters using Gaussian model, these three should have the same length
+A<-c(76,56,80); u<-c(29,40,67); sig<-c(4,3,2.5) 
+
+fg<-gennls(A,u,sig)
+fg$formula
+
+##using adaptive Gaussian model, we still assign the initiated r to 2, you also can give another reasonble value
+A<-c(76,56,80); u<-c(29,40,67); sig<-c(4,3,2.5);  r<-c(2,2,2) 
+afg<- agennls(A,u,sig,r)
+afg$formula
+```
+
+
+###Prepare data and obtain rough estimates of waveforms
+```{r rough estimates}
+###rough estimate without decompostion or deconvolution
+library(data.table)
+library(caTools)
+
+data(return)
+wf<-data.table(index=c(1:nrow(return)),return)
+
+num_wf<- npeaks(wf[1,], drop=c(1,1))  
+num_wf1<- npeaks(return[1,])
+
+rough_estimates<- peakfind(wf[182,])
+rough_estimates1<-peakfind(wf[182,], thres = 0.3)
+
+```
+The **peakfind** can help us to quickly get the shape of waveforms quickly without any need of implementing complex waveform processing algorithms. The caution should be exercised on results of this function since they are vulnerable to the noise. 
+
+To visually inspect the results, we plot two waveforms as an example.
+
+```{r peakfind to get an overview of the waveform}
+y0<- return[182,]
+y0[y0==0]<-NA
+y1<- as.numeric(y0 - min(y0,na.rm = T) +1)
+y1<-y1[1:wavelen(y1)]
+
+realind<-rough_estimates[,3]
+newpeak<-rough_estimates[,2]
+
+I<-c("A1","A2","A3","A4");U<-c("u1","u2","u3","u4");S<-c("s1","s2","s3","s4")
+
+
+#########fig2.b
+re<-decom(wf[182,],smooth=TRUE, width=5)[[2]]
+yi<-cbind(re[1:3,2],re[4:6,2],re[7:9,2])
+sumyi<-0
+x<-1:wavelen(y1)
+for (i in 1:3){
+  sumyi<-sumyi + yi[i,1] * exp(-(x - yi[i,2])**2/(2 * yi[i,3]**2))
+}
+#re<-decom(wf[2,],smooth=TRUE, width=7)[[3]]
+#yi<-cbind(re[1:3,2],re[4:6,2],re[7:9,3])
+
+###fig2.c
+y2<- return[2,]
+y2[y2==0]<-NA
+y3<- as.numeric(y2 - min(y2,na.rm = T) +1)
+y3<-y3[1:wavelen(y3)]
+
+rough_estimates2<-peakfind(wf[2,])
+realind2<-rough_estimates2[,3]
+newpeak2<-rough_estimates2[,2]
+
+I2<-c("A1","A2");U2<-c("u1","u2");S2<-c("s1","s2")
+
+###fig4.d
+yi2<-decom(wf[2,])[[3]]
+#yi2<-cbind(re2[1:3,2],re[4:6,2],re[7:9,2])
+sumyi2<-0
+x<-1:wavelen(y2)
+for (i in 1:nrow(yi2)){
+  sumyi2<-sumyi2 + yi2[i,2] * exp(-(x - yi2[i,3])**2/(2 * yi2[i,4]**2))
+}
+
+
+setwd("A:/research/2018/waveform_summary_R/waveformlidar_package_papaer/code_for_paper") ##change your path here
+
+par(family = 'serif')
+png('peakfind_figure2_new.png', width = 7.25*1.8, height = 5.73*1.8, units = 'in',res = 600)
+par(mfrow=c(2,2), oma=c(0,0,0,0),mai=c(1.0,1.0,0.8,0))
+###fig2.a
+plot(seq_along(y1),y1,type="l",col="red",xlab="(a) Time(ns)",ylab="",cex.lab=2.5,lwd=3,axes=F,main="Rough estimates 4 waveform components",cex.main=2)
+axis(side=1, at=seq(0,(wavelen(y1)+15),15),cex.axis=2.5)
+axis(side=2, at=seq(0,(max(y1)+20),20),cex.axis=2.5)
+##add the point peak
+xy<-c(0,realind)###for showing sigma
+labelxy<-runmean(xy,2)
+
+for (i in 1:length(realind)){
+  points(realind[i],newpeak[i],pch=1,col="green",cex=2.5,lwd=2)
+  segments(x0=realind[i],y0=0,x1=realind[i],y1=newpeak[i],col="blue",lty=3,lwd=3)##for the vertical
+  segments(x0=xy[i],y0=6+(i-1)*7,x1=xy[i+1],y1=6+(i-1)*7,col="black",lty=3,lwd=3)####for the sigma
+  text(realind[i],newpeak[i],I[i],adj=1.5,cex=2,col="green") ###for intensity
+  text(realind[i],4,U[i],adj=1,cex=2,col="blue") ###for time bin
+  text(labelxy[i+1],7*i+2,S[i],adj=0.5,cex=2,col="black")
+}
+#####fig2.b
+##to demonstarte the noise and Gaussian funtion is good for decomposition
+x<-1:wavelen(y1)
+plot(seq_along(y1),y1,type="l",col="red",xlab="(b) Time(ns)",ylab="Intensity",
+     cex.lab=2.5,lwd=3.5,axes=F,main="Unreasonable decomposition",cex.main=2,ylim=c(-30,230))
+axis(side=1, at=seq(0,(wavelen(y1)+15),15),cex.axis=2.5)
+axis(side=2, at=seq(-30,(max(y1)+40),20),cex.axis=2.5)
+lines(seq_along(y1),y1,type="l",col="red",lwd=3)
+###idea components
+for (i in 1:3){
+  lines(x,yi[i,1] * exp(-(x - yi[i,2])**2/(2 * yi[i,3]**2)),lty=2,col=i+2,lwd=3)
+}
+
+lines(x,sumyi,lty=3,col="black",lwd=3)
+legend("topright",legend=c("1","2","3"),col=c(3,4,5),lty=c(2,2,2),lwd=3,cex=2,box.lwd="white")
+legend("topleft",legend=c("IGW","RW"),col=c("black","red"),lty=c(2,1),lwd=3,cex=2,box.lwd="white")
+###fig2.c
+
+plot(seq_along(y3),y3,type="l",col="red",xlab="(c) Time(ns)",ylab="",cex.lab=2.5,lwd=3,axes=F,main="Rough estimates 2 waveform components",cex.main=2)
+axis(side=1, at=seq(0,(wavelen(y1)+15),15),cex.axis=2.5)
+axis(side=2, at=seq(0,(max(y3)+20),20),cex.axis=2.5)
+##add the point peak
+xy2<-c(0,realind2)###for showing sigma
+labelxy2<-runmean(xy2,2)
+
+for (i in 1:length(realind2)){
+  points(realind2[i],newpeak2[i],pch=1,col="green",cex=2.5,lwd=2)
+  segments(x0=realind2[i],y0=0,x1=realind2[i],y1=newpeak2[i],col="blue",lty=3,lwd=3)##for the vertical
+  segments(x0=xy2[i],y0=6+(i-1)*7,x1=xy2[i+1],y1=6+(i-1)*7,col="black",lty=3,lwd=3)####for the sigma
+  text(realind2[i],newpeak2[i],I[i],adj=1.5,cex=2,col="green") ###for intensity
+  text(realind2[i],4,U[i],adj=1,cex=2,col="blue") ###for time bin
+  text(labelxy2[i+1],7*i+2,S2[i],adj=0.5,cex=2,col="black")
+}
+
+#####fig2.d
+##to demonstarte the noise and Gaussian funtion is good for decomposition
+x2<-1:wavelen(y3)
+plot(seq_along(y3),y3,type="l",col="red",xlab="(d) Time(ns)",ylab="Intensity",
+     cex.lab=2.5,lwd=3.5,axes=F,main="Successful decompostion",cex.main=2,ylim=c(0,max(y3)+20))
+axis(side=1, at=seq(0,(wavelen(y3)+15),15),cex.axis=2.5)
+axis(side=2, at=seq(-30,(max(y3)+40),20),cex.axis=2.5)
+#lines(seq_along(y3),y3,type="l",col="red",lwd=3)
+###idea components
+for (i in 1:2){
+  lines(x2,yi2[i,2] * exp(-(x2 - yi2[i,3])**2/(2 * yi2[i,4]**2)),lty=2,col=i+2,lwd=3)
+}
+
+lines(x2,sumyi2,lty=3,col="black",lwd=3)
+legend("topright",legend=c("1","2"),col=c(3,4),lty=c(2,2),lwd=3,cex=2,box.lwd="white")
+legend("topleft",legend=c("IGW","RW"),col=c("black","red"),lty=c(2,1),lwd=3,cex=2,box.lwd="white")
+
+dev.off()
+
+```

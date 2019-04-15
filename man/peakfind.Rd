@@ -38,3 +38,6 @@ dr<-apply(return,1,peakfind)
 rpf<-do.call("rbind",lapply(dr,"[[",1))
 
 }
+\references{
+Tan Zhou, and Sorin C. Popescu, 2017. Bayesian decomposition of full waveform LiDAR data with uncertainty analysis. Remote Sensing of Environment 200 (2017): 43-62.
+}

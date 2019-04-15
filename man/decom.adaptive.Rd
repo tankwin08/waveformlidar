@@ -22,7 +22,6 @@ A list contains estimates of A, u, sig and ri (rate parameter in adaotive Gaussi
 The function allows you to eatimate parameters charcterizing waveforms and to pave the way for generating waveform-based point cloud.
 }
 \examples{
-
 ##import return waveform data
 data(return)
 lr<-nrow(return)
@@ -55,4 +54,8 @@ rid<-rfit3[!is.na(rfit3),]
 wid<-setdiff(c(1:lr),rid)  ###index of waveforms needs to be reprocessed
 #Generally the adaptive Guassian will give less NA results comparing to Gaussian function (decom).
 rpars<-pa3[!is.na(pa3[,1]),]    ###useful decomposition parameters
+}
+\references{
+Tan Zhou, and Sorin C. Popescu, 2017. Bayesian decomposition of full waveform LiDAR data with uncertainty analysis.
+  Remote Sensing of Environment 200 (2017): 43-62.
 }

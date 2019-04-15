@@ -12,39 +12,38 @@
 #' @param geo the reference geolocation that is generally coming with waveform data and provided by the data provider.
 #' @param source is determined by input data. If estimated parameters are from dcomposition, source = "decomposition". Otherwise will be deconvolution and decomposition.
 #'   Default is decomposition.
-
-#' @return A dataframe with columns. For the direct decompostion method, we will have 29 columns and for the deconvolution and decomposition method,
-#'   17 columns were generated ("index","pi","t","sd","pise","tse","sdse","px","py","pz","uncerUXpeak","uncerUYpeak","uncerUZpeak","uncerLXpeak","uncerLYpeak","uncerLZpeak","rn").
-#'   \item{index}{The index of waveform}
-#'   \item{pi}{The estimated amplitude of an waveform componment}
-#'   \item{t}{The estimated peak location of an waveform componment}
-#'   \item{sd}{The estimated echo width of an waveform componment}
-#'   \item{pise}{The standard error of the estimated amplitude}
-#'   \item{tse}{The standard error of the estimated peak location}
-#'   \item{sdse}{The standard error of the estimated echo width}
-#'   \item{px}{Desired x position using peak locations}
-#'   \item{py}{Desired y position using peak locations}
-#'   \item{pz}{Desired y position using peak locations}
-#'   \item{lowx}{Desired x position using leading edge locations}
-#'   \item{lowy}{Desired y position using leading edge locations}
-#'   \item{lowz}{Desired z position using leading edge locations}
-#'   \item{upx}{Desired x position using trailing edge locations}
-#'   \item{upy}{Desired y position using trailing edge locations}
-#'   \item{upz}{Desired z position using trailing edge locations}
-#'   \item{uncerUXpeak}{upper bound of 95% confidence interval of px}
-#'   \item{uncerUYpeak}{upper bound of 95% confidence interval of py}
-#'   \item{uncerUZpeak}{upper bound of 95% confidence interval of pz}
-#'   \item{uncerLXpeak}{lower bound of 95% confidence interval of px}
-#'   \item{uncerLYpeak}{lower bound of 95% confidence interval of py}
-#'   \item{uncerLZpeak}{lower bound of 95% confidence interval of pz}
-#'   \item{uncerUXleading}{upper bound of 95% confidence interval of lowx}
-#'   \item{uncerUYleading}{upper bound of 95% confidence interval of lowy}
-#'   \item{uncerUZleading}{upper bound of 95% confidence interval of lowz}
-#'   \item{uncerLXleading}{lower bound of 95% confidence interval of lowx}
-#'   \item{uncerLYleading}{lower bound of 95% confidence interval of lowy}
-#'   \item{uncerLZleading}{lower bound of 95% confidence interval of lowz}
-#'   \item{rn}{the number of return for each waveform}
-#'   By combining xyz, the users can get waveform-based point cloud using leading edge, peak and trail edge positions, and parameter uncertainty of the point cloud.
+#' @return A dataframe with columns. For the direct decompostion method, we will have 29 columns and for the deconvolution and decomposition method.
+#'   17 columns were generated: index,pi,t,sd,pise,tse,sdse,px,py,pz,uncerUXpeak,uncerUYpeak,uncerUZpeak,uncerLXpeak,uncerLYpeak,uncerLZpeak,rn.
+#' \item{\code{index}}{The index of waveform.}
+#' \item{\code{pi}}{The estimated amplitude of an waveform componment.}
+#' \item{\code{t}}{The estimated peak location of an waveform componment.}
+#' \item{\code{sd}}{The estimated echo width of an waveform componment.}
+#' \item{\code{pise}}{The standard error of the estimated amplitude.}
+#' \item{\code{tse}}{The standard error of the estimated peak location.}
+#' \item{\code{sdse}}{The standard error of the estimated echo width.}
+#' \item{\code{px}}{Desired x position using peak locations.}
+#' \item{\code{py}}{Desired y position using peak locations.}
+#' \item{\code{pz}}{Desired y position using peak locations.}
+#' \item{\code{lowx}}{Desired x position using leading edge locations.}
+#' \item{\code{lowy}}{Desired y position using leading edge locations.}
+#' \item{\code{lowz}}{Desired z position using leading edge locations.}
+#' \item{\code{upx}}{Desired x position using trailing edge locations.}
+#' \item{\code{upy}}{Desired y position using trailing edge locations.}
+#' \item{\code{upz}}{Desired z position using trailing edge locations.}
+#' \item{\code{uncerUXpeak}}{Upper bound of 95th confidence interval of px.}
+#' \item{\code{uncerUYpeak}}{Upper bound of 95th confidence interval of py.}
+#' \item{\code{uncerUZpeak}}{Upper bound of 95th confidence interval of pz.}
+#' \item{\code{uncerLXpeak}}{Lower bound of 95th confidence interval of px.}
+#' \item{\code{uncerLYpeak}}{Lower bound of 95th confidence interval of py.}
+#' \item{\code{uncerLZpeak}}{Lower bound of 95thconfidence interval of pz.}
+#' \item{\code{uncerUXleading}}{Upper bound of 95th confidence interval of lowx.}
+#' \item{\code{uncerUYleading}}{Upper bound of 95th confidence interval of lowy.}
+#' \item{\code{uncerUZleading}}{Upper bound of 95th confidence interval of lowz.}
+#' \item{\code{uncerLXleading}}{Lower bound of 95th confidence interval of lowx.}
+#' \item{\code{uncerLYleading}}{Lower bound of 95th confidence interval of lowy.}
+#' \item{\code{uncerLZleading}}{Lower bound of 95th confidence interval of lowz.}
+#' \item{\code{rn}}{The number of return for each waveform.}
+#' By combining xyz, the users can get waveform-based point cloud using leading edge, peak and trail edge positions, and parameter uncertainty of the point cloud.
 #' @import data.table
 #' @import splitstackshape
 #' @import sqldf
@@ -68,13 +67,14 @@
 #' ##we need assign exactly same column names
 #' geoindex=c(1:9,16)
 #' colnames(geo)[geoindex]<-c("index","orix","oriy","oriz","dx","dy","dz","outref","refbin","outpeak")
-#' ####for decomposition results
+#' ##for decomposition results
 #'
 #' geor<-geotransform(decomp,geo)
 #'
 #' ########for deconvolution and decomposition
 #' decongeo<-geotransform(decomp=deconp,geo,source="deconvolution")
 #'
+
 
 
 

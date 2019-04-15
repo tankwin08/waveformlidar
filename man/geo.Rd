@@ -4,7 +4,26 @@
 \name{geo}
 \alias{geo}
 \title{The reference geolocation of the return waveforms.}
-\format{An object of class \code{data.table} (inherits from \code{data.frame}) with 500 rows and 17 columns.}
+\format{A data frame with 500 rows and 17 variables.
+\describe{
+ \item{index}{index to connect return waveform and geolocation}
+ \item{\code{x}}{Easting of first return}
+ \item{\code{y}}{Northing  of first return}
+ \item{\code{z}}{Height of first return}
+ \item{\code{dx}}{the position change per nanasecond at x direction}
+ \item{\code{dy}}{the position change per nanasecond at y direction}
+ \item{\code{dz}}{the position change per nanasecond at z direction}
+ \item{\code{or}}{outgoing pulse reference bin location (leading edge 50th point of the outgoing pulse)}
+ \item{\code{fr}}{first return reference bin location (leading edge 50th point of the first return)}
+ \item{\code{V9}}{Easting of Return Bin0}
+ \item{\code{V10}}{Northing of Return Bin0}
+ \item{\code{V11}}{Height of Return Bin0}
+ \item{\code{V12}}{the position change per nanasecond at x direction}
+ \item{\code{V13}}{the position change per nanasecond at y direction}
+ \item{\code{V14}}{the position change per nanasecond at z direction}
+ \item{\code{V15}}{outgoing pulse peak bin location}
+ \item{\code{V16}}{return bin0 location}
+}}
 \usage{
 geo
 }

@@ -9,7 +9,6 @@
 #' @return return a list contains waveform index, rough estimates of A, u, sig.
 #' @export
 #' @references
-#' @reference
 #'   Tan Zhou, and Sorin C. Popescu, 2017. Bayesian decomposition of full waveform LiDAR data with uncertainty analysis. Remote Sensing of Environment 200 (2017): 43-62.
 #' @examples
 #'

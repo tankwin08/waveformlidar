@@ -59,3 +59,7 @@ wid<-setdiff(c(1:lr),rid)
 ###useful decomposition parameters
 rpars<-pa3[!is.na(pa3[,1]),]
 }
+\references{
+Tan Zhou, and Sorin C. Popescu, 2017. Bayesian decomposition of full waveform LiDAR data with
+  uncertainty analysis. Remote Sensing of Environment 200 (2017): 43-62.
+}

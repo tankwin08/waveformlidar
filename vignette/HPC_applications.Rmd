@@ -1,0 +1,92 @@
+---
+title: "From waveforms to Hyper point cloud with waveformlidar"
+author: "Tan Zhou"
+date: "`r Sys.Date()`"
+output: 
+  rmarkdown::html_vignette:
+    toc: yes
+vignette: >
+  %\VignetteIndexEntry{From waveforms to Hyper point cloud with waveformlidar}
+  %\VignetteEngine{knitr::rmarkdown}
+  \usepackage[utf8]{inputenc}
+params:
+  EVAL: !r identical(Sys.getenv("NOT_CRAN"), "true")
+---
+
+```{r, SETTINGS-knitr, include=FALSE}
+stopifnot(require(knitr))
+options(width = 90)
+opts_chunk$set(
+  comment = NA,
+  message = FALSE,
+  warning = FALSE,
+  eval = if (isTRUE(exists("params"))) params$EVAL else FALSE,
+  dev = "png",
+  dpi = 150,
+  fig.asp = 0.8,
+  fig.width = 5,
+  out.width = "60%",
+  fig.align = "center"
+)
+library(waveformlidar)
+#ggplot2::theme_set(theme_default())
+```
+
+## Goal
+
+The purpose of this vignette is to show an example of converting waveforms into point cloud with high density (HPC). In addition, we also explore several applications of the HPC to demonstrate the usefulness of the products.
+
+
+## A Case Study
+
+```{r generate hyper point cloud}
+data(geo)
+data(return)
+
+geo$index<-NULL
+colnames(geo)[1:8]<-c("x","y","z","dx","dy","dz","or","fr")
+hpc<-hyperpointcloud(waveform=return,geo=geo)
+
+```
+
+
+###large dataset
+For a large data set, we need to use the data.table or rspark to deal with the big data frame
+the following code is just an example, you can adjust as your needs.
+```{r HPC with large dataset}
+
+re<-NULL
+chunks=5
+row_interval<- round(seq(1,nrow(return),length.out = chunks))
+for (i in 1:(chunks-1)){
+  swf<-waveform[row_interval[i]:(row_interval[i+1]-1)]
+  sgeo<-geo[row_interval[i]:(row_interval[i+1]-1)]
+  sre<-hyperpointcloud(swf,sgeo)
+  fwrite(sre,paste0("subset_hpc_",i,".csv"))
+  re<-rbind(re,sre)
+}
+
+```
+###HPC explorations
+
+
+```{r 2D and 3D applications}
+hpcgrid<-waveformgrid(hpc=hpc,res=c(1,1))
+###using raw data
+rawgrid<-waveformgrid(waveform = return,geo=geo,method="Other")
+##adding quantiles
+quangrid<-waveformgrid(hpc=hpc,res=c(1,1),quan=c(0.4,0.48,0.58,0.67,0.75,0.85,0.95))
+##for using the other method, we must assign the method
+rquangrid<-waveformgrid(waveform = return,geo = geo,res=c(1,1),quan=c(0.4,0.48,0.58,0.67,0.75,0.85,0.95),method="Other")
+
+####waveformvoxel
+voxr<-waveformvoxel(hpc,res=c(1,1,0.15))
+##adding quan
+qvoxr<-waveformvoxel(hpc,res=c(1,1,0.15),quan=c(0.4,0.5,0.75,0.86))
+
+###convert the hpc to the composite waveforms
+rtc<-rawtocomposite(voxr)
+###from hyper point cloud to composite waveforms, the inten_index will determine which intensity variable of the voxel you will use
+ph_rtc<-rawtocomposite(qvoxr,inten_index = 6)
+
+```

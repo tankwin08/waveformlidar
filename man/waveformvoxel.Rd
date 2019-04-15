@@ -48,3 +48,8 @@ hpr<- hyperpointcloud(waveform = return,geo = geo)
 voxr<-waveformvoxel(hpc = hpr,res=c(1,1,0.3))
 
 }
+\references{
+Tan Zhou, Sorin Popescu, Lonesome Malambo, Kaiguang Zhao, Keith Krause. From LiDAR waveforms
+  to Hyper Point Clouds: a novel data product to characterize vegetation structure.
+  Remote Sensing 2018, 10(12), 1949; https://doi.org/10.3390/rs10121949
+}

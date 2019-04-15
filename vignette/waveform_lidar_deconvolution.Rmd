@@ -1,0 +1,110 @@
+---
+title: "Conduct deconvolution on waveform LiDAR data with waveformlidar"
+author: "Tan Zhou"
+date: "`r Sys.Date()`"
+output: 
+  rmarkdown::html_vignette:
+    toc: yes
+vignette: >
+  %\VignetteIndexEntry{Conduct deconvolution on waveform LiDAR data with waveformlidar}
+  %\VignetteEngine{knitr::rmarkdown}
+  \usepackage[utf8]{inputenc}
+params:
+  EVAL: !r identical(Sys.getenv("NOT_CRAN"), "true")
+---
+
+```{r, SETTINGS-knitr, include=FALSE}
+stopifnot(require(knitr))
+options(width = 90)
+opts_chunk$set(
+  comment = NA,
+  message = FALSE,
+  warning = FALSE,
+  eval = if (isTRUE(exists("params"))) params$EVAL else FALSE,
+  dev = "png",
+  dpi = 150,
+  fig.asp = 0.8,
+  fig.width = 5,
+  out.width = "60%",
+  fig.align = "center"
+)
+library(waveformlidar)
+#ggplot2::theme_set(theme_default())
+```
+
+## Goal
+
+The purpose of this vignette is to show an example to conduct waveform deconvolution using differnt algorithms such as the Gold and Richardson-Lucy (RL) algorithms using **waveformlidar** package. 
+
+
+## A Case Study
+
+As a case study, we will use the waveform LiDAR data of the **waveformlidar** package, which comes from the National Ecological Observatory Networks (NEON). The example dataset used here is a subset (500 waveforms) from the Harvard Forest, Massachusetts, USA. Each row represents one waveform and each column represents a time bin. The temporal resolution of the time bin can be 1/2/4 nanosecond (ns), which is up to the data collecting system. In this case, the temporal resolution is 1 ns with the vertical distance approximately 0.15m.
+
+```{r data}
+data(return, package = "waveformlidar")
+head(return)
+```
+###Overview
+The deconvolution is an algorithm-based process that is to reverse the effect of convolution on the recorded signals, and the decomposition is a process which can provide estimates of the location and properties of objects along the pulse (Wagner et al. 2006). In this package, two deconvolution methods including the Gold and Richardson-Lucy (RL) are available for conducting the deconvolution. The detailed description of these algorithms can be found in (Zhou et al. 2017b).
+For the decomposition, both the outgoing pulse and the return pulse are nearly following some probability distribution such as Gaussian distribution in terms of shape. Thus, the information inherent in waveform can be extracted through fitting waveforms with a mixture of models with the specific distribution or waveform components. By interpreting these models' parameters or waveform components, the targets such as vegetation and ground interacting with outgoing pulse along the path can be characterized. 
+
+###Prepare data and conduct deconvolution
+```{r deconvolution examples with differnt assumption on system impluse response}
+library(waveformlidar)
+data(return)
+data(outg)  ###corresponding outgoing pulse of return
+data(imp)  ##The impulse function is generally one for the whole study area or
+data(imp_out) ##corresponding outgoing pulse of imp
+
+i=1
+re<-return[i,]
+out<-outg[i,]
+imp<-imp
+imp_out<-imp_out
+
+### option1: to obtain the true system impluse response using the return impluse repsonse (imp) and corresponding outgoing pulse (imp_out)
+gold0<-deconvolution(re = re,out = out,imp = imp,imp_out = imp_out)
+rl0<-deconvolution(re = re,out = out,imp = imp,imp_out = imp_out,method = "RL")
+
+plot(gold0,type="l")
+lines(rl0,col="red")
+
+###option2: assume the return impluse repsonse RIP is the system impulse reponse (SIR)
+gold1<-deconvolution(re = re,out = out,imp = imp)
+rl1<-deconvolution(re = re,out = out,imp = imp,method="RL",small_paras = c(30,2,1.5,30,2,2))
+plot(gold1,type="l")
+lines(rl1,col="red")
+```
+
+###for multiple waveforms using deconvolution algorithms
+
+```{r conduct analysis on the whole dataset instaed of just one individual waveform}
+##since the impulse response is just one waveform.
+imp1<-rep(imp,nrow(return))
+imp1<-matrix(imp1,nrow=nrow(return),byrow=TRUE)
+
+###we need to convert the data into list first before we run the following
+return1<-as.list(as.data.frame(t(return)))
+out1<-as.list(as.data.frame(t(outg)))
+imp2<-as.list(as.data.frame(t(imp1)))
+
+###you need convert you data into list first
+dec<-mapply(deconvolution,re=return1,out=out1,imp=imp2)
+dec<-t(dec)
+
+```
+Next step we need to extarct useful information from these deconvolution results.
+There are two major options for this purpose:
+(1) use peakfind function to roughly estimate these peaks
+(2) conduct decompositon on these waveform deconvoluton results
+
+```{r extract information from deconvolution results}
+##(1) peakfind
+fdec<-data.frame(index=1:nrow(dec),dec)
+final_result1<- peakfind(fdec[1,])
+
+##(2) Gaussian decompostion, you also can try other models to fit the deconvolution results
+final_result2<-decom(fdec[1,])
+
+```

@@ -42,9 +42,8 @@
 #' \describe{
 #'   \item{outgoing pulse}{}
 #' }
+
 "imp_out"
-
-
 
 #' The reference geolocation of the return waveforms.
 #'
@@ -53,25 +52,25 @@
 #' the same as the return waveform or pulse (return).
 #'
 #'
-#' @format A data frame with 500 rows and 17 variables
+#' @format A data frame with 500 rows and 17 variables.
 #' \describe{
-#'   \item{index}{index to connect return waveform and geolocation}
-#'   \item{x}{Easting of first return}
-#'   \item{y}{Northing  of first return}
-#'   \item{z}{Height of first return}
-#'   \item{dx}{the position change per nanasecond at x direction}
-#'   \item{dy}{the position change per nanasecond at y direction}
-#'   \item{dz}{the position change per nanasecond at z direction}
-#'   \item{or}{outgoing pulse reference bin location (leading edge 50% point of the outgoing pulse)}
-#'   \item{fr}{first return reference bin location (leading edge 50% point of the first return)}
-#'   \item{V9}{Easting of Return Bin0}
-#'   \item{V10}{Northing of Return Bin0}
-#'   \item{V11}{Height of Return Bin0}
-#'   \item{V12}{the position change per nanasecond at x direction}
-#'   \item{V13}{the position change per nanasecond at y direction}
-#'   \item{V14}{the position change per nanasecond at z direction}
-#'   \item{V15}{outgoing pulse peak bin location}
-#'   \item{V16}{return bin0 location}
+#'  \item{index}{index to connect return waveform and geolocation}
+#'  \item{\code{x}}{Easting of first return}
+#'  \item{\code{y}}{Northing  of first return}
+#'  \item{\code{z}}{Height of first return}
+#'  \item{\code{dx}}{the position change per nanasecond at x direction}
+#'  \item{\code{dy}}{the position change per nanasecond at y direction}
+#'  \item{\code{dz}}{the position change per nanasecond at z direction}
+#'  \item{\code{or}}{outgoing pulse reference bin location (leading edge 50th point of the outgoing pulse)}
+#'  \item{\code{fr}}{first return reference bin location (leading edge 50th point of the first return)}
+#'  \item{\code{V9}}{Easting of Return Bin0}
+#'  \item{\code{V10}}{Northing of Return Bin0}
+#'  \item{\code{V11}}{Height of Return Bin0}
+#'  \item{\code{V12}}{the position change per nanasecond at x direction}
+#'  \item{\code{V13}}{the position change per nanasecond at y direction}
+#'  \item{\code{V14}}{the position change per nanasecond at z direction}
+#'  \item{\code{V15}}{outgoing pulse peak bin location}
+#'  \item{\code{V16}}{return bin0 location}
 #' }
 "geo"
 
@@ -88,7 +87,7 @@
 #'   \item{A_std}{the standard error of A, which can be used for uncertainty analysis}
 #'   \item{u_std}{the standard error of u, which can be used for uncertainty analysis}
 #'   \item{sig_std}{the standard error of sigma, which can be used for uncertainty analysis}
-#'}
+#' }
 "decom_result"
 
 #' Results of using the deconvolution and decomposition method.
@@ -106,7 +105,7 @@
 #'   \item{A_std}{the standard error of A, which can be used for uncertainty analysis}
 #'   \item{u_std}{the standard error of u, which can be used for uncertainty analysis}
 #'   \item{sig_std}{the standard error of sigma, which can be used for uncertainty analysis}
-#'}
+#' }
 "decon_result"
 
 

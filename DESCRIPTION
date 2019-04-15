@@ -5,10 +5,10 @@ Version: 1.1.0
 Date: 2019-04-04
 Authors@R: person("Tan", "Zhou", email = "tankchow12@gmail.com",
                   role = c("aut", "cre"))
-Depends: 
+Depends:
     R (>= 3.3.0)
 Maintainer: Tan Zhou <tankchow12@gmail.com>
-Imports: 
+Imports:
     data.table (>= 1.9.7),
     caTools,
     minpack.lm,
@@ -21,8 +21,9 @@ Imports:
     splitstackshape,
 	reshape2
 Suggests:
-    rPeaks
-Additional_repositories: https://github.com/jrminter/rPeaks
+    knitr,
+	rPeaks
+Additional_repositories: https://github.com/jrminter/rPeaks/
 Description: A wealth of Full Waveform (FW) LiDAR data are available to 
 	the public from different sources, which is poised to boost the extensive 
 	application of FW LiDAR data. However, we lack a handy and open source tool 
@@ -31,7 +32,7 @@ Description: A wealth of Full Waveform (FW) LiDAR data are available to
 	FW LiDAR processing, analysis and visualization as a solution to the constraint.
 	Specifically, this package provides several commonly used waveform processing methods
 	such as Gaussian, adaptive Gaussian and Weibull decompositions, and 
-	deconvolution approaches (Gold and Richard-Lucy (RL)) with usersâ€™ customized settings. 
+	deconvolution approaches (Gold and Richard-Lucy (RL)) with users’ customized settings. 
 	In addition, we also develop some functions to derive commonly used waveform metrics
 	for characterizing vegetation structure. Moreover, a new way to directly visualize 
 	FW LiDAR data is developed through converting waveforms into points to form the Hyper

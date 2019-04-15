@@ -1,0 +1,185 @@
+---
+title: "From waveforms to Hyper point cloud with waveformlidar"
+author: "Tan Zhou"
+date: "`r Sys.Date()`"
+output: 
+  rmarkdown::html_vignette:
+    toc: yes
+vignette: >
+  %\VignetteIndexEntry{From waveforms to Hyper point cloud with waveformlidar}
+  %\VignetteEngine{knitr::rmarkdown}
+  \usepackage[utf8]{inputenc}
+params:
+  EVAL: !r identical(Sys.getenv("NOT_CRAN"), "true")
+---
+
+```{r, SETTINGS-knitr, include=FALSE}
+stopifnot(require(knitr))
+options(width = 90)
+opts_chunk$set(
+  comment = NA,
+  message = FALSE,
+  warning = FALSE,
+  eval = if (isTRUE(exists("params"))) params$EVAL else FALSE,
+  dev = "png",
+  dpi = 150,
+  fig.asp = 0.8,
+  fig.width = 5,
+  out.width = "60%",
+  fig.align = "center"
+)
+library(waveformlidar)
+#ggplot2::theme_set(theme_default())
+```
+
+## Goal
+
+The purpose of this vignette is to show an example of converting waveforms into point cloud with high density (HPC). In addition, we also explore several applications of the HPC to demonstrate the usefulness of the products.
+
+
+## A Case Study
+
+```{r generate hyper point cloud}
+data("return")
+x<-return[182,]
+qr<-seq(0.45,0.99,0.05)
+re1<-percentile.location(x,quan=qr,top=FALSE)
+
+###calculate the relative height of these percentile
+rh1<- (re1-ground.location(x,top = FALSE))*0.15 ##negative values represent they are above assumed ground, since we look from the endind of waveform.
+wd<- wavelen(x)*0.15
+wgd<- (wavelen(x) - ground.location(x,top = FALSE))*0.15
+num_peaks<- npeaks(x)
+
+##height of half total energy above the ground
+hhg<-med.height(x)
+
+##height of half total energy for the full waveform profile (from half to the waveform ending)
+hht<-(wavelen(x) - which.half(x))*0.15
+##integral of vegetation and ground
+xx<-return[182,]
+rr1<-integral(xx)
+
+```
+
+
+###Visualize these waveform metrics
+```{r rough estimates}
+
+library(plotrix)
+##when we calculated the height, refz is starting from the highest points, so we should reverse it first
+refz<-as.numeric(x)[1:wavelen(x)]
+refz<-rev(refz - min(refz)) +1
+
+#fcom_ave1<-rev(fcom_ave)
+setwd("A:/research/2018/waveform_summary_R/waveformlidar_package_papaer/code_for_paper")#change to where you want to save the FIG
+par(family = 'serif')
+png('accumulated_waveforms-for_pine_new1.jpg', width = 7, height = 5.6, units = 'in',res = 500)
+par(#mfrow=c(1,2), 
+    oma=c(0,0,0,0),mai=c(0.9,0.9,0.4,0.2))
+
+
+plot(refz,seq_along(refz)*0.15,type="l",col="black",xlab="Rescaled intensity",ylab="Height (m)",
+     cex.lab=1.5,lwd=2,axes=F,main="",cex.main=1.5,xlim=c(0,max(refz)))
+axis(side=2, at=seq(0,length(refz)*0.15+5,3),cex.axis=2)
+axis(side=1, at=seq(0,max(refz),30),cex.axis=2)
+segments(-4,0,max(refz),0,col="blue",lwd=2,lty=3)
+segments(-4,length(refz)*0.15,max(refz),length(refz)*0.15,col="blue",lwd=2,lty=3)
+#segments(-4,length(refz)*0.15,-4,0,col="blue",lwd=2,lty=3)
+
+##1 WD
+segments(1,length(refz)*0.15,1,0,col="red",lwd=2,lty=3)
+
+text(2.5,9,"WD",cex=1.5,col="red")
+
+#segments(0,length(refz)*0.15,0,0,col="red",lwd=2,lty=3)
+
+###2 front slope angle################
+fs<-fslope(x,thres = 0.2)
+
+##to obtian the peak's relative time location
+x1<-wf[182,]
+peak_pos<- peakfind(x1,thres = 0.2) ##the threshold should be same as the fslope
+first_peak_loc<-wavelen(x) - peak_pos[1,3]+1
+
+segments(refz[length(refz)],length(refz)*0.15,
+         refz[first_peak_loc],(first_peak_loc)*0.15,col="green",lwd=3,lty=1)
+draw.arc(1,length(refz)*0.15,5,deg1=270,deg2=fs[1]+270,col="green",lwd=3)
+text(15,length(refz)*0.15-2.5,"FS",cex=2,col="green")
+
+##############################################################
+### 3 accmulative energy, integral
+###found the ground location, we assumed the last identified peak was the ground
+gind<-wavelen(x) - peak_pos[nrow(peak_pos),3]
+vind<-gind+20
+
+y1<-seq(0.15*gind,vind*0.15,0.15)
+x1<-rep(1,length(y1))
+
+x2<-rev(refz[gind:vind])
+y2<-rev(y1)
+
+polygon(c(x1,x2),c(y1,y2),col="grey85")
+
+###vegetation energy, above ground 3m
+
+vy1<-seq(0.15*vind,length(refz)*0.15,0.15)
+vx1<-rep(1,length(vy1))
+
+vx2<-rev(refz[vind:length(refz)])
+vy2<-rev(vy1)
+
+polygon(c(vx1,vx2),c(vy1,vy2),col="blue",density=20)
+
+legend("topright",legend=c("VegI","GI"),fill=c("blue","grey85"),
+       density=c(20,NA),bty="n",border=c("blue","grey85"),cex=1.5)
+
+
+###4 half energy postion 
+halfp<-which.half(refz)
+
+points(refz[halfp],halfp*0.15, col="red",cex=2)
+segments(refz[halfp],0,refz[halfp],halfp*0.15,col="red",lwd=3,lty=1)
+#arrows(refz[halfp],0,refz[halfp],halfp*0.15,col="red",lwd=1,lty=1,code=3)
+text(refz[halfp]+1,halfp*0.15/2+3,"HOHE",cex=1.5,col="red")
+
+###5 number of peaks
+points(rev(refz)[peak_pos[,3]],(wavelen(x) - peak_pos[,3])*0.15,col="orange",cex=1.2,pch=17)   
+
+
+###6 ground locations
+points(rev(refz)[peak_pos[,3]][4],gind*0.15,col="cyan",pch=5,cex=1.5)
+text(rev(refz)[peak_pos[,3]][4],gind*0.15-1.0,"ground",cex=1.5,col="cyan")
+
+###7wgd from begining to the ground
+segments(75,gind*0.15,75,length(refz)*0.15,col="darkgreen",lwd=3,lty=2)
+text(70,9,"WGD",cex=1.5,col="darkgreen")
+
+####8 plot legend
+
+legend(135,5.5,c("peaks"),pch=c(17),col=c("orange"),cex=1.3,box.col="white")
+
+legend(80,13,c("RVegI=VegI/(VegI+GI)"),pch=c(NA),col=c("black"),cex=1.1,box.col="white")
+legend(110,2,c("HEHR=HOHE/WD"),pch=c(NA),col=c("black"),cex=1.2,box.col="white")
+
+dev.off()
+
+```
+###To extract waveforms within the region of interest (ROI)
+
+
+```{r waveformclip for selecting waveforms within the ROI}
+####waveformclip
+data(geo)
+colnames(geo)[2:9]<-c("x","y","z","dx","dy","dz","or","fr")
+
+data(return)
+wf<-data.table(index=c(1:nrow(return)),return)
+
+swre1<-waveformclip(waveform = wf,geo =geo,geoextent=c(731126,731128,4712688,4712698))
+
+data("shp_hf")
+swre2<-waveformclip(waveform = wf,geo = geo,shp = shp_hf)
+
+
+```
