@@ -11,6 +11,11 @@ if (!require("devtools")) {
   install.packages("devtools")  
 }  
 devtools::install_github("tankwin08/waveformlidar", dependencies = TRUE)  
+
+##if you didn't install rPeaks, you may need to install it first at the beginning, but most of time, it works fine.
+#if (!require("rPeaks")) {
+#    devtools::install_github("tankwin08/rPeaks")
+#  }
 ``` 
 **How to use waveformlidar**
 ---
@@ -123,6 +128,7 @@ hpc<-hyperpointcloud(waveform=return,geo=geo)
 ```
 
 **Individaul tree waveform voxelization**
+---
 The principle behind the voxel is that the neighborhood points shared the similar characteristic and the information within the homogenous unit can be represented by one quantity or one voxel.  The following example shows how to voxelize data from the HPC. The main parameter of this function is the voxel size (res) which require you to assign a vector containing three values to represent voxel size at the X, Y and Z directions. Analogous to the waveformgrid, we also can generate the quantile intensity in each voxel by adding quan argument.
 ```R
 voxr<-waveformvoxel(hpc,res=c(1,1,0.15))

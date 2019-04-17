@@ -35,7 +35,7 @@
 #' #not run
 #' #library(waveformlidar)
 #' #if (!require("rPeaks")) {
-#' #    devtools::install_github("jrminter/rPeaks")
+#' #    devtools::install_github("tankwin08/rPeaks")
 #' #  }
 #' #data(return)
 #' #data(outg)
