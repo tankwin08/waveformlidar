@@ -106,11 +106,12 @@ lines(rl1,col="red")
 ---
 To visually compare the decompostion and deconvolution results at the individual waveform level, we made a plot of three wavefroms with these three methods (Gaussian decomposition, Gold and RL deconvolution).
 
-Individual waveform level:
+****Individual waveform level****
 
 ![alt text](https://github.com/tankwin08/waveformlidar/blob/master/man/figures/README_decompostion%26deconvolution_example.png)
 
-Point Cloud level:
+
+****Point Cloud level****
 
 ![alt text](https://github.com/tankwin08/waveformlidar/blob/master/man/figures/README_point_cloud_comparison-min.png)
 
