@@ -5,6 +5,10 @@ A wealth of Full Waveform (FW) LiDAR data are available to the public from diffe
 
 **Install waveformlidar**
 ---
+The stable version can be found in CRAN and you can use the following code to install:
+```
+install.packages("waveformlidar")
+```
 The current developmental version can be downloaded from github via  
 ```
 if (!require("devtools")) {  
@@ -14,13 +18,14 @@ devtools::install_github("tankwin08/waveformlidar", dependencies = TRUE)
 
 ##if you didn't install rPeaks, you may need to install it first at the beginning, but most of time, it works fine.
 #if (!require("rPeaks")) {
-#    devtools::install_github("tankwin08/rPeaks")
+#    devtools::install_github("jrminter/rPeaks")
 #  }
 ``` 
 **How to use waveformlidar**
 ---
 As a brief introduction, we conduct Gaussian decomposition on several waveforms to extarct useful information from the wavefomrs. In addition, we also examplify the waveforms on decompostion method with GOLD and RL methods. The detailed description of these methods has been documented in our previous reserach (https://doi.org/10.1016/j.isprsjprs.2017.04.021). 
 Furthermore, we also demonstrate how to generate Hyper Point Cloud (HPC) from a sample waveform dataset at a small region.
+Some examples about using these functions can be found in vignettes.
 
 ***Decomposition***
 ---

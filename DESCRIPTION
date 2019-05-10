@@ -2,7 +2,7 @@ Package: waveformlidar
 Type: Package
 Title: Waveform LiDAR Data Processing and Analysis
 Version: 1.1.0
-Date: 2019-04-04
+Date: 2019-04-24
 Authors@R: person("Tan", "Zhou", email = "tankchow12@gmail.com",
                   role = c("aut", "cre"))
 Depends:
@@ -24,25 +24,26 @@ Suggests:
     knitr,
 	rPeaks
 Additional_repositories: https://tankwin08.github.io/drat
-Description: A wealth of Full Waveform (FW) LiDAR data are available to 
+Description: A wealth of Full Waveform (FW) Light Detection and Ranging (LiDAR) data are available to 
 	the public from different sources, which is poised to boost the extensive 
 	application of FW LiDAR data. However, we lack a handy and open source tool 
-	that can be used by potential users for processing and analyzing FW LiDAR 
-	data. To this end, we introduce waveformlidar, an R package dedicated to 
+	that can be used by ecological and remote sensing communities for processing and analyzing FW LiDAR 
+	data. To this end, we introduce 'waveformlidar', an R package dedicated to 
 	FW LiDAR processing, analysis and visualization as a solution to the constraint.
 	Specifically, this package provides several commonly used waveform processing methods
 	such as Gaussian, adaptive Gaussian and Weibull decompositions, and 
-	deconvolution approaches (Gold and Richard-Lucy (RL)) with users’ customized settings. 
+	deconvolution approaches (Gold and Richard-Lucy (RL)) with customized settings. 
 	In addition, we also develop some functions to derive commonly used waveform metrics
 	for characterizing vegetation structure. Moreover, a new way to directly visualize 
 	FW LiDAR data is developed through converting waveforms into points to form the Hyper
 	Point cloud (HPC), which can be easily adopted and subsequently analyzed with existing 
-	discrete-return LiDAR processing tools such as LAStools and FUSION. Basic explorations of 
+	discrete-return LiDAR processing tools such as 'LAStools' and 'FUSION'. Basic explorations of 
 	the HPC such as 3D voxelization of the HPC and conversion from original waveforms to 
 	composite waveforms are also available in this package. All of these functions are 
 	developed based on small-footprint FW LiDAR data, but they can be easily transplanted to
 	the large footprint FW LiDAR data such as Geoscience Laser Altimeter System (GLAS) 
-	and Global Ecosystem Dynamics Investigation (GEDI) data analysis. 
+	and Global Ecosystem Dynamics Investigation (GEDI) data analysis. References: Zhou et al. (2017a) <doi:10.1016/j.isprsjprs.2017.04.021>;
+	Zhou et al. (2017b) <doi:10.1016/j.rse.2017.08.012>; Zhou et al. (2018a) <doi:10.3390/rs10010039>;Zhou et al. (2018b) <doi:10.3390/rs10121949>.
 License: GPL (>= 2)
 Encoding: UTF-8
 LazyData: true

@@ -32,31 +32,31 @@
 #'   131-150. https://doi.org/10.1016/j.isprsjprs.2017.04.021
 #'
 #' @examples
-#' #not run
-#' #library(waveformlidar)
-#' #if (!require("rPeaks")) {
-#' #    devtools::install_github("tankwin08/rPeaks")
-#' #  }
-#' #data(return)
-#' #data(outg)
-#' #data(imp)  ##The impulse function is generally one for the whole study area or
-#' #data(imp_out)
+#' \donttest{
+#' library(waveformlidar)
+#' if (!require("rPeaks")) {
+#'     install_github("tankwin08/rPeaks")
+#'   }
+#' data(return)
+#' data(outg)
+#' data(imp)  ##The impulse function is generally one for the whole study area or
+#' data(imp_out)
 #'
-#' #re<-return[1,]
-#' #out<-outg[1,]
-#' #imp<-imp
+#' re<-return[1,]
+#' out<-outg[1,]
+#' imp<-imp
 #'
-#' #dr<-deconvolution(re,out,imp)
-#' #dr1<-deconvolution(re,out,imp,method="RL")
-#' #dr2<-deconvolution(re,out,imp,method="RL",small_paras=c(20,2,1.8,20,2,2))
+#' dr<-deconvolution(re,out,imp)
+#' dr1<-deconvolution(re,out,imp,method="RL")
+#' dr2<-deconvolution(re,out,imp,method="RL",small_paras=c(20,2,1.8,20,2,2))
 #'
-#' #plot(dr,type="l")
-#' #lines(dr1,col="red")
-#' #lines(dr2,col="blue")
+#' plot(dr,type="l")
+#' lines(dr1,col="red")
+#' lines(dr2,col="blue")
 #' ###some differences can be observed when you used different parameters.
 #' ##In the real application, you need to find optimized parameters suitable for your case.
 #' ## In addition, the accuracy of impulse function significantly affects results based on experiments.
-#'
+#' }
 
 deconvolution<-function(re,out,imp,imp_out=NULL,method =c("Gold"),np=2,rescale=TRUE,
                         small_paras=c(30,2,1.8,30,2,1.8),large_paras=c(30,3,1.8,40,3,1.8),

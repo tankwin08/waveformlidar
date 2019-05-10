@@ -47,9 +47,11 @@
 #' r5<-decom(xx,width=10) ##this will work by smoothing the waveform
 #' r6<-decom(xx,thres=0.1,width=5)  ##by adjusting width and thres of real peak, you may
 #'                                  ##get a reasonable results
-#'
+#' \donttest{
 #' # for the whole dataset
 #' dr<-apply(return,1,decom)
+#' }
+
 #'
 
 

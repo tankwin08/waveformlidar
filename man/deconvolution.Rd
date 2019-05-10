@@ -47,31 +47,31 @@ The function allows you to deconvolve retrun waveform lidar data by using the sy
  and its corresponding outgoing pluse) and corresponding outgoing waveform to obtain effective target positions. Two algorithms including Gold or Richardson-Lucy algorithms were available.
 }
 \examples{
-#not run
-#library(waveformlidar)
-#if (!require("rPeaks")) {
-#    devtools::install_github("tankwin08/rPeaks")
-#  }
-#data(return)
-#data(outg)
-#data(imp)  ##The impulse function is generally one for the whole study area or
-#data(imp_out)
+\donttest{
+library(waveformlidar)
+if (!require("rPeaks")) {
+    install_github("tankwin08/rPeaks")
+  }
+data(return)
+data(outg)
+data(imp)  ##The impulse function is generally one for the whole study area or
+data(imp_out)
 
-#re<-return[1,]
-#out<-outg[1,]
-#imp<-imp
+re<-return[1,]
+out<-outg[1,]
+imp<-imp
 
-#dr<-deconvolution(re,out,imp)
-#dr1<-deconvolution(re,out,imp,method="RL")
-#dr2<-deconvolution(re,out,imp,method="RL",small_paras=c(20,2,1.8,20,2,2))
+dr<-deconvolution(re,out,imp)
+dr1<-deconvolution(re,out,imp,method="RL")
+dr2<-deconvolution(re,out,imp,method="RL",small_paras=c(20,2,1.8,20,2,2))
 
-#plot(dr,type="l")
-#lines(dr1,col="red")
-#lines(dr2,col="blue")
+plot(dr,type="l")
+lines(dr1,col="red")
+lines(dr2,col="blue")
 ###some differences can be observed when you used different parameters.
 ##In the real application, you need to find optimized parameters suitable for your case.
 ## In addition, the accuracy of impulse function significantly affects results based on experiments.
-
+}
 }
 \references{
 Zhou, Tan*, Sorin C. Popescu, Keith Krause, Ryan D. Sheridan, and Eric Putman, 2017. Gold-A novel deconvolution algorithm with

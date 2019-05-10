@@ -32,28 +32,10 @@ r1<-decom(x)
 
 r2<-decom.adaptive(x)
 
+\donttest{
 # for the whole dataset
-dr3<-apply(return,1,decom.adaptive)
-dd<-return[10:100,]
-dr4<-apply(dd,1,decom.adaptive)
-
-####to collect all data
-## waveform is correctly decomposed with index,some are not correct index by NA
-rfit3<-do.call("rbind",lapply(dr3,"[[",1))
-
-###the original results, which can help to get more detailed results.
-ga3<-do.call("rbind",lapply(dr3,"[[",2))
-
-###useful decompostion results for next step or geolocation transformation.
-pa3<-do.call("rbind",lapply(dr3,"[[",3))
-
-colnames(pa3)<-c("index","pi","t","sd","ri","pise","tse","sdse","rise")
-
-####delete some wrong ones
-rid<-rfit3[!is.na(rfit3),]
-wid<-setdiff(c(1:lr),rid)  ###index of waveforms needs to be reprocessed
-#Generally the adaptive Guassian will give less NA results comparing to Gaussian function (decom).
-rpars<-pa3[!is.na(pa3[,1]),]    ###useful decomposition parameters
+dr3<-apply(return[50:200, ],1,decom.adaptive)
+}
 }
 \references{
 Tan Zhou, and Sorin C. Popescu, 2017. Bayesian decomposition of full waveform LiDAR data with uncertainty analysis.
