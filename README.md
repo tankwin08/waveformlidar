@@ -8,6 +8,8 @@ A wealth of Full Waveform (FW) LiDAR data are available to the public from diffe
 
 Recently, one paper has come out to explain how to use this package efficently. You can find it here: https://doi.org/10.3390/rs11212552
 
+Example codes can be found in https://github.com/tankwin08/waveformlidar/tree/master/vignettes
+
 **Install waveformlidar**
 ---
 The stable version can be found in CRAN and you can use the following code to install:
