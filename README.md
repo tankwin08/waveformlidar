@@ -6,6 +6,8 @@ A wealth of Full Waveform (FW) LiDAR data are available to the public from diffe
 
 ![alt text](https://github.com/tankwin08/waveformlidar/blob/master/man/figures/r_package_graphic_abstract1.png)
 
+Recently, one paper has come out to explain how to use this package efficently. You can find it here: https://doi.org/10.3390/rs11212552
+
 **Install waveformlidar**
 ---
 The stable version can be found in CRAN and you can use the following code to install:
@@ -161,6 +163,8 @@ When using waveformlidar, please cite one or more of the following publications:
 3. Tan Zhou*, and S.C. Popescu, 2017. Bayesian decomposition of full waveform LiDAR data with uncertainty analysis. Remote Sensing of Environment 200 (2017): 43-62. http://dx.doi.org/10.1016/j.rse.2017.08.012
 
 4. Tan Zhou*, Sorin C. Popescu, Keith Krause, Ryan D. Sheridan, and Eric Putman, 2017. Gold-A novel deconvolution algorithm with optimization for waveform LiDAR processing. ISPRS Journal of Photogrammetry and Remote Sensing 129 (2017): 131-150. https://doi.org/10.1016/j.isprsjprs.2017.04.021
+
+5. Tan Zhou*, Sorin Popescu. waveformlidar: An R Package for Waveform LiDAR Processing and Analysis. Remote Sensing. 2019, 11(21), 2552. https://doi.org/10.3390/rs11212552
 
 **What is the best way to ask a question or propose a new feature?**
 ---
