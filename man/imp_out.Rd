@@ -4,11 +4,13 @@
 \name{imp_out}
 \alias{imp_out}
 \title{Outgoing pulse corresponding to the system impulse}
-\format{A vector with the length of 100. The zero padding was used to make sure every waveforms has the same length. In this case, 0 means no recorded intensity.
+\format{
+A vector with the length of 100. The zero padding was used to make sure every waveforms has the same length. In this case, 0 means no recorded intensity.
 
 \describe{
   \item{outgoing pulse}{}
-}}
+}
+}
 \usage{
 imp_out
 }

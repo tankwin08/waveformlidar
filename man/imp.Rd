@@ -4,10 +4,12 @@
 \name{imp}
 \alias{imp}
 \title{prototype system impulse}
-\format{A data frame with 100 rows and 1 column.
+\format{
+A data frame with 100 rows and 1 column.
 \describe{
  \item{V1}{The intensity of the system impulse}
-}}
+}
+}
 \usage{
 imp
 }

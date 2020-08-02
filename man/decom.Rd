@@ -41,7 +41,7 @@ r4<-decom(xx,smooth=TRUE,width=5) ##when you change to a larger width, it can wo
 ###original result from this decom is (you will not see it, the function filter this result
 ###and put NA for the estimation since they maybe not right results)
 #Nonlinear regression model
-#model:y~A1*exp(-(x-u1)^2/(2*sigma1^2))+A2*exp(-(x-u2)^2/(2*sigma2^2)) n\\
+#model:y~A1*exp(-(x-u1)^2/(2*sigma1^2))+A2*exp(-(x-u2)^2/(2*sigma2^2)) n\
 #+A3*exp(-(x-u3)^2/(2*sigma3^2))
 #data: df
 #A1      A2      A3      u1      u2      u3  sigma1  sigma2  sigma3

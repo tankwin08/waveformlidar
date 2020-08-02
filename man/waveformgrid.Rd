@@ -4,8 +4,14 @@
 \alias{waveformgrid}
 \title{waveformgrid}
 \usage{
-waveformgrid(hpc, waveform = NULL, geo = NULL, quan = NULL,
-  res = c(0.8, 0.8), method = "HPC")
+waveformgrid(
+  hpc,
+  waveform = NULL,
+  geo = NULL,
+  quan = NULL,
+  res = c(0.8, 0.8),
+  method = "HPC"
+)
 }
 \arguments{
 \item{hpc}{The hyper point cloud generated from the raw waveform data with hyperpointcloud function or

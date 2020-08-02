@@ -4,7 +4,9 @@
 \name{outg}
 \alias{outg}
 \title{500 corresponding outgoing pulses.}
-\format{A data frame with 500 rows and 100 variables:}
+\format{
+A data frame with 500 rows and 100 variables:
+}
 \usage{
 outg
 }

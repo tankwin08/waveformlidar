@@ -4,10 +4,18 @@
 \alias{deconvolution}
 \title{deconvolution}
 \usage{
-deconvolution(re, out, imp, imp_out = NULL, method = c("Gold"),
-  np = 2, rescale = TRUE, small_paras = c(30, 2, 1.8, 30, 2, 1.8),
-  large_paras = c(30, 3, 1.8, 40, 3, 1.8), imp_out_pars = c(20, 5,
-  1.8))
+deconvolution(
+  re,
+  out,
+  imp,
+  imp_out = NULL,
+  method = c("Gold"),
+  np = 2,
+  rescale = TRUE,
+  small_paras = c(30, 2, 1.8, 30, 2, 1.8),
+  large_paras = c(30, 3, 1.8, 40, 3, 1.8),
+  imp_out_pars = c(20, 5, 1.8)
+)
 }
 \arguments{
 \item{re}{is the return waveform.}

@@ -4,7 +4,8 @@
 \name{decom_result}
 \alias{decom_result}
 \title{Results of decomposition using Gaussian model}
-\format{A data frame with 1000 rows and 7 variables
+\format{
+A data frame with 1000 rows and 7 variables
 \describe{
   \item{index}{index of waveform, which can tell which rows or results belongs to specific waveform}
   \item{A}{the amplitude of one waveform componment (A)}
@@ -13,7 +14,8 @@
   \item{A_std}{the standard error of A, which can be used for uncertainty analysis}
   \item{u_std}{the standard error of u, which can be used for uncertainty analysis}
   \item{sig_std}{the standard error of sigma, which can be used for uncertainty analysis}
-}}
+}
+}
 \usage{
 decom_result
 }

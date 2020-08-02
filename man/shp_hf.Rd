@@ -4,7 +4,9 @@
 \name{shp_hf}
 \alias{shp_hf}
 \title{A boundary shapefile, polygon}
-\format{A shapefile containing a small boudary of the Harvard Forest.}
+\format{
+A shapefile containing a small boudary of the Harvard Forest.
+}
 \usage{
 shp_hf
 }

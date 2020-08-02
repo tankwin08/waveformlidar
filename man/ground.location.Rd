@@ -4,8 +4,14 @@
 \alias{ground.location}
 \title{ground.location}
 \usage{
-ground.location(y, smooth = TRUE, rescale = TRUE, thres = 0.2,
-  width = 3, top = TRUE)
+ground.location(
+  y,
+  smooth = TRUE,
+  rescale = TRUE,
+  thres = 0.2,
+  width = 3,
+  top = TRUE
+)
 }
 \arguments{
 \item{y}{is the waveform intensities. If you have other information, you should delete these intensites before you run this function .}

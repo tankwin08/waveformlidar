@@ -4,7 +4,8 @@
 \name{geo}
 \alias{geo}
 \title{The reference geolocation of the return waveforms.}
-\format{A data frame with 500 rows and 17 variables.
+\format{
+A data frame with 500 rows and 17 variables.
 \describe{
  \item{index}{index to connect return waveform and geolocation}
  \item{\code{x}}{Easting of first return}
@@ -23,7 +24,8 @@
  \item{\code{V14}}{the position change per nanasecond at z direction}
  \item{\code{V15}}{outgoing pulse peak bin location}
  \item{\code{V16}}{return bin0 location}
-}}
+}
+}
 \usage{
 geo
 }

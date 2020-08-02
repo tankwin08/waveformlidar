@@ -4,8 +4,7 @@
 \alias{percentile.location}
 \title{percentile.location}
 \usage{
-percentile.location(x, quan = seq(0.5, 1, 0.1), rescale = TRUE,
-  top = TRUE)
+percentile.location(x, quan = seq(0.5, 1, 0.1), rescale = TRUE, top = TRUE)
 }
 \arguments{
 \item{x}{is the waveform intensities. If you have other information, you should delete these intensites before you run this function .}

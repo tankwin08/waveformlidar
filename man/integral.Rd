@@ -4,8 +4,15 @@
 \alias{integral}
 \title{integral}
 \usage{
-integral(y, smooth = TRUE, rescale = TRUE, thres = 0.2, width = 3,
-  tr = 1, dis = 20)
+integral(
+  y,
+  smooth = TRUE,
+  rescale = TRUE,
+  thres = 0.2,
+  width = 3,
+  tr = 1,
+  dis = 20
+)
 }
 \arguments{
 \item{y}{is the waveform intensities. If you have other information, you should delete these intensites before you run this function .}
