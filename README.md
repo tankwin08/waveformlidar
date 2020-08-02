@@ -6,7 +6,7 @@ A wealth of Full Waveform (FW) LiDAR data are available to the public from diffe
 
 ![alt text](https://github.com/tankwin08/waveformlidar/blob/master/man/figures/r_package_graphic_abstract1.png)
 
-Recently, one paper has come out to explain how to use this package efficently. You can find it here: https://doi.org/10.3390/rs11212552
+I had a paper which describe and explain how to use this package efficently. You can find it here: https://doi.org/10.3390/rs11212552
 
 Example codes can be found in https://github.com/tankwin08/waveformlidar/tree/master/vignettes
 
