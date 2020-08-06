@@ -65,9 +65,11 @@ deconvolution<-function(re,out,imp,imp_out=NULL,method =c("Gold"),np=2,rescale=T
   #library.dynam('Peaks', 'Peaks', lib.loc=NULL)
   #(the above line tells R to load the dynamic library for the Peaks package, which allows Rcpp to call its functions.)
 
-  # if (!requireNamespace("rPeaks", quietly = TRUE)) {
-  #   devtools::install_github("jrminter/rPeaks")
-  # }
+  if (!requireNamespace("rPeaks", quietly = TRUE)) {
+  
+    devtools::install_github("jrminter/rPeaks")
+	
+    }
   y<-as.numeric(re)
   x<-as.numeric(out)
 

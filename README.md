@@ -12,24 +12,29 @@ Example codes can be found in https://github.com/tankwin08/waveformlidar/tree/ma
 
 **Install waveformlidar**
 ---
-A new version is coming on its way, please give it a try.
 
-The stable version can be found in CRAN and you can use the following code to install:
-```
-install.packages("waveformlidar")
+
+The stable version can be found in CRAN, but it has been archived.
+if you cannot install with normal way, please try the following:
+
 ```
 The current developmental version can be downloaded from github via  
 ```
+
+#install.packages("waveformlidar")
+
 if (!require("devtools")) {  
   install.packages("devtools")  
 }  
+
+if (!require("rPeaks")) {
+   devtools::install_github("jrminter/rPeaks")
+} 
+
+##generally the previous two steps are not necessary
+
 devtools::install_github("tankwin08/waveformlidar", dependencies = TRUE)  
 
-##if this method didn't work well, try to install rPeaks first, and then download the git and install it from local
-
-#if (!require("rPeaks")) {
-#    devtools::install_github("jrminter/rPeaks")
-#  }
 ``` 
 **How to use waveformlidar**
 ---
