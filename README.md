@@ -17,11 +17,9 @@ Example codes can be found in https://github.com/tankwin08/waveformlidar/tree/ma
 The stable version can be found in CRAN, but it has been archived.
 if you cannot install with normal way, please try the following:
 
-```
+
 The current developmental version can be downloaded from github via  
 ```
-
-#install.packages("waveformlidar")
 
 if (!require("devtools")) {  
   install.packages("devtools")  
